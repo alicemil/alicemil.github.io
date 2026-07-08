@@ -2,10 +2,283 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Benim GitHub Sitem</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>123456group-a | Resmi Web Sitesi</title>
+    <style>
+        /* Genel Temizlik ve Arka Plan */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* --- ARKA PLANDA BÜYÜYÜP KÜÇÜLEN KIRMIZI IŞIKLAR (NEFES ALMA EFEKTİ) --- */
+        .bg-glows {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .glow {
+            position: absolute;
+            background: radial-gradient(circle, rgba(255, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0) 70%);
+            border-radius: 50%;
+            animation: pulse 6s infinite ease-in-out;
+        }
+
+        .glow-1 {
+            width: 600px;
+            height: 600px;
+            top: -10%;
+            left: -10%;
+            animation-delay: 0s;
+        }
+
+        .glow-2 {
+            width: 500px;
+            height: 500px;
+            bottom: -10%;
+            right: -10%;
+            animation-delay: 3s;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.6;
+            }
+            50% {
+                transform: scale(1.3);
+                opacity: 0.9;
+            }
+        }
+
+        /* --- LIQUID GLASS (SIVI CAM) EFEKTİ --- */
+        .liquid-glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37),
+                        inset 0 0 32px rgba(255, 255, 255, 0.02);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Cam parlaması (Liquid hissi vermek için üstteki ışık süzmesi) */
+        .liquid-glass::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -50%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(255, 255, 255, 0.05),
+                transparent
+            );
+            transform: rotate(-45deg);
+            pointer-events: none;
+        }
+
+        /* İçerik Düzeni */
+        header {
+            width: 100%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            z-index: 10;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            background: linear-gradient(45deg, #ff4d4d, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            z-index: 10;
+            flex-grow: 1;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        .hero-section {
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .hero-section h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .hero-section p {
+            font-size: 1.2rem;
+            color: #cccccc;
+            max-width: 700px;
+            margin: 0 auto 40px auto;
+            line-height: 1.6;
+        }
+
+        /* Ekip Bölümü (Kard Yapısı) */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .team-card {
+            padding: 30px 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 77, 77, 0.4);
+            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.1);
+        }
+
+        .team-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+
+        .team-card p {
+            font-size: 0.9rem;
+            color: #ff4d4d;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Buton Stili */
+        .cta-btn {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.07);
+            color: white;
+            padding: 12px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .cta-btn:hover {
+            background: #ff4d4d;
+            border-color: #ff4d4d;
+            box-shadow: 0 0 20px rgba(255, 77, 77, 0.6);
+            transform: scale(1.05);
+        }
+
+        footer {
+            width: 100%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            text-align: center;
+            z-index: 10;
+            font-size: 0.9rem;
+            color: #666;
+        }
+    </style>
 </head>
 <body>
-    <h1>Merhaba Dünya!</h1>
-    <p>GitHub Pages ile ilk web sitemi başarıyla kurdum.</p>
+
+    <div class="bg-glows">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+    </div>
+
+    <header>
+        <div class="nav-container liquid-glass">
+            <div class="logo">123456GROUP-A</div>
+            <div>
+                <span style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">Yaratıcı Geliştirici Ekibi</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        
+        <section class="hero-section liquid-glass">
+            <h1>Geleceğin Teknolojilerini İnşa Ediyoruz</h1>
+            <p>Yenilikçi yazılımlar, oyun projeleri ve dijital çözümlerle sınırları zorlayan, vizyoner bir geliştirici topluluğu.</p>
+            <button class="cta-btn" onclick="alert('Projelerimiz çok yakında burada listelenecek!')">Projelerimizi İncele</button>
+        </section>
+
+        <h2 style="text-align: center; margin-top: 20px; letter-spacing: 1px;">Ekibimiz</h2>
+        <section class="team-grid">
+            
+            <div class="team-card liquid-glass">
+                <h3>Cemil Çam</h3>
+                <p>Kurucu / Geliştirici</p>
+            </div>
+
+            <div class="team-card liquid-glass">
+                <h3>Berat Öztürk</h3>
+                <p>Ekip Üyesi</p>
+            </div>
+
+            <div class="team-card liquid-glass">
+                <h3>Çınar Gülen</h3>
+                <p>Ekip Üyesi</p>
+            </div>
+
+            <div class="team-card liquid-glass">
+                <h3>Ahmet Batuhan</h3>
+                <p>Ekip Üyesi</p>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="nav-container liquid-glass" style="justify-content: center; padding: 15px;">
+            <p>&copy; 2026 123456group-a. Tüm Hakları Saklıdır.</p>
+        </div>
+    </footer>
+
 </body>
 </html>
