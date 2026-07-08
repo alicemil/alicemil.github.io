@@ -5,25 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>123456group-a | Resmi Web Sitesi</title>
     <style>
-        /* --- PREMIUM SIFIRLAMA VE AKICILIK --- */
+        /* --- HIGH PERFORMANCE SIFIRLAMA --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
             scroll-behavior: smooth;
             -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: #060608;
+            background-color: #050507;
             color: #ffffff;
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* --- ARKA PLAN NEFES ALAN KIRMIZI GLOW IŞIKLAR --- */
+        /* --- GPU DESTEKLİ OPTİMİZE ARKA PLAN GLOWS (Donmayı Engeller) --- */
         .bg-glows {
             position: fixed;
             width: 100vw;
@@ -32,213 +32,151 @@
             left: 0;
             z-index: 0;
             pointer-events: none;
+            will-change: transform;
         }
 
         .glow {
             position: absolute;
-            background: radial-gradient(circle, rgba(255, 26, 26, 0.28) 0%, rgba(0, 0, 0, 0) 70%);
+            background: radial-gradient(circle, rgba(255, 30, 30, 0.18) 0%, rgba(0, 0, 0, 0) 70%);
             border-radius: 50%;
-            animation: pulseGlow 6s infinite ease-in-out;
-            filter: blur(40px);
+            animation: pulseGlow 8s infinite ease-in-out;
+            will-change: transform, opacity;
+            transform: translateZ(0); /* GPU donanım ivmesi aktiftir */
         }
 
         .glow-1 {
-            width: 80vw;
-            height: 80vw;
-            max-width: 650px;
-            max-height: 650px;
+            width: 70vw;
+            height: 70vw;
+            max-width: 500px;
+            max-height: 500px;
             top: -10%;
             left: -10%;
-            animation-delay: 0s;
         }
 
         .glow-2 {
-            width: 75vw;
-            height: 75vw;
-            max-width: 550px;
-            max-height: 550px;
+            width: 65vw;
+            height: 65vw;
+            max-width: 450px;
+            max-height: 450px;
             bottom: -10%;
             right: -10%;
-            animation-delay: 3s;
+            animation-delay: 4s;
         }
 
         @keyframes pulseGlow {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 0.6;
-            }
-            50% {
-                transform: scale(1.3);
-                opacity: 0.95;
-            }
+            0%, 100% { transform: scale(1) translateZ(0); opacity: 0.5; }
+            50% { transform: scale(1.15) translateZ(0); opacity: 0.8; }
         }
 
-        /* --- ULTIMATE LIQUID GLASS (SIVI CAM) EFEKTİ --- */
+        /* --- LIGHTWEIGHT LIQUID GLASS (Mobil Dostu) --- */
         .liquid-glass {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(25px) saturate(190%);
-            -webkit-backdrop-filter: blur(25px) saturate(190%);
-            border: 1px solid rgba(255, 255, 255, 0.09);
-            border-radius: 24px;
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6),
-                        inset 0 1px 1px rgba(255, 255, 255, 0.1),
-                        inset 0 0 30px rgba(255, 255, 255, 0.02);
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(12px) saturate(160%);
+            -webkit-backdrop-filter: blur(12px) saturate(160%);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
             position: relative;
             overflow: hidden;
+            transform: translateZ(0);
         }
 
-        /* Akıcı Sıvı Yansıması Animasyonu */
         .liquid-glass::after {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -60%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                45deg,
-                transparent 30%,
-                rgba(255, 255, 255, 0.04) 45%,
-                rgba(255, 255, 255, 0.08) 50%,
-                rgba(255, 255, 255, 0.04) 55%,
-                transparent 70%
-            );
-            transform: rotate(-45deg);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
             pointer-events: none;
-            animation: liquidShine 8s infinite linear;
-        }
-
-        @keyframes liquidShine {
-            0% { transform: translate(-30%, -30%) rotate(-45deg); }
-            100% { transform: translate(30%, 30%) rotate(-45deg); }
         }
 
         /* --- SAYFA YAPISI --- */
         .container {
             width: 100%;
-            max-width: 1200px;
+            max-width: 1140px;
             margin: 0 auto;
-            padding: 0 24px;
+            padding: 0 20px;
             position: relative;
             z-index: 2;
         }
 
-        /* --- MOBİL UYUMLU NAVİGASYON --- */
-        header {
-            padding: 20px 0;
-        }
-
+        header { padding: 20px 0; }
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 16px 32px;
+            padding: 14px 28px;
         }
 
         .logo {
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             font-weight: 900;
-            letter-spacing: 2.5px;
-            background: linear-gradient(135deg, #ff3b3b, #ffffff);
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #ff3333, #ffffff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 15px rgba(255, 59, 59, 0.2);
         }
 
-        .nav-links {
-            display: flex;
-            gap: 24px;
-        }
-
+        .nav-links { display: flex; gap: 20px; }
         .nav-links a {
-            color: rgba(255, 255, 255, 0.75);
+            color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 600;
-            transition: color 0.3s, transform 0.3s;
-            position: relative;
-            padding: 4px 0;
+            transition: color 0.2s;
         }
+        .nav-links a:hover { color: #ff3333; }
 
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: #ff3b3b;
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .nav-links a:hover {
-            color: #ff3b3b;
-        }
-
-        /* Mobil Menü Butonu */
         .menu-toggle {
             display: none;
             flex-direction: column;
-            gap: 6px;
+            gap: 5px;
             cursor: pointer;
             border: none;
             background: none;
-            padding: 4px;
         }
-
         .menu-toggle span {
-            width: 26px;
+            width: 24px;
             height: 3px;
             background-color: white;
             border-radius: 2px;
-            transition: 0.3s;
+            transition: 0.2s;
         }
 
-        /* --- HERO (KARŞILAMA) ALANI --- */
-        .hero {
-            padding: 60px 0 40px 0;
-        }
-
-        .hero-box {
-            padding: 80px 40px;
-            text-align: center;
-        }
-
+        /* --- HERO --- */
+        .hero { padding: 40px 0; }
+        .hero-box { padding: 60px 30px; text-align: center; }
         .hero-badge {
             display: inline-block;
-            background: rgba(255, 59, 59, 0.15);
-            border: 1px solid rgba(255, 59, 59, 0.4);
-            color: #ff5252;
-            padding: 6px 16px;
+            background: rgba(255, 51, 51, 0.12);
+            border: 1px solid rgba(255, 51, 51, 0.3);
+            color: #ff4444;
+            padding: 5px 14px;
             border-radius: 30px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 700;
             letter-spacing: 1px;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             text-transform: uppercase;
         }
 
         h1 {
-            font-size: 3.5rem;
+            font-size: 2.8rem;
             font-weight: 900;
-            line-height: 1.15;
-            margin-bottom: 20px;
-            letter-spacing: -1px;
-            background: linear-gradient(180deg, #ffffff 30%, #a5a5a5 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
+            color: #ffffff;
         }
 
         .hero p {
-            font-size: 1.25rem;
-            color: #b0b0b8;
-            max-width: 720px;
-            margin: 0 auto 36px auto;
-            line-height: 1.6;
+            font-size: 1.15rem;
+            color: #aaaaaa;
+            max-width: 680px;
+            margin: 0 auto 30px auto;
+            line-height: 1.5;
         }
 
         /* --- PREMIUM BUTON --- */
@@ -246,202 +184,111 @@
             display: inline-block;
             background: rgba(255, 255, 255, 0.06);
             color: #fff;
-            padding: 16px 40px;
+            padding: 14px 36px;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 700;
-            font-size: 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            font-size: 0.95rem;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.2s ease-out;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
-
         .btn:hover {
-            background: #ff3b3b;
-            border-color: #ff3b3b;
-            box-shadow: 0 0 30px rgba(255, 59, 59, 0.6);
-            transform: translateY(-3px) scale(1.02);
+            background: #ff3333;
+            border-color: #ff3333;
+            box-shadow: 0 0 20px rgba(255, 51, 51, 0.5);
+            transform: translateY(-2px);
         }
 
-        /* --- SEKSİYON BAŞLIKLARI --- */
         .section-title {
             text-align: center;
-            font-size: 2.2rem;
-            margin: 90px 0 45px 0;
+            font-size: 1.8rem;
+            margin: 70px 0 35px 0;
             font-weight: 800;
-            letter-spacing: 0.5px;
-            background: linear-gradient(135deg, #ffffff, #888);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* --- PROJELER BÖLÜMÜ --- */
-        .grid-layout {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-        }
-
-        .project-card {
-            padding: 40px 30px;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s;
-        }
-
-        .project-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(255, 59, 59, 0.4);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 0 0 20px rgba(255, 59, 59, 0.05);
-        }
-
-        .icon-box {
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 59, 59, 0.1);
-            border: 1px solid rgba(255, 59, 59, 0.3);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 24px;
-            color: #ff3b3b;
-        }
-
-        .project-card h3 {
-            font-size: 1.45rem;
-            margin-bottom: 14px;
-            font-weight: 700;
-        }
-
-        .project-card p {
-            color: #a0a0ab;
-            font-size: 0.98rem;
-            line-height: 1.6;
-        }
-
-        /* --- EKİP BÖLÜMÜ --- */
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 25px;
-        }
-
-        .team-card {
-            padding: 40px 24px;
-            text-align: center;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s;
-        }
-
-        .team-card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(255, 59, 59, 0.4);
-        }
-
-        .team-card .avatar {
-            width: 85px;
-            height: 85px;
-            background: linear-gradient(135deg, #ff3b3b 0%, #15151c 100%);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            margin: 0 auto 22px auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 1.4rem;
-            letter-spacing: 1px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
             color: #ffffff;
         }
 
-        .team-card h3 {
-            font-size: 1.35rem;
-            margin-bottom: 8px;
-            font-weight: 700;
+        /* --- PROJELER GRID --- */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
         }
+        .project-card { padding: 30px 25px; transition: border-color 0.2s, transform 0.2s; }
+        .project-card:hover { border-color: rgba(255, 51, 51, 0.3); transform: translateY(-4px); }
+        .icon-box {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #ff3333;
+        }
+        .project-card h3 { font-size: 1.3rem; margin-bottom: 10px; font-weight: 700; }
+        .project-card p { color: #999999; font-size: 0.95rem; line-height: 1.5; }
 
+        /* --- EKİP --- */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+        .team-card { padding: 30px 20px; text-align: center; }
+        .team-card .avatar {
+            width: 75px;
+            height: 75px;
+            background: linear-gradient(135deg, #ff3333 0%, #1a1a22 100%);
+            border-radius: 50%;
+            margin: 0 auto 15px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: #ffffff;
+        }
+        .team-card h3 { font-size: 1.2rem; margin-bottom: 6px; }
         .team-card span {
             display: inline-block;
-            font-size: 0.85rem;
-            color: #ff3b3b;
+            font-size: 0.8rem;
+            color: #ff3333;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            background: rgba(255, 59, 59, 0.08);
-            padding: 4px 12px;
+            letter-spacing: 1px;
+            background: rgba(255, 51, 51, 0.08);
+            padding: 3px 10px;
             border-radius: 20px;
-            border: 1px solid rgba(255, 59, 59, 0.15);
         }
 
         /* --- İLETİŞİM FORMU --- */
-        .contact-section {
-            max-width: 680px;
-            margin: 0 auto;
-            padding: 50px 40px;
-        }
-
-        .form-group {
-            margin-bottom: 24px;
-        }
-
+        .contact-section { max-width: 620px; margin: 0 auto; padding: 40px 30px; }
+        .form-group { margin-bottom: 20px; }
         .form-group label {
             display: block;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
-            margin-bottom: 8px;
-            color: #d0d0d8;
-            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+            color: #cccccc;
         }
-
         .form-group input, .form-group textarea {
             width: 100%;
-            padding: 16px;
+            padding: 14px;
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 14px;
+            border-radius: 12px;
             color: white;
-            font-size: 1rem;
-            transition: all 0.3s;
+            font-size: 0.95rem;
+            transition: border-color 0.2s;
         }
-
         .form-group input:focus, .form-group textarea:focus {
             outline: none;
-            border-color: #ff3b3b;
-            background: rgba(255, 255, 255, 0.04);
-            box-shadow: 0 0 15px rgba(255, 59, 59, 0.15);
+            border-color: #ff3333;
         }
 
-        /* --- FOOTER --- */
-        footer {
-            margin-top: 120px;
-            padding: 40px 0;
-            text-align: center;
-        }
+        footer { margin-top: 100px; padding: 30px 0; text-align: center; }
+        footer p { font-size: 0.85rem; color: #666666; }
 
-        footer p {
-            font-size: 0.9rem;
-            color: #70707a;
-            letter-spacing: 0.5px;
-        }
-
-        /* --- %100 MOBİL VE TABLET UYUMLULUK AYARLARI --- */
-        @media (max-width: 992px) {
-            h1 { font-size: 2.8rem; }
-            .hero-box { padding: 60px 30px; }
-        }
-
+        /* --- RESPONSIVE AYARLARI --- */
         @media (max-width: 768px) {
-            header {
-                padding: 15px 0;
-            }
-            .navbar {
-                padding: 12px 24px;
-                position: relative;
-            }
-            .menu-toggle {
-                display: flex;
-            }
+            .navbar { padding: 12px 20px; }
+            .menu-toggle { display: flex; }
             .nav-links {
                 display: none;
                 flex-direction: column;
@@ -449,53 +296,36 @@
                 top: 100%;
                 left: 0;
                 width: 100%;
-                background: rgba(10, 10, 12, 0.96);
-                backdrop-filter: blur(20px);
-                -webkit-backdrop-filter: blur(20px);
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-                padding: 20px;
-                gap: 20px;
+                background: rgba(10, 10, 12, 0.98);
+                padding: 15px;
+                gap: 15px;
                 text-align: center;
-                border-radius: 0 0 20px 20px;
-                box-shadow: 0 20px 30px rgba(0,0,0,0.5);
+                border-radius: 0 0 16px 16px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
                 z-index: 999;
             }
-            .nav-links.active {
-                display: flex;
-            }
-            .nav-links a {
-                font-size: 1.1rem;
-                display: block;
-                padding: 10px 0;
-            }
-            h1 { font-size: 2.3rem; letter-spacing: -0.5px; }
-            .hero-box { padding: 50px 20px; }
-            .hero p { font-size: 1.1rem; }
-            .btn { width: 100%; text-align: center; padding: 15px 0; }
-            .section-title { font-size: 1.8rem; margin: 60px 0 30px 0; }
-            .contact-section { padding: 35px 20px; }
+            .nav-links.active { display: flex; }
+            h1 { font-size: 2rem; }
+            .hero-box { padding: 40px 15px; }
+            .section-title { font-size: 1.5rem; margin: 50px 0 25px 0; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Kusursuz Arka Plan Işıkları -->
     <div class="bg-glows">
         <div class="glow glow-1"></div>
         <div class="glow glow-2"></div>
     </div>
 
-    <!-- Başlık / Navigasyon Alanı -->
     <header class="container">
         <nav class="navbar liquid-glass">
             <div class="logo">123456GROUP-A</div>
-            
-            <button class="menu-toggle" id="mobile-menu-btn" aria-label="Menüyü Aç">
+            <button class="menu-toggle" id="mobile-menu-btn" aria-label="Menü">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
-
             <div class="nav-links" id="nav-menu">
                 <a href="#projeler">Projelerimiz</a>
                 <a href="#ekip">Ekibimiz</a>
@@ -504,77 +334,63 @@
         </nav>
     </header>
 
-    <!-- Ana Sayfa İçeriği -->
     <main class="container">
         
-        <!-- Karşılama (Hero) Bölümü -->
         <section class="hero">
             <div class="hero-box liquid-glass">
                 <div class="hero-badge">Resmi Geliştirici Topluluğu</div>
                 <h1>Fikirleri Koda, Projeleri Dünyaya Dönüştürüyoruz</h1>
-                <p>Biz; bağımsız oyun geliştirme, akıllı otomasyon sistemleri ve sınırları zorlayan modern dijital çözümler üreten tam uyumlu bir yazılım ekibiyiz.</p>
+                <p>Biz; bağımsız oyun geliştirme, akıllı otomasyon sistemleri ve sınırları zorlayan modern dijital solutions üreten tam uyumlu bir yazılım ekibiyiz.</p>
                 <a href="#projeler" class="btn">Çalışmalarımızı Keşfet</a>
             </div>
         </section>
 
-        <!-- Neler Yapıyoruz / Projeler Bölümü -->
         <h2 id="projeler" class="section-title">Neler Yapıyoruz?</h2>
         <section class="grid-layout">
-            
             <div class="project-card liquid-glass">
                 <div class="icon-box">🎮</div>
                 <h3>Oyun Geliştirme</h3>
                 <p>Gelişmiş kütüphaneler ve oyun motorları kullanarak açık dünya simülasyonları, yaratıcı sandbox deneyimleri ve mekanik odaklı indie projeler tasarlıyoruz.</p>
             </div>
-
             <div class="project-card liquid-glass">
                 <div class="icon-box">🤖</div>
                 <h3>Sistem ve Otomasyon</h3>
                 <p>Donanımla entegre çalışan akıllı betikler, Telegram API tabanlı bot mimarileri, Linux optimizasyonları ve ağ güvenliği çözümleri geliştiriyoruz.</p>
             </div>
-
             <div class="project-card liquid-glass">
                 <div class="icon-box">⚡</div>
                 <h3>Modern Web Teknolojileri</h3>
                 <p>Kullanıcı arabiriminde hız ve estetiği bir araya getiren, Liquid Glass gibi güncel global trendleri barındıran tam uyumlu web deneyimleri oluşturuyoruz.</p>
             </div>
-
         </section>
 
-        <!-- Kadro Bölümü -->
         <h2 id="ekip" class="section-title">Yaratıcı Kadromuz</h2>
         <section class="team-grid">
-            
             <div class="team-card liquid-glass">
                 <div class="avatar">CÇ</div>
                 <h3>Cemil Çam</h3>
                 <span>Kurucu / Lead Developer</span>
             </div>
-
             <div class="team-card liquid-glass">
                 <div class="avatar">BÖ</div>
                 <h3>Berat Öztürk</h3>
                 <span>Core Developer</span>
             </div>
-
             <div class="team-card liquid-glass">
                 <div class="avatar">ÇG</div>
                 <h3>Çınar Gülen</h3>
                 <span>Developer</span>
             </div>
-
             <div class="team-card liquid-glass">
                 <div class="avatar">AB</div>
                 <h3>Ahmet Batuhan</h3>
                 <span>Developer</span>
             </div>
-
         </section>
 
-        <!-- İletişim Formu -->
         <h2 id="iletisim" class="section-title">Bizimle Bağlantı Kurun</h2>
         <section class="contact-section liquid-glass">
-            <form action="https://formspree.io/f/your-id-here" method="POST">
+            <form action="https://formspree.io/f/mjgqqven" method="POST">
                 <div class="form-group">
                     <label for="form-name">Adınız / Ekip Adı</label>
                     <input type="text" id="form-name" name="name" placeholder="Örn: Ahmet Yılmaz" required>
@@ -585,9 +401,9 @@
                 </div>
                 <div class="form-group">
                     <label for="form-msg">Mesajınız</label>
-                    <textarea id="form-msg" name="message" rows="5" placeholder="Projenizden veya fikirlerinizden bahsedin..." required></textarea>
+                    <textarea id="form-msg" name="message" rows="5" placeholder="Projenizden bahsedin..." required></textarea>
                 </div>
-                <div style="text-align: center; margin-top: 10px;">
+                <div style="text-align: center;">
                     <button type="submit" class="btn">Mesajı Gönder</button>
                 </div>
             </form>
@@ -595,14 +411,12 @@
 
     </main>
 
-    <!-- Alt Bilgi / Footer Bölümü -->
     <footer class="container">
-        <div class="liquid-glass" style="padding: 24px 20px;">
+        <div class="liquid-glass" style="padding: 20px;">
             <p>&copy; 2026 123456group-a. Tüm Hakları Saklıdır. SudoSu.net Altyapısıyla Güçlendirilmiştir.</p>
         </div>
     </footer>
 
-    <!-- MOBİL MENÜ TETİKLEYİCİSİ -->
     <script>
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const navMenu = document.getElementById('nav-menu');
@@ -611,9 +425,9 @@
             navMenu.classList.toggle('active');
             const spans = mobileMenuBtn.querySelectorAll('span');
             if(navMenu.classList.contains('active')) {
-                spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
                 spans[1].style.opacity = '0';
-                spans[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
+                spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
             } else {
                 spans[0].style.transform = 'none';
                 spans[1].style.opacity = '1';
@@ -621,8 +435,7 @@
             }
         });
 
-        const menuLinks = navMenu.querySelectorAll('a');
-        menuLinks.forEach(link => {
+        navMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 navMenu.classList.remove('active');
                 const spans = mobileMenuBtn.querySelectorAll('span');
