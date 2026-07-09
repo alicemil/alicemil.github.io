@@ -21,25 +21,55 @@
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
-            padding-top: 40px; /* Test banner'ı için üstten boşluk */
+            padding-top: 45px;
         }
 
-        /* --- GEÇİCİ TEST AŞAMASI BANNERI --- */
+        /* --- OPENAI TARZI SİLİNİP YAZILAN ULTRA BELİRGİN BANNER --- */
         .test-banner {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            background: linear-gradient(90deg, #ff3333, #aa1111);
+            background: #111115;
+            border-bottom: 2px solid #ff3333;
             color: #ffffff;
             text-align: center;
-            padding: 8px 10px;
+            padding: 10px 10px;
             font-size: 0.85rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            z-index: 99999;
-            box-shadow: 0 2px 15px rgba(255, 51, 51, 0.3);
-            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 1px;
+            z-index: 999999;
+            box-shadow: 0 4px 20px rgba(255, 51, 51, 0.25);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Yanıp sönen imleç efekti */
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 14px;
+            background-color: #ff3333;
+            animation: blink 0.7s infinite;
+            vertical-align: middle;
+        }
+
+        /* Ana başlıktaki imleç için özel boyut */
+        .hero-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 2.8rem;
+            background-color: #ff3333;
+            animation: blink 0.7s infinite;
+            vertical-align: middle;
+            margin-left: 5px;
+        }
+
+        @keyframes blink {
+            0%, 100     % { opacity: 1; }
+            50% { opacity: 0; }
         }
 
         /* --- GPU DESTEKLİ OPTİMİZE ARKA PLAN GLOWS --- */
@@ -190,7 +220,7 @@
             border: none;
             background: none;
             padding: 10px;
-            z-index: 100000; /* En üstte durması sağlandı */
+            z-index: 1000000;
         }
         .menu-toggle span {
             width: 24px;
@@ -224,6 +254,7 @@
             margin-bottom: 15px;
             letter-spacing: -0.5px;
             color: #ffffff;
+            min-height: 7rem; /* Yazı silindiğinde sayfa aşağı yukarı oynamasın diye sabit alan */
         }
 
         .hero p {
@@ -359,7 +390,7 @@
                 gap: 22px;
                 text-align: center;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-                z-index: 99999;
+                z-index: 999999;
             }
             
             .nav-links.active { display: flex; }
@@ -372,7 +403,8 @@
                 gap: 15px;
             }
             .btn-register { width: 85%; max-width: 220px; text-align: center; }
-            h1 { font-size: 2rem; }
+            h1 { font-size: 2rem; min-height: 5.5rem; }
+            .hero-cursor { height: 2rem; }
             .hero-box { padding: 40px 15px; }
             .section-title { font-size: 1.5rem; margin: 50px 0 25px 0; }
         }
@@ -381,7 +413,8 @@
 <body>
 
     <div class="test-banner">
-        ⚠️ BU SİTE ŞU ANDA TEST AŞAMASINDADIR. TÜM ÖZELLİKLER AKTİF DEĞİLDİR.
+        <span>⚠️ SYSTEM: </span>
+        <span id="typewriter-text"></span><span class="cursor"></span>
     </div>
 
     <div class="bg-glows">
@@ -414,7 +447,7 @@
         <section class="hero">
             <div class="hero-box liquid-glass">
                 <div class="hero-badge">Resmi Geliştirici Topluluğu</div>
-                <h1>Fikirleri Koda, Projeleri Dünyaya Dönüştürüyoruz</h1>
+                <h1><span id="hero-typewriter"></span><span class="hero-cursor"></span></h1>
                 <p>Biz; bağımsız oyun geliştirme, akıllı otomasyon sistemleri ve sınırları zorlayan modern dijital çözümler üreten tam uyumlu bir yazılım ekibiyiz.</p>
                 <a href="#projeler" class="btn">Çalışmalarımızı Keşfet</a>
             </div>
@@ -488,11 +521,12 @@
 
     <footer class="container">
         <div class="liquid-glass" style="padding: 20px;">
-            <p>&copy; 2026 123456group-a. Tüm Hakları Saklıdır. SudoSu.net Altyapısıyla Güçlendirilmiştir.</p>
+            <p>&copy; 2026 123456group-a. Tüm Hakları Saklıdır. SudoSu.net Altyapısıyla Güçlendiritmiştir.</p>
         </div>
     </footer>
 
     <script>
+        // --- MOBILE MENU CODE ---
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const navMenu = document.getElementById('nav-menu');
 
@@ -520,6 +554,62 @@
                 spans[1].style.opacity = '1';
                 spans[2].style.transform = 'none';
             });
+        });
+
+        // --- 1. ÜST BANNER TYPEWRITER ---
+        const bannerWords = ["BU SİTE ŞU ANDA TEST AŞAMASINDADIR.", "GELİŞTİRMELER HIZLA DEVAM EDİYOR.", "YENİ ÖZELLİKLER YOLDA!"];
+        let bWordIdx = 0; let bCharIdx = 0; let bIsDeleting = false;
+        const bannerEl = document.getElementById("typewriter-text");
+
+        function typeBanner() {
+            const currentWord = bannerWords[bWordIdx];
+            if (bIsDeleting) {
+                bannerEl.textContent = currentWord.substring(0, bCharIdx - 1);
+                bCharIdx--;
+            } else {
+                bannerEl.textContent = currentWord.substring(0, bCharIdx + 1);
+                bCharIdx++;
+            }
+            let speed = bIsDeleting ? 30 : 60;
+            if (!bIsDeleting && bCharIdx === currentWord.length) {
+                speed = 2000; bIsDeleting = true;
+            } else if (bIsDeleting && bCharIdx === 0) {
+                bIsDeleting = false;
+                bWordIdx = (bWordIdx + 1) % bannerWords.length;
+                speed = 400;
+            }
+            setTimeout(typeBanner, speed);
+        }
+
+        // --- 2. ANA BAŞLIK (HERO) TYPEWRITER ---
+        const heroWords = ["Fikirleri Koda Dönüştürüyoruz.", "Kodları Projeye Dönüştürüyoruz.", "Geleceği Tasarlıyoruz."];
+        let hWordIdx = 0; let hCharIdx = 0; let hIsDeleting = false;
+        const heroEl = document.getElementById("hero-typewriter");
+
+        function typeHero() {
+            const currentWord = heroWords[hWordIdx];
+            if (hIsDeleting) {
+                heroEl.textContent = currentWord.substring(0, hCharIdx - 1);
+                hCharIdx--;
+            } else {
+                heroEl.textContent = currentWord.substring(0, hCharIdx + 1);
+                hCharIdx++;
+            }
+            let speed = hIsDeleting ? 25 : 55; // Ana başlık biraz daha akıcı yazsın
+            if (!hIsDeleting && hCharIdx === currentWord.length) {
+                speed = 2500; hIsDeleting = true; // Başlık ekranda 2.5 saniye sabit kalsın
+            } else if (hIsDeleting && hCharIdx === 0) {
+                hIsDeleting = false;
+                hWordIdx = (hWordIdx + 1) % heroWords.length;
+                speed = 300;
+            }
+            setTimeout(typeHero, speed);
+        }
+
+        // Sayfa yüklendiğinde her iki döngüyü de tetikle
+        document.addEventListener("DOMContentLoaded", () => {
+            typeBanner();
+            typeHero();
         });
     </script>
 </body>
