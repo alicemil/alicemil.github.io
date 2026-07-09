@@ -68,7 +68,7 @@
         }
 
         @keyframes blink {
-            0%, 100     % { opacity: 1; }
+            0%, 100% { opacity: 1; }
             50% { opacity: 0; }
         }
 
@@ -254,7 +254,7 @@
             margin-bottom: 15px;
             letter-spacing: -0.5px;
             color: #ffffff;
-            min-height: 7rem; /* Yazı silindiğinde sayfa aşağı yukarı oynamasın diye sabit alan */
+            min-height: 7rem;
         }
 
         .hero p {
@@ -521,7 +521,7 @@
 
     <footer class="container">
         <div class="liquid-glass" style="padding: 20px;">
-            <p>&copy; 2026 123456group-a. Tüm Hakları Saklıdır. SudoSu.net Altyapısıyla Güçlendiritmiştir.</p>
+            <p>&copy; 2026 123456group-a. Tüm Hakları Saklıdır. SudoSu.net Altyapısıyla Güçlendirilmiştir.</p>
         </div>
     </footer>
 
@@ -595,9 +595,9 @@
                 heroEl.textContent = currentWord.substring(0, hCharIdx + 1);
                 hCharIdx++;
             }
-            let speed = hIsDeleting ? 25 : 55; // Ana başlık biraz daha akıcı yazsın
+            let speed = hIsDeleting ? 25 : 55;
             if (!hIsDeleting && hCharIdx === currentWord.length) {
-                speed = 2500; hIsDeleting = true; // Başlık ekranda 2.5 saniye sabit kalsın
+                speed = 2500; hIsDeleting = true;
             } else if (hIsDeleting && hCharIdx === 0) {
                 hIsDeleting = false;
                 hWordIdx = (hWordIdx + 1) % heroWords.length;
@@ -606,7 +606,6 @@
             setTimeout(typeHero, speed);
         }
 
-        // Sayfa yüklendiğinde her iki döngüyü de tetikle
         document.addEventListener("DOMContentLoaded", () => {
             typeBanner();
             typeHero();
