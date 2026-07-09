@@ -21,9 +21,28 @@
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
+            padding-top: 40px; /* Test banner'ı için üstten boşluk */
         }
 
-        /* --- GPU DESTEKLİ OPTİMİZE ARKA PLAN GLOWS (Donmayı Engeller) --- */
+        /* --- GEÇİCİ TEST AŞAMASI BANNERI --- */
+        .test-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(90deg, #ff3333, #aa1111);
+            color: #ffffff;
+            text-align: center;
+            padding: 8px 10px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            z-index: 99999;
+            box-shadow: 0 2px 15px rgba(255, 51, 51, 0.3);
+            text-transform: uppercase;
+        }
+
+        /* --- GPU DESTEKLİ OPTİMİZE ARKA PLAN GLOWS --- */
         .bg-glows {
             position: fixed;
             width: 100vw;
@@ -41,7 +60,7 @@
             border-radius: 50%;
             animation: pulseGlow 8s infinite ease-in-out;
             will-change: transform, opacity;
-            transform: translateZ(0); /* GPU donanım ivmesi aktiftir */
+            transform: translateZ(0);
         }
 
         .glow-1 {
@@ -68,7 +87,7 @@
             50% { transform: scale(1.15) translateZ(0); opacity: 0.8; }
         }
 
-        /* --- LIGHTWEIGHT LIQUID GLASS (Mobil Dostu) --- */
+        /* --- LIGHTWEIGHT LIQUID GLASS --- */
         .liquid-glass {
             background: rgba(255, 255, 255, 0.02);
             backdrop-filter: blur(12px) saturate(160%);
@@ -102,7 +121,7 @@
             z-index: 2;
         }
 
-        header { padding: 20px 0; }
+        header { padding: 20px 0; position: relative; z-index: 9999; }
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -119,7 +138,7 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .nav-links { display: flex; gap: 20px; }
+        .nav-links { display: flex; gap: 20px; align-items: center; }
         .nav-links a {
             color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
@@ -129,6 +148,40 @@
         }
         .nav-links a:hover { color: #ff3333; }
 
+        /* --- MENÜ BUTONLARI --- */
+        .nav-auth {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-left: 10px;
+        }
+        .btn-login {
+            color: rgba(255, 255, 255, 0.8) !important;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .btn-login:hover { color: #ffffff !important; }
+        
+        .btn-register {
+            background: #ff3333;
+            color: #ffffff !important;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 0.85rem !important;
+            font-weight: 700 !important;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(255, 51, 51, 0.3);
+            transition: all 0.2s ease;
+        }
+        .btn-register:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(255, 51, 51, 0.5);
+            background: #ff4444;
+        }
+
+        /* --- MOBİL TETİKLEYİCİ (3 ÇİZGİ) --- */
         .menu-toggle {
             display: none;
             flex-direction: column;
@@ -136,13 +189,15 @@
             cursor: pointer;
             border: none;
             background: none;
+            padding: 10px;
+            z-index: 100000; /* En üstte durması sağlandı */
         }
         .menu-toggle span {
             width: 24px;
             height: 3px;
             background-color: white;
             border-radius: 2px;
-            transition: 0.2s;
+            transition: transform 0.3s ease, opacity 0.3s ease;
         }
 
         /* --- HERO --- */
@@ -289,6 +344,7 @@
         @media (max-width: 768px) {
             .navbar { padding: 12px 20px; }
             .menu-toggle { display: flex; }
+            
             .nav-links {
                 display: none;
                 flex-direction: column;
@@ -296,15 +352,26 @@
                 top: 100%;
                 left: 0;
                 width: 100%;
-                background: rgba(10, 10, 12, 0.98);
-                padding: 15px;
-                gap: 15px;
+                background: rgba(5, 5, 7, 0.98);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                padding: 30px 15px;
+                gap: 22px;
                 text-align: center;
-                border-radius: 0 0 16px 16px;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-                z-index: 999;
+                z-index: 99999;
             }
+            
             .nav-links.active { display: flex; }
+            
+            .nav-auth {
+                flex-direction: column;
+                width: 100%;
+                margin-left: 0;
+                margin-top: 10px;
+                gap: 15px;
+            }
+            .btn-register { width: 85%; max-width: 220px; text-align: center; }
             h1 { font-size: 2rem; }
             .hero-box { padding: 40px 15px; }
             .section-title { font-size: 1.5rem; margin: 50px 0 25px 0; }
@@ -312,6 +379,10 @@
     </style>
 </head>
 <body>
+
+    <div class="test-banner">
+        ⚠️ BU SİTE ŞU ANDA TEST AŞAMASINDADIR. TÜM ÖZELLİKLER AKTİF DEĞİLDİR.
+    </div>
 
     <div class="bg-glows">
         <div class="glow glow-1"></div>
@@ -330,6 +401,10 @@
                 <a href="#projeler">Projelerimiz</a>
                 <a href="#ekip">Ekibimiz</a>
                 <a href="#iletisim">İletişim</a>
+                <div class="nav-auth">
+                    <a href="#login" class="btn-login">Giriş Yap</a>
+                    <a href="#register" class="btn-register">Üye Ol</a>
+                </div>
             </div>
         </nav>
     </header>
@@ -340,7 +415,7 @@
             <div class="hero-box liquid-glass">
                 <div class="hero-badge">Resmi Geliştirici Topluluğu</div>
                 <h1>Fikirleri Koda, Projeleri Dünyaya Dönüştürüyoruz</h1>
-                <p>Biz; bağımsız oyun geliştirme, akıllı otomasyon sistemleri ve sınırları zorlayan modern dijital solutions üreten tam uyumlu bir yazılım ekibiyiz.</p>
+                <p>Biz; bağımsız oyun geliştirme, akıllı otomasyon sistemleri ve sınırları zorlayan modern dijital çözümler üreten tam uyumlu bir yazılım ekibiyiz.</p>
                 <a href="#projeler" class="btn">Çalışmalarımızı Keşfet</a>
             </div>
         </section>
@@ -421,9 +496,11 @@
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const navMenu = document.getElementById('nav-menu');
 
-        mobileMenuBtn.addEventListener('click', () => {
+        mobileMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
             navMenu.classList.toggle('active');
             const spans = mobileMenuBtn.querySelectorAll('span');
+            
             if(navMenu.classList.contains('active')) {
                 spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
                 spans[1].style.opacity = '0';
