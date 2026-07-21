@@ -240,7 +240,59 @@
             color: #ffffff;
         }
 
-        /* --- ADMIN YÖNETİM PANELİ (GİZLİ SAKLI GLASS PANEL) --- */
+        /* --- OYUN GALERİSİ ALANI --- */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            aspect-ratio: 16 / 9;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 12px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.85));
+            font-size: 0.85rem;
+            color: #ddd;
+            font-weight: 600;
+        }
+
+        .btn-delete-img {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff3333;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            display: none;
+            z-index: 10;
+        }
+
+        /* --- ADMIN YÖNETİM PANELİ --- */
         .admin-dashboard {
             display: none;
             margin: 30px 0;
@@ -249,7 +301,7 @@
             background: rgba(20, 10, 15, 0.85);
         }
         .admin-dashboard h3 { color: #ff3333; margin-bottom: 20px; font-size: 1.4rem; }
-        .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
         .admin-form-group { margin-bottom: 15px; }
         .admin-form-group label { display: block; font-size: 0.85rem; color: #ccc; margin-bottom: 5px; }
         .admin-form-group input, .admin-form-group textarea, .admin-form-group select {
@@ -329,14 +381,12 @@
         footer p { font-size: 0.85rem; color: #666666; }
 
         @media (max-width: 768px) {
-            .admin-grid { grid-template-columns: 1fr; }
             h1 { font-size: 2rem; min-height: 5.5rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Üst Banner Efekti -->
     <div class="test-banner">
         <span>⚠️ SYSTEM: </span>
         <span id="typewriter-text"></span><span class="cursor"></span>
@@ -351,6 +401,7 @@
         <nav class="navbar liquid-glass">
             <div class="logo">123456GROUP-A</div>
             <div class="nav-links">
+                <a href="#galeri">Oyun Görselleri</a>
                 <a href="#projeler">Projelerimiz</a>
                 <a href="#yorumlar">Oyuncu Yorumları</a>
                 <a href="#ekip">Ekibimiz</a>
@@ -361,7 +412,7 @@
 
     <main class="container">
         
-        <!-- CANLI DÜZENLENEBİLİR HERO ALANI -->
+        <!-- HERO ALANI -->
         <section class="hero">
             <div class="hero-box liquid-glass">
                 <div class="hero-badge" id="displayBadge">Resmi Geliştirici Topluluğu</div>
@@ -369,62 +420,80 @@
                 <p id="displayHeroDesc">Biz; bağımsız oyun geliştirme, akıllı otomasyon sistemleri ve sınırları zorlayan modern dijital çözümler üreten tam uyumlu bir yazılım ekibiyiz.</p>
                 
                 <div class="btn-container">
-                    <a href="#projeler" class="btn">Çalışmalarımızı Keşfet</a>
-                    <a href="https://github.com/alicemil/alicemil.github.io/releases/download/Bikerman/Bikerman.setup.exe" class="btn btn-download">
-                        🚀 Bikerman İndir (36 MB)
+                    <a href="#galeri" class="btn btn-download">
+                        🚀 Oyun Detayları & Görseller
+                    </a>
+                    <a href="https://github.com/alicemil/alicemil.github.io/releases/download/Bikerman/Bikerman.setup.exe" class="btn">
+                        ⚡ Direk İndir (36 MB)
                     </a>
                 </div>
                 <div class="counter-text" id="download-counter">Toplam İndirme: 0</div>
             </div>
         </section>
 
-        <!-- ADMIN PANELİ (1256 İLE GİRİŞ YAPILINCA AÇILIR) -->
+        <!-- ADMIN PANELİ -->
         <div id="adminDashboard" class="liquid-glass admin-dashboard">
             <h3>⚙️ Admin Yönetim Paneli (Şifre: 1256)</h3>
             <div class="admin-grid">
-                <!-- Sol Kolon: Oyunculardan Gelenler Yorum Ekleme -->
+                <!-- 1. Fotoğraf Ekleme -->
                 <div>
-                    <h4 style="margin-bottom:10px; color:#fff;">Yeni Oyuncu Yorumu Ekle</h4>
+                    <h4 style="margin-bottom:10px; color:#ff3333;">🖼️ Oyun Galerisine Fotoğraf Ekle</h4>
+                    <div class="admin-form-group">
+                        <label>Fotoğraf URL:</label>
+                        <input type="text" id="newGalleryImgUrl" placeholder="https://i.imgur.com/example.jpg">
+                    </div>
+                    <div class="admin-form-group">
+                        <label>Fotoğraf Başlığı / Açıklama:</label>
+                        <input type="text" id="newGalleryTitle" placeholder="Örn: Bikerman Şehir İçi Sürüşü">
+                    </div>
+                    <button class="btn btn-download" style="padding:10px 20px; font-size:0.85rem;" onclick="addNewGalleryImg()">Fotoğraf Yayınla</button>
+                </div>
+
+                <!-- 2. Yorum Ekleme -->
+                <div>
+                    <h4 style="margin-bottom:10px; color:#ff3333;">💬 Oyuncu Yorumu Ekle</h4>
                     <div class="admin-form-group">
                         <label>Oyuncu Adı:</label>
                         <input type="text" id="newPlayerName" placeholder="Örn: Bikerman_Pro">
-                    </div>
-                    <div class="admin-form-group">
-                        <label>Profil Fotoğrafı URL (İsteğe Bağlı):</label>
-                        <input type="text" id="newPlayerImg" placeholder="https://... (boş bırakılırsa varsayılan konur)">
                     </div>
                     <div class="admin-form-group">
                         <label>Yıldız Puanı:</label>
                         <select id="newPlayerStars">
                             <option value="★★★★★">★★★★★ (5 Yıldız)</option>
                             <option value="★★★★☆">★★★★☆ (4 Yıldız)</option>
-                            <option value="★★★☆☆">★★★☆☆ (3 Yıldız)</option>
                         </select>
                     </div>
                     <div class="admin-form-group">
                         <label>Oyuncu Yorumu:</label>
-                        <textarea id="newPlayerComment" rows="3" placeholder="Oyun hakkındaki düşünceler..."></textarea>
+                        <textarea id="newPlayerComment" rows="2" placeholder="Oyun hakkındaki düşünceler..."></textarea>
                     </div>
                     <button class="btn btn-download" style="padding:10px 20px; font-size:0.85rem;" onclick="addNewReview()">Yorum Yayınla</button>
                 </div>
 
-                <!-- Sağ Kolon: Site Metinlerini Düzenleme -->
+                <!-- 3. Site Metinleri -->
                 <div>
-                    <h4 style="margin-bottom:10px; color:#fff;">Site Alanlarını Anlık Düzenle</h4>
+                    <h4 style="margin-bottom:10px; color:#ff3333;">✏️ Site Metinleri</h4>
                     <div class="admin-form-group">
                         <label>Rozet Metni (Hero Badge):</label>
                         <input type="text" id="editBadgeInput">
                     </div>
                     <div class="admin-form-group">
                         <label>Hero Açıklama Metni:</label>
-                        <textarea id="editDescInput" rows="4"></textarea>
+                        <textarea id="editDescInput" rows="3"></textarea>
                     </div>
-                    <button class="btn" style="padding:10px 20px; font-size:0.85rem;" onclick="saveHeroData()">Değişiklikleri Kaydet</button>
-                    <button class="btn" style="padding:10px 20px; font-size:0.85rem; background:#444; margin-left:10px;" onclick="logoutAdmin()">Çıkış Yap</button>
+                    <button class="btn" style="padding:10px 20px; font-size:0.85rem;" onclick="saveHeroData()">Kaydet</button>
+                    <button class="btn" style="padding:10px 20px; font-size:0.85rem; background:#444;" onclick="logoutAdmin()">Çıkış Yap</button>
                 </div>
             </div>
         </div>
 
+        <!-- OYUN GALERİSİ VE EKRAN GÖRÜNTÜLERİ -->
+        <h2 id="galeri" class="section-title">Oyun İçi Ekran Görüntüleri</h2>
+        <section id="galleryContainer" class="gallery-grid">
+            <!-- Fotoğraflar JavaScript ile buraya eklenecek -->
+        </section>
+
+        <!-- NELER YAPIYORUZ -->
         <h2 id="projeler" class="section-title">Neler Yapıyoruz?</h2>
         <section class="grid-layout">
             <div class="project-card liquid-glass">
@@ -444,13 +513,13 @@
             </div>
         </section>
 
-        <!-- OYUNCULARDAN GELENLER BÖLÜMÜ -->
+        <!-- OYUNCULARDAN GELENLER -->
         <h2 id="yorumlar" class="section-title">Oyunculardan Gelenler</h2>
         <section id="reviewsContainer" class="reviews-grid">
-            <!-- Yorumlar Javascript ile buraya yüklenecek -->
+            <!-- Yorumlar Javascript ile buraya eklenecek -->
         </section>
 
-        <!-- EKİBİMİZ (MUHARREM ÖZTÜRK DÜZELTİLDİ) -->
+        <!-- EKİBİMİZ -->
         <h2 id="ekip" class="section-title">Yaratıcı Kadromuz</h2>
         <section class="team-grid">
             <div class="team-card liquid-glass">
@@ -483,7 +552,7 @@
         </div>
     </footer>
 
-    <!-- SHADOW ADMIN MODAL -->
+    <!-- ADMIN MODAL -->
     <div id="adminModal" class="modal">
         <div class="liquid-glass modal-card">
             <h3 style="color:#ff3333;">Admin Girişi</h3>
@@ -496,21 +565,28 @@
     </div>
 
     <script>
-        // --- ADMIN & STORAGE YÖNETİMİ ---
+        // --- VARSAYILAN GALERİ FOTOĞRAFLARI ---
+        const DEFAULT_GALLERY = [
+            {
+                id: 1,
+                url: "https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=800&q=80",
+                title: "Bikerman - Şehir İçi Motor Fiziği"
+            },
+            {
+                id: 2,
+                url: "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&w=800&q=80",
+                title: "Bikerman - Gece Sürüş Modu"
+            }
+        ];
+
+        // --- VARSAYILAN YORUMLAR ---
         const DEFAULT_REVIEWS = [
             {
                 id: 1,
                 name: "Mert_Rider",
                 img: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=120&q=80",
                 stars: "★★★★★",
-                comment: "Bikerman gerçekten fizik kontrolü olarak harika hissettiriyor. 36 MB olmasına rağmen grafikleri ve akıcılığı şaşırtıcı derecede iyi!"
-            },
-            {
-                id: 2,
-                name: "Kaan_Gamer",
-                img: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=120&q=80",
-                stars: "★★★★★",
-                comment: "Kurulum dosyası saniyeler içinde indi ve kuruldu. Yerli bir ekibin böyle dinamik bir iş çıkarması gurur verici!"
+                comment: "Bikerman gerçekten fizik kontrolü olarak harika hissettiriyor. 36 MB olmasına rağmen grafikleri harika!"
             }
         ];
 
@@ -535,6 +611,7 @@
                 localStorage.setItem("adminAuth", "true");
                 closeAdminModal();
                 toggleAdminDashboard(true);
+                renderGallery();
                 renderReviews();
                 alert("Admin paneli açıldı!");
             } else {
@@ -546,6 +623,7 @@
             isAdminLoggedIn = false;
             localStorage.setItem("adminAuth", "false");
             toggleAdminDashboard(false);
+            renderGallery();
             renderReviews();
             alert("Admin çıkışı yapıldı.");
         }
@@ -559,7 +637,54 @@
             }
         }
 
-        // YORUM DÜZENLEME & SİLME
+        // --- GALERİ YÖNETİMİ ---
+        function getGallery() {
+            const data = localStorage.getItem("siteGallery");
+            return data ? JSON.parse(data) : DEFAULT_GALLERY;
+        }
+
+        function renderGallery() {
+            const gallery = getGallery();
+            const container = document.getElementById('galleryContainer');
+            container.innerHTML = "";
+
+            gallery.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "gallery-item liquid-glass";
+                card.innerHTML = `
+                    ${isAdminLoggedIn ? `<button class="btn-delete-img" style="display:block;" onclick="deleteGalleryImg(${item.id})">Sil</button>` : ''}
+                    <img src="${item.url}" alt="${item.title}">
+                    <div class="gallery-caption">${item.title}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function addNewGalleryImg() {
+            const url = document.getElementById('newGalleryImgUrl').value;
+            const title = document.getElementById('newGalleryTitle').value || "Oyun Ekran Görüntüsü";
+
+            if(!url) { alert("Lütfen bir fotoğraf URL'si girin."); return; }
+
+            const gallery = getGallery();
+            gallery.unshift({ id: Date.now(), url: url, title: title });
+
+            localStorage.setItem("siteGallery", JSON.stringify(gallery));
+            renderGallery();
+            document.getElementById('newGalleryImgUrl').value = "";
+            document.getElementById('newGalleryTitle').value = "";
+            alert("Yeni fotoğraf galeriye eklendi!");
+        }
+
+        function deleteGalleryImg(id) {
+            if(!confirm("Bu fotoğrafı galericen silmek istiyor musunuz?")) return;
+            let gallery = getGallery();
+            gallery = gallery.filter(item => item.id !== id);
+            localStorage.setItem("siteGallery", JSON.stringify(gallery));
+            renderGallery();
+        }
+
+        // --- YORUM YÖNETİMİ ---
         function getReviews() {
             const data = localStorage.getItem("siteReviews");
             return data ? JSON.parse(data) : DEFAULT_REVIEWS;
@@ -591,20 +716,13 @@
 
         function addNewReview() {
             const name = document.getElementById('newPlayerName').value || "Anonim Oyuncu";
-            const img = document.getElementById('newPlayerImg').value;
             const stars = document.getElementById('newPlayerStars').value;
             const comment = document.getElementById('newPlayerComment').value;
 
             if(!comment) { alert("Lütfen bir yorum yazın."); return; }
 
             const reviews = getReviews();
-            reviews.unshift({
-                id: Date.now(),
-                name: name,
-                img: img,
-                stars: stars,
-                comment: comment
-            });
+            reviews.unshift({ id: Date.now(), name: name, stars: stars, comment: comment });
 
             localStorage.setItem("siteReviews", JSON.stringify(reviews));
             renderReviews();
@@ -623,15 +741,8 @@
         function saveHeroData() {
             const badge = document.getElementById('editBadgeInput').value;
             const desc = document.getElementById('editDescInput').value;
-            
-            if(badge) {
-                document.getElementById('displayBadge').textContent = badge;
-                localStorage.setItem("heroBadge", badge);
-            }
-            if(desc) {
-                document.getElementById('displayHeroDesc').textContent = desc;
-                localStorage.setItem("heroDesc", desc);
-            }
+            if(badge) { document.getElementById('displayBadge').textContent = badge; localStorage.setItem("heroBadge", badge); }
+            if(desc) { document.getElementById('displayHeroDesc').textContent = desc; localStorage.setItem("heroDesc", desc); }
             alert("Site metinleri güncellendi!");
         }
 
@@ -642,7 +753,7 @@
             if(desc) document.getElementById('displayHeroDesc').textContent = desc;
         }
 
-        // --- TYPEWRITER & LIVE COUNTER EFEKTLERİ ---
+        // --- TYPEWRITER & LIVE COUNTER ---
         const bannerWords = ["BU SİTE ŞU ANDA TEST AŞAMASINDADIR.", "GELİŞTİRMELER HIZLA DEVAM EDİYOR."];
         let bWordIdx = 0; let bCharIdx = 0; let bIsDeleting = false;
         const bannerEl = document.getElementById("typewriter-text");
@@ -692,6 +803,7 @@
             typeHero();
             getDownloadCount();
             loadSavedHeroData();
+            renderGallery();
             renderReviews();
             if(isAdminLoggedIn) toggleAdminDashboard(true);
         });
