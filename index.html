@@ -45,20 +45,11 @@
     </div>
 
     <script>
-        // API anahtarınız sisteme entegre edildi
+        // API anahtarınız parçalı olarak tanımlandı
         const p1 = "AQ.Ab8RN6Lq";
         const p2 = "djsH8kgVt9lPuN_";
         const p3 = "LgIHkioWvKGKadF1gdWtb8i4zUw";
         const API_KEY = p1 + p2 + p3;
-
-        const correctPasswordHash = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918";
-
-        async function sha256(message) {
-            const msgBuffer = new TextEncoder().encode(message);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        }
 
         function showPasswordScreen() {
             document.getElementById('warning-screen').classList.add('hidden');
@@ -66,11 +57,11 @@
             document.getElementById('password-input').focus();
         }
 
-        async function checkPassword() {
-            const inputVal = document.getElementById('password-input').value;
-            const hashedInput = await sha256(inputVal);
+        function checkPassword() {
+            const inputVal = document.getElementById('password-input').value.trim();
 
-            if (hashedInput === correctPasswordHash) {
+            // Doğrudan şifre kontrolü
+            if (inputVal === "1453") {
                 document.getElementById('password-screen').classList.add('hidden');
                 document.getElementById('chat-screen').classList.remove('hidden');
                 document.getElementById('user-input').focus();
