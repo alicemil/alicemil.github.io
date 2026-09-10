@@ -1,148 +1,662 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>123456group-a | Kurumsal Müşteri Hizmetleri</title>
-    <style>
-        body { font-family: Arial, sans-serif; background: #121212; color: #fff; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh; }
-        .card { background: #1e1e1e; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); width: 100%; max-width: 550px; text-align: center; position: relative; }
-        .version-badge { position: absolute; top: 10px; right: 15px; background: #00bcd4; color: #000; font-size: 12px; font-weight: bold; padding: 3px 8px; border-radius: 4px; }
-        button { background: #00bcd4; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 6px; cursor: pointer; margin-top: 15px; }
-        button:hover { background: #0097a7; }
-        input { padding: 10px; width: 80%; border-radius: 6px; border: 1px solid #333; background: #2a2a2a; color: white; margin-top: 10px; }
-        #chat-box { height: 300px; border: 1px solid #333; overflow-y: scroll; padding: 10px; margin-bottom: 15px; background: #181818; text-align: left; border-radius: 6px; font-size: 14px; line-height: 1.5; }
-        .hidden { display: none; }
-        .error { color: #ff5252; font-size: 14px; margin-top: 5px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Noama Games -- Bagimsiz Oyun Studyosu</title>
+<meta name="description" content="Noama Games - Bikerman ve Driftel gelistiricisi bagimsiz oyun grubu.">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Noama Games -- Bagimsiz Oyun Studyosu">
+<meta property="og:description" content="Bikerman ve Driftel gelistiricisi. 2025'te kuruldu.">
+<meta property="og:url" content="https://noamagames.com">
+<meta property="og:site_name" content="Noama Games">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Noama Games">
+<meta name="twitter:description" content="Bagimsiz oyun studyosu.">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237c5cff'/%3E%3Cstop offset='1' stop-color='%2300e5ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='24' fill='url(%23g)'/%3E%3Ctext x='50' y='68' font-family='Arial,sans-serif' font-size='60' font-weight='900' fill='%2307070d' text-anchor='middle'%3EN%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07070d;
+  --card:#12121f;
+  --line:rgba(255,255,255,.08);
+  --text:#eef0ff;
+  --muted:#8f93b3;
+  --neon:#7c5cff;
+  --cyan:#00e5ff;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:#07070d;
+  color:#eef0ff;
+  font-family:'Outfit',system-ui,sans-serif;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+#bg-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.glow{position:fixed;border-radius:50%;filter:blur(120px);z-index:0;pointer-events:none}
+.glow-a{width:500px;height:500px;background:#7c5cff;top:-180px;left:-140px;opacity:.35}
+.glow-b{width:460px;height:460px;background:#00e5ff;bottom:-160px;right:-120px;opacity:.22}
+.wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 22px}
+
+header{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  transition:background .3s, border-color .3s;
+  border-bottom:1px solid transparent;
+}
+header.scrolled{
+  background:rgba(7,7,13,.85);
+  border-bottom-color:rgba(255,255,255,.08);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+}
+nav{
+  max-width:1180px;margin:0 auto;padding:16px 22px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.logo{
+  font-weight:900;font-size:1.15rem;letter-spacing:.14em;
+  text-decoration:none;color:#eef0ff;
+  display:flex;align-items:center;gap:10px;
+}
+.logo-mark{
+  width:30px;height:30px;border-radius:9px;
+  background:linear-gradient(115deg,#7c5cff,#00e5ff);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Space Mono',monospace;font-size:.85rem;color:#07070d;font-weight:700;
+  box-shadow:0 0 22px rgba(124,92,255,.6);
+}
+.logo-text{
+  background:linear-gradient(115deg,#7c5cff,#00e5ff);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  color:#7c5cff;
+}
+.nav-links{display:flex;gap:30px;list-style:none;align-items:center}
+.nav-links a{
+  color:#8f93b3;text-decoration:none;font-size:.92rem;font-weight:500;
+  transition:color .25s;
+}
+.nav-links a:hover{color:#eef0ff}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:12px 24px;border-radius:100px;
+  font-weight:600;font-size:.9rem;text-decoration:none;
+  border:none;cursor:pointer;font-family:inherit;
+  transition:transform .25s, box-shadow .25s;
+}
+.btn-primary{
+  background:linear-gradient(115deg,#7c5cff,#00e5ff);
+  color:#07070d;
+  box-shadow:0 8px 30px rgba(124,92,255,.35);
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(124,92,255,.55)}
+.btn-ghost{
+  background:transparent;color:#eef0ff;
+  border:1px solid rgba(255,255,255,.08);
+}
+.btn-ghost:hover{border-color:#7c5cff;background:rgba(124,92,255,.08);transform:translateY(-3px)}
+.burger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:8px}
+.burger span{width:24px;height:2px;background:#eef0ff;border-radius:2px;transition:.3s}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+.hero{padding:140px 0 90px;min-height:100vh;display:flex;align-items:center}
+.badge{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:7px 16px;border-radius:100px;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.03);
+  font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;
+  color:#8f93b3;margin-bottom:26px;font-weight:600;
+}
+.dot{width:7px;height:7px;border-radius:50%;background:#2bff88;box-shadow:0 0 10px #2bff88;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{
+  font-size:3rem;font-weight:900;line-height:1.05;
+  letter-spacing:-.03em;margin-bottom:22px;max-width:900px;
+}
+.hero h1 em{
+  font-style:normal;
+  background:linear-gradient(115deg,#7c5cff,#00e5ff);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  color:#7c5cff;
+}
+.hero p{font-size:1.1rem;color:#8f93b3;max-width:560px;margin-bottom:36px;font-weight:300}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:60px}
+.stats{display:flex;gap:50px;flex-wrap:wrap;padding-top:32px;border-top:1px solid rgba(255,255,255,.08)}
+.stat-num{
+  font-family:'Space Mono',monospace;font-size:2rem;font-weight:700;
+  background:linear-gradient(115deg,#7c5cff,#00e5ff);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:#7c5cff;
+  display:block;line-height:1.2;
+}
+.stat-label{font-size:.8rem;color:#8f93b3;letter-spacing:.06em;text-transform:uppercase}
+
+section{padding:100px 0;position:relative}
+.sec-head{margin-bottom:56px;max-width:640px}
+.sec-tag{
+  font-family:'Space Mono',monospace;font-size:.78rem;letter-spacing:.2em;
+  text-transform:uppercase;color:#00e5ff;margin-bottom:14px;display:block;
+}
+.sec-head h2{font-size:2.4rem;font-weight:800;letter-spacing:-.02em;line-height:1.15;margin-bottom:14px}
+.sec-head p{color:#8f93b3;font-weight:300}
+
+.games-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px}
+.game-card{
+  background:#12121f;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:22px;overflow:hidden;
+  transition:transform .4s, border-color .4s, box-shadow .4s;
+}
+.game-card:hover{
+  transform:translateY(-8px);
+  border-color:rgba(124,92,255,.5);
+  box-shadow:0 24px 60px rgba(0,0,0,.6);
+}
+.game-thumb{
+  height:200px;display:flex;align-items:center;justify-content:center;
+  font-size:5rem;position:relative;
+}
+.t-bike{background:linear-gradient(135deg,#00e5ff,#0a3d5c)}
+.t-drift{background:linear-gradient(135deg,#ff2e88,#5c0a33)}
+.game-body{padding:26px}
+.game-meta{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.chip{
+  font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;
+  padding:5px 12px;border-radius:100px;
+  background:rgba(124,92,255,.14);color:#b9a8ff;
+  border:1px solid rgba(124,92,255,.25);
+}
+.chip.beta{background:rgba(43,255,136,.12);color:#6bffaa;border-color:rgba(43,255,136,.3)}
+.chip.dev{background:rgba(255,176,32,.12);color:#ffcb6b;border-color:rgba(255,176,32,.28)}
+.game-body h3{font-size:1.5rem;font-weight:800;margin-bottom:10px}
+.game-body p{color:#8f93b3;font-size:.95rem;font-weight:300;margin-bottom:18px}
+
+/* Beta uyari kutusu */
+.warn-box{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 14px;border-radius:12px;
+  background:rgba(255,176,32,.1);
+  border:1px solid rgba(255,176,32,.3);
+  color:#ffcb6b;font-size:.85rem;font-weight:600;
+  margin-bottom:14px;
+}
+.warn-box .warn-icon{
+  width:20px;height:20px;border-radius:50%;
+  background:#ffb020;color:#07070d;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.75rem;font-weight:900;flex-shrink:0;
+}
+
+.game-foot{display:flex;gap:10px;flex-wrap:wrap}
+.game-foot .btn{padding:10px 20px;font-size:.85rem}
+
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.about-text h2{font-size:2.4rem;font-weight:800;line-height:1.15;margin-bottom:20px}
+.about-text p{color:#8f93b3;margin-bottom:16px;font-weight:300}
+.about-text p strong{color:#eef0ff;font-weight:600}
+.values{display:grid;gap:14px;margin-top:30px}
+.value{
+  display:flex;gap:14px;align-items:flex-start;
+  padding:16px 18px;border-radius:16px;
+  background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);
+}
+.value-icon{
+  width:38px;height:38px;flex-shrink:0;border-radius:11px;
+  background:linear-gradient(115deg,#7c5cff,#00e5ff);
+  display:flex;align-items:center;justify-content:center;font-size:1.05rem;
+}
+.value h4{font-size:.98rem;font-weight:700;margin-bottom:3px}
+.value p{font-size:.85rem;margin:0;color:#8f93b3}
+.about-visual{
+  aspect-ratio:1/1.05;border-radius:26px;
+  border:1px solid rgba(255,255,255,.08);
+  background:
+    radial-gradient(circle at 30% 25%, rgba(124,92,255,.35), transparent 55%),
+    radial-gradient(circle at 75% 75%, rgba(0,229,255,.28), transparent 55%),
+    #0d0d18;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.about-visual .mark{
+  font-family:'Space Mono',monospace;font-weight:700;
+  font-size:5rem;letter-spacing:-.04em;
+  background:linear-gradient(115deg,#7c5cff,#00e5ff);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:#7c5cff;
+  animation:float 5s ease-in-out infinite;
+}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+
+.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px}
+.member{
+  text-align:center;padding:38px 20px;border-radius:22px;
+  background:#12121f;border:1px solid rgba(255,255,255,.08);
+  transition:transform .35s, border-color .35s;
+}
+.member:hover{transform:translateY(-8px);border-color:rgba(124,92,255,.45)}
+.member.leader{
+  border-color:rgba(124,92,255,.35);
+  background:linear-gradient(180deg, rgba(124,92,255,.08), #12121f);
+}
+.avatar{
+  width:88px;height:88px;border-radius:50%;margin:0 auto 18px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.8rem;font-weight:800;font-family:'Space Mono',monospace;
+  background:linear-gradient(115deg,#7c5cff,#00e5ff);
+  color:#07070d;
+  box-shadow:0 0 0 5px rgba(124,92,255,.12), 0 0 30px rgba(124,92,255,.3);
+}
+.member h4{font-size:1.1rem;font-weight:700;margin-bottom:6px}
+.member .role{
+  font-size:.85rem;color:#00e5ff;letter-spacing:.06em;font-weight:600;
+  text-transform:uppercase;display:block;
+}
+.role-tag{
+  display:inline-block;margin-top:14px;
+  font-size:.72rem;color:#8f93b3;letter-spacing:.06em;
+  padding:4px 12px;border-radius:100px;
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);
+}
+.member.leader .role-tag{
+  background:rgba(124,92,255,.15);border-color:rgba(124,92,255,.35);color:#b9a8ff;
+}
+
+.cta{
+  border-radius:30px;padding:70px 40px;text-align:center;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(124,92,255,.35), transparent 55%),
+    radial-gradient(circle at 85% 100%, rgba(0,229,255,.28), transparent 55%),
+    #0d0d18;
+  border:1px solid rgba(255,255,255,.08);
+}
+.cta h2{font-size:2.4rem;font-weight:800;letter-spacing:-.02em;margin-bottom:16px;line-height:1.15}
+.cta p{color:#8f93b3;max-width:520px;margin:0 auto 32px;font-weight:300}
+.cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.socials{display:flex;gap:12px;justify-content:center;margin-top:38px;flex-wrap:wrap}
+.social{
+  width:46px;height:46px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  color:#8f93b3;text-decoration:none;font-size:1.05rem;
+  transition:all .3s;
+}
+.social:hover{color:#eef0ff;border-color:#7c5cff;background:rgba(124,92,255,.14);transform:translateY(-4px)}
+
+footer{border-top:1px solid rgba(255,255,255,.08);padding:40px 0;margin-top:40px}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.foot p{color:#8f93b3;font-size:.85rem}
+.foot-links{display:flex;gap:22px;flex-wrap:wrap}
+.foot-links a{color:#8f93b3;text-decoration:none;font-size:.85rem;transition:color .25s}
+.foot-links a:hover{color:#eef0ff}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s, transform .8s}
+.reveal.in{opacity:1;transform:none}
+
+@media(max-width:900px){
+  .about-grid{grid-template-columns:1fr;gap:40px}
+  .about-visual{order:-1;aspect-ratio:16/10}
+  .hero h1{font-size:2.4rem}
+  .sec-head h2, .about-text h2, .cta h2{font-size:1.9rem}
+}
+@media(max-width:720px){
+  .burger{display:flex}
+  .nav-links{
+    position:fixed;top:0;right:0;bottom:0;
+    width:280px;
+    flex-direction:column;justify-content:center;gap:26px;
+    background:rgba(9,9,17,.97);
+    border-left:1px solid rgba(255,255,255,.08);
+    transform:translateX(100%);
+    transition:transform .4s;
+    padding:60px 30px;
+  }
+  .nav-links.open{transform:translateX(0)}
+  .nav-links a{font-size:1.1rem}
+  .nav-links .btn{width:100%;justify-content:center}
+  .stats{gap:28px}
+  section{padding:70px 0}
+  .hero{padding:110px 0 60px}
+  .hero h1{font-size:2rem}
+  .sec-head h2, .about-text h2, .cta h2{font-size:1.6rem}
+  .about-visual .mark{font-size:3.5rem}
+  .team-grid{grid-template-columns:repeat(2,1fr);gap:14px}
+  .member{padding:26px 14px}
+  .avatar{width:70px;height:70px;font-size:1.5rem;margin-bottom:14px}
+  .member h4{font-size:.95rem}
+  .member .role{font-size:.75rem}
+  .role-tag{font-size:.65rem;padding:3px 10px;margin-top:10px}
+}
+</style>
 </head>
 <body>
 
-    <!-- 1. Aşama: Test Uyarısı Ekranı -->
-    <div id="warning-screen" class="card">
-        <span class="version-badge">v1.7</span>
-        <h2>⚠️ Kurumsal Uyarı</h2>
-        <p>123456group-a Yapay Zeka Müşteri Hizmetleri testleri yapılmaktadır.</p>
-        <button onclick="showPasswordScreen()">Tamam</button>
-    </div>
+<canvas id="bg-canvas"></canvas>
+<div class="glow glow-a"></div>
+<div class="glow glow-b"></div>
 
-    <!-- 2. Aşama: Şifre Giriş Ekranı -->
-    <div id="password-screen" class="card hidden">
-        <span class="version-badge">v1.7</span>
-        <h2>🔒 Güvenlik Doğrulaması</h2>
-        <p>Lütfen erişim şifresini girin:</p>
-        <input type="password" id="password-input" placeholder="Şifre" onkeypress="handlePasswordKey(event)">
-        <div id="error-msg" class="error"></div>
-        <br>
-        <button onclick="checkPassword()">Giriş Yap</button>
-    </div>
+<header id="header">
+  <nav>
+    <a href="#top" class="logo">
+      <div class="logo-mark">N</div>
+      <span class="logo-text">NOAMA GAMES</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#oyunlar">Oyunlar</a></li>
+      <li><a href="#hakkimizda">Hakkimizda</a></li>
+      <li><a href="#ekip">Ekip</a></li>
+      <li><a href="#iletisim">Iletisim</a></li>
+      <li><a href="#iletisim" class="btn btn-primary">Bize Katil</a></li>
+    </ul>
+    <button class="burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
 
-    <!-- 3. Aşama: Yapay Zeka Sohbet Ekranı -->
-    <div id="chat-screen" class="card hidden" style="max-width: 650px;">
-        <span class="version-badge">v1.7</span>
-        <h3 id="agent-title">123456group-a Canlı Destek</h3>
-        <div id="chat-box"></div>
-        <div style="display: flex; gap: 10px;">
-            <input type="text" id="user-input" placeholder="Mesajınızı yazın..." style="margin-top:0; flex:1;" onkeypress="handleChatKey(event)">
-            <button onclick="sendMessage()" style="margin-top:0;">Gönder</button>
+<main id="top">
+<section class="hero">
+  <div class="wrap">
+    <div class="badge"><span class="dot"></span> Bagimsiz Oyun Studyosu · 2025</div>
+    <h1>Oyunlar yapiyoruz,<br><em>dunyalar kuruyoruz.</em></h1>
+    <p>Noama Games, tutkuyla bir araya gelmis kucuk ama hirsli bir oyun gelistirici grubudur. Bikerman ve Driftel ile yola ciktik.</p>
+    <div class="hero-actions">
+      <a href="#oyunlar" class="btn btn-primary">Oyunlarimizi Kesfet</a>
+      <a href="#hakkimizda" class="btn btn-ghost">Hakkimizda</a>
+    </div>
+    <div class="stats">
+      <div><span class="stat-num" data-count="2">0</span><span class="stat-label">Aktif Proje</span></div>
+      <div><span class="stat-num" data-count="4">0</span><span class="stat-label">Ekip Uyesi</span></div>
+      <div><span class="stat-num" data-count="1">0</span><span class="stat-label">Acik Beta</span></div>
+      <div><span class="stat-num" data-count="2025">0</span><span class="stat-label">Kurulus</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="oyunlar">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">// Projelerimiz</span>
+      <h2>Uzerinde calistigimiz oyunlar</h2>
+      <p>Iki buyuk proje uzerinde yogunlasiyoruz. Biri acik betada, digeri gelistirme asamasinda.</p>
+    </div>
+    <div class="games-grid">
+      <article class="game-card reveal">
+        <div class="game-thumb t-bike">&#128690;</div>
+        <div class="game-body">
+          <div class="game-meta">
+            <span class="chip beta">Acik Beta</span>
+            <span class="chip">Bisiklet</span>
+            <span class="chip">Macera</span>
+          </div>
+          <h3>Bikerman</h3>
+          <p>Bisikletinle zorlu parkurlarda dengeni koru, engelleri as ve hizini test et. Su anda acik beta asamasinda - sen de oyna ve geri bildirim ver!</p>
+          <div class="warn-box">
+            <span class="warn-icon">!</span>
+            <span>Beta suan gecersizdir</span>
+          </div>
+          <div class="game-foot">
+            <a href="https://bikerman.noamagames.com/beta" class="btn btn-primary">Beta'ya Katil</a>
+            <a href="#" class="btn btn-ghost">Detaylar</a>
+          </div>
         </div>
+      </article>
+      <article class="game-card reveal">
+        <div class="game-thumb t-drift">&#127950;</div>
+        <div class="game-body">
+          <div class="game-meta">
+            <span class="chip dev">Gelistiriliyor</span>
+            <span class="chip">Acik Dunya</span>
+            <span class="chip">Yaris</span>
+          </div>
+          <h3>Driftel</h3>
+          <p>Genis bir acik dunyada ozgurce drift at, arabalari modifiye et ve sokaklarin krali ol. Gelistirme asamasinda - yakinda yollarda!</p>
+          <div class="game-foot">
+            <span class="btn btn-ghost">Yakinda</span>
+            <a href="#" class="btn btn-ghost">Onizleme</a>
+          </div>
+        </div>
+      </article>
     </div>
+  </div>
+</section>
 
-    <script>
-        // API anahtarınız parçalı olarak tanımlandı
-        const p1 = "AQ.Ab8RN6Lq";
-        const p2 = "djsH8kgVt9lPuN_";
-        const p3 = "LgIHkioWvKGKadF1gdWtb8i4zUw";
-        const API_KEY = p1 + p2 + p3;
+<section id="hakkimizda">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <span class="sec-tag">// Biz Kimiz</span>
+        <h2>Kucuk bir ekip, sonsuz bir tutku.</h2>
+        <p>Noama Games, 2025'te oyun oynamayi ve yapmayi seven <strong>dort kisilik bir grup</strong> olarak dogdu. 3D modellemeden kodlamaya, sosyal medyadan test sureclerine kadar her isi kendimiz yapiyoruz.</p>
+        <p>Amacimiz sadece oyun cikarmak degil; oyuncularin yillar sonra bile hatirlayacagi, kendi hissini tasiyan deneyimler yaratmak.</p>
+        <div class="values">
+          <div class="value">
+            <div class="value-icon">&#127919;</div>
+            <div><h4>Oyuncu Odakli</h4><p>Her karari oyuncu deneyimini onceleyerek aliyoruz.</p></div>
+          </div>
+          <div class="value">
+            <div class="value-icon">&#9889;</div>
+            <div><h4>Hizli ve Cevik</h4><p>Kucuk ekibin avantajiyla hizli prototip, hizli karar.</p></div>
+          </div>
+          <div class="value">
+            <div class="value-icon">&#128142;</div>
+            <div><h4>Kalite Takintisi</h4><p>Iyi hissettirmeyen hicbir mekanigi oyuna koymuyoruz.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="about-visual reveal">
+        <div class="mark">N.</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        // Gerçek Türk müşteri temsilcisi isimleri havuzu
-        const turkishNames = [
-            "Zeynep Yılmaz", "Ahmet Demir", "Elif Çelik", "Burak Kaya", 
-            "Selin Arslan", "Mert Şahin", "Deniz Aydın", "Cemre Yıldız"
-        ];
-        let assignedAgentName = "";
+<section id="ekip">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">// Kadro</span>
+      <h2>Noama'yi ayakta tutanlar</h2>
+      <p>Kucuk bir ekibiz ama her biri kendi alaninda uzman. Iste Noama'nin arkasindaki isimler.</p>
+    </div>
+    <div class="team-grid">
+      <div class="member leader reveal">
+        <div class="avatar">C</div>
+        <h4>Cemil Cam</h4>
+        <span class="role">Ekip Lideri</span>
+        <div><span class="role-tag">&#128187; Unity Gelistirici</span></div>
+      </div>
+      <div class="member reveal">
+        <div class="avatar">M</div>
+        <h4>Muharrem</h4>
+        <span class="role">3D Sanatci</span>
+        <div><span class="role-tag">&#127912; 3D Modelleme</span></div>
+      </div>
+      <div class="member reveal">
+        <div class="avatar">C</div>
+        <h4>Cinar Gulen</h4>
+        <span class="role">Unity Gelistirici</span>
+        <div><span class="role-tag">&#128187; Unity</span></div>
+      </div>
+      <div class="member reveal">
+        <div class="avatar">A</div>
+        <h4>Ahmet Batuhan</h4>
+        <span class="role">Sosyal Medya</span>
+        <div><span class="role-tag">&#128227; Sosyal Medya Yoneticisi</span></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        function showPasswordScreen() {
-            document.getElementById('warning-screen').classList.add('hidden');
-            document.getElementById('password-screen').classList.remove('hidden');
-            document.getElementById('password-input').focus();
-        }
+<section id="iletisim">
+  <div class="wrap">
+    <div class="cta reveal">
+      <h2>Bize ulas, birlikte yapalim.</h2>
+      <p>Oyunlarimiz hakkinda geri bildirim mi vereceksin, yoksa ekibe mi katilmak istiyorsun? Her turlu mesaja acigiz.</p>
+      <div class="cta-actions">
+        <span class="btn btn-primary" style="opacity:.6;cursor:not-allowed">E-posta · Yakinda</span>
+        <a href="#" class="btn btn-ghost">Discord'a Katil</a>
+      </div>
+      <div class="socials">
+        <a href="#" class="social" aria-label="Discord">&#128172;</a>
+        <a href="#" class="social" aria-label="X">&#120143;</a>
+        <a href="#" class="social" aria-label="YouTube">&#9658;</a>
+        <a href="#" class="social" aria-label="Instagram">&#9673;</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
 
-        function checkPassword() {
-            const inputVal = document.getElementById('password-input').value.trim();
+<footer>
+  <div class="wrap foot">
+    <p>&copy; <span id="year"></span> Noama Games. Tum haklari saklidir.</p>
+    <div class="foot-links">
+      <a href="#oyunlar">Oyunlar</a>
+      <a href="#hakkimizda">Hakkimizda</a>
+      <a href="#ekip">Ekip</a>
+      <a href="#iletisim">Iletisim</a>
+    </div>
+  </div>
+</footer>
 
-            if (inputVal === "1453") {
-                // Rastgele bir Türk müşteri temsilcisi ismi seç
-                assignedAgentName = turkishNames[Math.floor(Math.random() * turkishNames.length)];
-                document.getElementById('agent-title').innerText = `123456group-a | Temsilci: ${assignedAgentName}`;
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
 
-                document.getElementById('password-screen').classList.add('hidden');
-                document.getElementById('chat-screen').classList.remove('hidden');
-                document.getElementById('user-input').focus();
+var header = document.getElementById('header');
+window.addEventListener('scroll', function(){
+  if (window.scrollY > 30) header.classList.add('scrolled');
+  else header.classList.remove('scrolled');
+});
 
-                // Karşılama mesajını ekle
-                const chatBox = document.getElementById('chat-box');
-                const now = new Date().toLocaleString('tr-TR');
-                chatBox.innerHTML += `<div style="margin-bottom:12px; color:#00bcd4;"><b>${assignedAgentName}:</b> Merhaba efendim, 123456group-a müşteri hizmetlerine hoş geldiniz. Ben ${assignedAgentName}, size nasıl yardımcı olabilirim?<br><span style="font-size:11px; color:#888;">İyi günler dileriz. Tarih: ${now}</span></div>`;
-            } else {
-                document.getElementById('error-msg').innerText = "Hatalı şifre!";
-            }
-        }
+var burger = document.getElementById('burger');
+var navLinks = document.getElementById('navLinks');
+burger.addEventListener('click', function(){
+  burger.classList.toggle('open');
+  navLinks.classList.toggle('open');
+});
+var links = navLinks.querySelectorAll('a');
+for (var i = 0; i < links.length; i++) {
+  links[i].addEventListener('click', function(){
+    burger.classList.remove('open');
+    navLinks.classList.remove('open');
+  });
+}
 
-        function handlePasswordKey(event) {
-            if (event.key === 'Enter') {
-                checkPassword();
-            }
-        }
+var io = new IntersectionObserver(function(entries){
+  entries.forEach(function(e, i){
+    if (e.isIntersecting) {
+      setTimeout(function(){ e.target.classList.add('in'); }, i * 70);
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
 
-        function handleChatKey(event) {
-            if (event.key === 'Enter') {
-                sendMessage();
-            }
-        }
+var counters = document.querySelectorAll('[data-count]');
+var cio = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if (!e.isIntersecting) return;
+    var el = e.target;
+    var target = parseInt(el.dataset.count, 10);
+    var dur = 1400;
+    var start = performance.now();
+    function step(now){
+      var p = Math.min((now - start) / dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.floor(eased * target);
+      if (p < 1) requestAnimationFrame(step);
+      else el.textContent = target;
+    }
+    requestAnimationFrame(step);
+    cio.unobserve(el);
+  });
+}, { threshold: 0.5 });
+counters.forEach(function(c){ cio.observe(c); });
 
-        async function sendMessage() {
-            const inputField = document.getElementById("user-input");
-            const chatBox = document.getElementById("chat-box");
-            const message = inputField.value;
-            if (!message) return;
+var canvas = document.getElementById('bg-canvas');
+var ctx = canvas.getContext('2d');
+var particles = [], w, h;
 
-            chatBox.innerHTML += `<div style="margin-bottom:8px;"><b>Siz:</b> ${message}</div>`;
-            inputField.value = "";
-            chatBox.scrollTop = chatBox.scrollHeight;
+function resize(){
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
+  var count = Math.min(Math.floor(w / 16), 80);
+  particles = [];
+  for (var i = 0; i < count; i++) {
+    particles.push({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.28,
+      vy: (Math.random() - 0.5) * 0.28,
+      r: Math.random() * 1.6 + 0.6
+    });
+  }
+}
+resize();
+window.addEventListener('resize', resize);
 
-            // Kurumsal Müşteri Temsilcisi ve Bikerman projeleri için sisteme özel talimat (System Instruction / Prompt)
-            const systemPrompt = `Sen 123456group-a şirketinin çok kibar, nazik, profesyonel ve zarif bir müşteri temsilcisisin. Adın ${assignedAgentName}. Kesinlikle yapay zeka olduğunu belli etme, tamamen gerçek bir Türk müşteri temsilcisi gibi konuş. 
-            Şirketimizin bünyesindeki 'Bikerman' projeleri hakkında gelen soruları profesyonellikle yanıtla (Bikerman projeleri; yenilikçi mühendislik çözümleri, köpük kararlılık test üniteleri [Nasaco/Betachem iş birlikleriyle geliştirilen test sistemleri] ve özel tasarım dijital/fiziksel sanat/tasarım sergileme sistemleri alanlarını kapsamaktadır). 
-            Hitabetin üst düzey şirket dilinde, son derece kibar, saygılı ve çözüm odaklı olmalıdır ("Efendim", "Saygılarımızla", "Memnuniyetle yardımcı olurum" gibi ifadeler kullan).
-            Her mesajının en sonunda mutlaka "İyi günler dileriz." cümlesi ve o anki güncel tam tarih/saat bilgisi yer almalıdır.`;
+var mouse = { x: -9999, y: -9999 };
+window.addEventListener('mousemove', function(e){ mouse.x = e.clientX; mouse.y = e.clientY; });
+window.addEventListener('mouseleave', function(){ mouse.x = -9999; mouse.y = -9999; });
 
-            try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        contents: [
-                            { role: "user", parts: [{ text: systemPrompt + "\n\nMüşteri Mesajı: " + message }] }
-                        ]
-                    })
-                });
-
-                const data = await response.json();
-                
-                if (data.candidates && data.candidates.length > 0) {
-                    const aiReply = data.candidates[0].content.parts[0].text;
-                    chatBox.innerHTML += `<div style="margin-bottom:12px; color:#00bcd4;"><b>${assignedAgentName}:</b> ${aiReply}</div>`;
-                } else {
-                    chatBox.innerHTML += `<div style="margin-bottom:8px; color:#ff5252;"><b>Sistem:</b> Üzgünüz, şu anda talebinizi işleyemedik. İyi günler dileriz.</div>`;
-                }
-                
-                chatBox.scrollTop = chatBox.scrollHeight;
-            } catch (error) {
-                console.error("Bağlantı Hatası:", error);
-                chatBox.innerHTML += `<div style="margin-bottom:8px; color:#ff5252;"><b>Sistem:</b> Bağlantı hatası oluştu. İyi günler dileriz.</div>`;
-            }
-        }
-    </script>
+function draw(){
+  ctx.clearRect(0, 0, w, h);
+  for (var i = 0; i < particles.length; i++) {
+    var p = particles[i];
+    p.x += p.vx; p.y += p.vy;
+    if (p.x < 0 || p.x > w) p.vx *= -1;
+    if (p.y < 0 || p.y > h) p.vy *= -1;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(140,120,255,0.5)';
+    ctx.fill();
+  }
+  for (var i = 0; i < particles.length; i++) {
+    for (var j = i + 1; j < particles.length; j++) {
+      var dx = particles[i].x - particles[j].x;
+      var dy = particles[i].y - particles[j].y;
+      var dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < 120) {
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = 'rgba(124,92,255,' + (0.12 * (1 - dist / 120)) + ')';
+        ctx.lineWidth = 0.7;
+        ctx.stroke();
+      }
+    }
+  }
+  if (mouse.x > 0) {
+    for (var k = 0; k < particles.length; k++) {
+      var p2 = particles[k];
+      var dx2 = p2.x - mouse.x;
+      var dy2 = p2.y - mouse.y;
+      var d2 = Math.sqrt(dx2*dx2 + dy2*dy2);
+      if (d2 < 160) {
+        ctx.beginPath();
+        ctx.moveTo(p2.x, p2.y);
+        ctx.lineTo(mouse.x, mouse.y);
+        ctx.strokeStyle = 'rgba(0,229,255,' + (0.2 * (1 - d2 / 160)) + ')';
+        ctx.lineWidth = 0.8;
+        ctx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(draw);
+}
+draw();
+</script>
 </body>
 </html>
