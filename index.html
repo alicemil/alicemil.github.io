@@ -3,660 +3,1352 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Noama Games -- Bagimsiz Oyun Studyosu</title>
-<meta name="description" content="Noama Games - Bikerman ve Driftel gelistiricisi bagimsiz oyun grubu.">
-
-<meta property="og:type" content="website">
-<meta property="og:title" content="Noama Games -- Bagimsiz Oyun Studyosu">
-<meta property="og:description" content="Bikerman ve Driftel gelistiricisi. 2025'te kuruldu.">
-<meta property="og:url" content="https://noamagames.com">
-<meta property="og:site_name" content="Noama Games">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Noama Games">
-<meta name="twitter:description" content="Bagimsiz oyun studyosu.">
-
+<title>Noama Games — Oyun Platformu</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237c5cff'/%3E%3Cstop offset='1' stop-color='%2300e5ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='24' fill='url(%23g)'/%3E%3Ctext x='50' y='68' font-family='Arial,sans-serif' font-size='60' font-weight='900' fill='%2307070d' text-anchor='middle'%3EN%3C/text%3E%3C/svg%3E">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#07070d;
+  --bg2:#0d0d18;
   --card:#12121f;
+  --card2:#181826;
   --line:rgba(255,255,255,.08);
   --text:#eef0ff;
   --muted:#8f93b3;
   --neon:#7c5cff;
   --cyan:#00e5ff;
+  --pink:#ff2e88;
+  --green:#2bff88;
+  --orange:#ffb020;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+html,body{height:100%}
 body{
-  background:#07070d;
-  color:#eef0ff;
+  background:var(--bg);
+  color:var(--text);
   font-family:'Outfit',system-ui,sans-serif;
   line-height:1.6;
   overflow-x:hidden;
 }
-#bg-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
-.glow{position:fixed;border-radius:50%;filter:blur(120px);z-index:0;pointer-events:none}
-.glow-a{width:500px;height:500px;background:#7c5cff;top:-180px;left:-140px;opacity:.35}
-.glow-b{width:460px;height:460px;background:#00e5ff;bottom:-160px;right:-120px;opacity:.22}
-.wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 22px}
+input,button,textarea,select{font-family:inherit}
 
-header{
-  position:fixed;top:0;left:0;right:0;z-index:50;
-  transition:background .3s, border-color .3s;
-  border-bottom:1px solid transparent;
-}
-header.scrolled{
-  background:rgba(7,7,13,.85);
-  border-bottom-color:rgba(255,255,255,.08);
-  backdrop-filter:blur(14px);
-  -webkit-backdrop-filter:blur(14px);
-}
-nav{
-  max-width:1180px;margin:0 auto;padding:16px 22px;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.logo{
-  font-weight:900;font-size:1.15rem;letter-spacing:.14em;
-  text-decoration:none;color:#eef0ff;
-  display:flex;align-items:center;gap:10px;
-}
-.logo-mark{
-  width:30px;height:30px;border-radius:9px;
-  background:linear-gradient(115deg,#7c5cff,#00e5ff);
+/* ============ AUTH EKRANI ============ */
+#auth-screen{
+  min-height:100vh;
   display:flex;align-items:center;justify-content:center;
-  font-family:'Space Mono',monospace;font-size:.85rem;color:#07070d;font-weight:700;
-  box-shadow:0 0 22px rgba(124,92,255,.6);
+  padding:20px;
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(124,92,255,.35), transparent 50%),
+    radial-gradient(circle at 85% 80%, rgba(0,229,255,.28), transparent 50%),
+    #07070d;
 }
-.logo-text{
-  background:linear-gradient(115deg,#7c5cff,#00e5ff);
-  -webkit-background-clip:text;
-  background-clip:text;
-  -webkit-text-fill-color:transparent;
-  color:#7c5cff;
+#auth-screen::before{
+  content:'';
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+  background-size:44px 44px;
+  mask-image:radial-gradient(circle at 50% 50%, #000 30%, transparent 75%);
 }
-.nav-links{display:flex;gap:30px;list-style:none;align-items:center}
-.nav-links a{
-  color:#8f93b3;text-decoration:none;font-size:.92rem;font-weight:500;
-  transition:color .25s;
+.auth-box{
+  position:relative;z-index:1;
+  width:100%;max-width:420px;
+  background:rgba(18,18,31,.85);
+  backdrop-filter:blur(18px);
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:40px 34px;
+  box-shadow:0 30px 80px rgba(0,0,0,.7), 0 0 60px rgba(124,92,255,.15);
 }
-.nav-links a:hover{color:#eef0ff}
-.btn{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:12px 24px;border-radius:100px;
-  font-weight:600;font-size:.9rem;text-decoration:none;
-  border:none;cursor:pointer;font-family:inherit;
-  transition:transform .25s, box-shadow .25s;
+.auth-logo{
+  display:flex;align-items:center;gap:12px;justify-content:center;
+  margin-bottom:6px;
 }
-.btn-primary{
-  background:linear-gradient(115deg,#7c5cff,#00e5ff);
+.auth-logo-mark{
+  width:44px;height:44px;border-radius:13px;
+  background:linear-gradient(115deg,var(--neon),var(--cyan));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Space Mono',monospace;font-size:1.3rem;font-weight:700;color:#07070d;
+  box-shadow:0 0 30px rgba(124,92,255,.6);
+}
+.auth-logo-text{
+  font-size:1.4rem;font-weight:900;letter-spacing:.14em;
+  background:linear-gradient(115deg,var(--neon),var(--cyan));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.auth-sub{
+  text-align:center;color:var(--muted);font-size:.85rem;
+  margin-bottom:30px;letter-spacing:.05em;
+}
+.auth-tabs{
+  display:flex;gap:6px;margin-bottom:24px;
+  background:rgba(0,0,0,.3);padding:5px;border-radius:14px;
+}
+.auth-tab{
+  flex:1;padding:11px;border-radius:10px;
+  background:transparent;border:none;color:var(--muted);
+  font-weight:600;font-size:.9rem;cursor:pointer;
+  transition:all .25s;
+}
+.auth-tab.active{
+  background:linear-gradient(115deg,var(--neon),var(--cyan));
   color:#07070d;
-  box-shadow:0 8px 30px rgba(124,92,255,.35);
 }
-.btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(124,92,255,.55)}
-.btn-ghost{
-  background:transparent;color:#eef0ff;
-  border:1px solid rgba(255,255,255,.08);
+.auth-field{margin-bottom:16px}
+.auth-field label{
+  display:block;font-size:.78rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted);
+  margin-bottom:8px;font-weight:600;
 }
-.btn-ghost:hover{border-color:#7c5cff;background:rgba(124,92,255,.08);transform:translateY(-3px)}
-.burger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:8px}
-.burger span{width:24px;height:2px;background:#eef0ff;border-radius:2px;transition:.3s}
-.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-.burger.open span:nth-child(2){opacity:0}
-.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.auth-field input{
+  width:100%;padding:14px 18px;border-radius:12px;
+  background:rgba(0,0,0,.35);border:1px solid var(--line);
+  color:var(--text);font-size:.95rem;
+  transition:border-color .25s, box-shadow .25s;
+}
+.auth-field input:focus{
+  outline:none;border-color:var(--neon);
+  box-shadow:0 0 0 3px rgba(124,92,255,.15);
+}
+.auth-btn{
+  width:100%;padding:14px;border-radius:12px;
+  background:linear-gradient(115deg,var(--neon),var(--cyan));
+  color:#07070d;border:none;font-weight:700;font-size:.95rem;
+  cursor:pointer;letter-spacing:.03em;
+  transition:transform .2s, box-shadow .2s;
+  box-shadow:0 8px 24px rgba(124,92,255,.35);
+}
+.auth-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(124,92,255,.5)}
+.auth-msg{
+  padding:11px 14px;border-radius:10px;
+  font-size:.85rem;margin-bottom:16px;display:none;
+}
+.auth-msg.error{
+  display:block;background:rgba(255,46,136,.12);
+  border:1px solid rgba(255,46,136,.3);color:#ff85b3;
+}
+.auth-msg.success{
+  display:block;background:rgba(43,255,136,.12);
+  border:1px solid rgba(43,255,136,.3);color:#6bffaa;
+}
+.auth-hint{
+  margin-top:20px;padding-top:20px;border-top:1px solid var(--line);
+  text-align:center;font-size:.75rem;color:var(--muted);
+  font-family:'Space Mono',monospace;
+}
+.auth-hint code{
+  color:var(--cyan);background:rgba(0,229,255,.08);
+  padding:2px 8px;border-radius:6px;
+}
 
-.hero{padding:140px 0 90px;min-height:100vh;display:flex;align-items:center}
-.badge{
-  display:inline-flex;align-items:center;gap:9px;
-  padding:7px 16px;border-radius:100px;
-  border:1px solid rgba(255,255,255,.08);
+/* ============ APP EKRANI ============ */
+#app-screen{display:none;min-height:100vh}
+#app-screen.active{display:flex}
+
+.sidebar{
+  width:260px;flex-shrink:0;
+  background:var(--bg2);
+  border-right:1px solid var(--line);
+  display:flex;flex-direction:column;
+  position:sticky;top:0;height:100vh;
+}
+.sidebar-head{
+  padding:24px 22px 20px;
+  border-bottom:1px solid var(--line);
+}
+.sidebar-logo{
+  display:flex;align-items:center;gap:10px;text-decoration:none;
+}
+.sidebar-logo-mark{
+  width:34px;height:34px;border-radius:10px;
+  background:linear-gradient(115deg,var(--neon),var(--cyan));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Space Mono',monospace;font-size:.95rem;font-weight:700;color:#07070d;
+  box-shadow:0 0 20px rgba(124,92,255,.5);
+}
+.sidebar-logo-text{
+  font-size:1rem;font-weight:900;letter-spacing:.12em;
+  background:linear-gradient(115deg,var(--neon),var(--cyan));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.sidebar-nav{flex:1;padding:18px 12px;overflow-y:auto}
+.nav-label{
+  font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);font-weight:700;
+  padding:14px 12px 8px;
+}
+.nav-item{
+  display:flex;align-items:center;gap:12px;
+  padding:11px 14px;border-radius:10px;
+  color:var(--muted);text-decoration:none;font-size:.9rem;
+  font-weight:500;cursor:pointer;
+  transition:all .2s;margin-bottom:2px;
+  border:none;background:none;width:100%;text-align:left;
+}
+.nav-item:hover{background:rgba(255,255,255,.04);color:var(--text)}
+.nav-item.active{
+  background:linear-gradient(115deg,rgba(124,92,255,.18),rgba(0,229,255,.1));
+  color:var(--text);
+  box-shadow:inset 0 0 0 1px rgba(124,92,255,.25);
+}
+.nav-item .icon{font-size:1.15rem;width:22px;text-align:center}
+.nav-item .badge{
+  margin-left:auto;font-size:.68rem;font-weight:700;
+  padding:2px 8px;border-radius:100px;
+  background:rgba(255,176,32,.15);color:#ffcb6b;
+  letter-spacing:.05em;
+}
+.nav-item .badge.admin{
+  background:rgba(124,92,255,.2);color:#b9a8ff;
+}
+.nav-item.coming{
+  opacity:.55;cursor:not-allowed;
+}
+.nav-item.coming:hover{background:none;color:var(--muted)}
+
+.sidebar-user{
+  padding:16px;border-top:1px solid var(--line);
+}
+.user-card{
+  display:flex;align-items:center;gap:10px;
+  padding:10px;border-radius:12px;
   background:rgba(255,255,255,.03);
-  font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;
-  color:#8f93b3;margin-bottom:26px;font-weight:600;
 }
-.dot{width:7px;height:7px;border-radius:50%;background:#2bff88;box-shadow:0 0 10px #2bff88;animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.hero h1{
-  font-size:3rem;font-weight:900;line-height:1.05;
-  letter-spacing:-.03em;margin-bottom:22px;max-width:900px;
+.user-avatar{
+  width:38px;height:38px;border-radius:10px;
+  background:linear-gradient(115deg,var(--neon),var(--cyan));
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:1rem;color:#07070d;
+  font-family:'Space Mono',monospace;flex-shrink:0;
 }
-.hero h1 em{
-  font-style:normal;
-  background:linear-gradient(115deg,#7c5cff,#00e5ff);
-  -webkit-background-clip:text;
-  background-clip:text;
-  -webkit-text-fill-color:transparent;
-  color:#7c5cff;
+.user-info{flex:1;min-width:0}
+.user-name{
+  font-size:.88rem;font-weight:700;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
-.hero p{font-size:1.1rem;color:#8f93b3;max-width:560px;margin-bottom:36px;font-weight:300}
-.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:60px}
-.stats{display:flex;gap:50px;flex-wrap:wrap;padding-top:32px;border-top:1px solid rgba(255,255,255,.08)}
-.stat-num{
-  font-family:'Space Mono',monospace;font-size:2rem;font-weight:700;
-  background:linear-gradient(115deg,#7c5cff,#00e5ff);
-  -webkit-background-clip:text;background-clip:text;
-  -webkit-text-fill-color:transparent;color:#7c5cff;
-  display:block;line-height:1.2;
+.user-role{font-size:.7rem;color:var(--muted);letter-spacing:.04em}
+.logout-btn{
+  width:36px;height:36px;border-radius:10px;
+  background:rgba(255,46,136,.1);border:1px solid rgba(255,46,136,.25);
+  color:#ff85b3;cursor:pointer;font-size:.95rem;
+  transition:all .2s;flex-shrink:0;
 }
-.stat-label{font-size:.8rem;color:#8f93b3;letter-spacing:.06em;text-transform:uppercase}
+.logout-btn:hover{background:rgba(255,46,136,.2)}
 
-section{padding:100px 0;position:relative}
-.sec-head{margin-bottom:56px;max-width:640px}
-.sec-tag{
-  font-family:'Space Mono',monospace;font-size:.78rem;letter-spacing:.2em;
-  text-transform:uppercase;color:#00e5ff;margin-bottom:14px;display:block;
+.main{
+  flex:1;min-width:0;
+  padding:40px 44px;
+  overflow-y:auto;
+  max-height:100vh;
 }
-.sec-head h2{font-size:2.4rem;font-weight:800;letter-spacing:-.02em;line-height:1.15;margin-bottom:14px}
-.sec-head p{color:#8f93b3;font-weight:300}
+.view{display:none;animation:fadeUp .4s ease}
+.view.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 
-.games-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px}
-.game-card{
-  background:#12121f;
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:22px;overflow:hidden;
-  transition:transform .4s, border-color .4s, box-shadow .4s;
+.view-head{margin-bottom:32px}
+.view-tag{
+  font-family:'Space Mono',monospace;font-size:.72rem;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--cyan);margin-bottom:8px;display:block;
 }
-.game-card:hover{
-  transform:translateY(-8px);
+.view-title{
+  font-size:2rem;font-weight:900;letter-spacing:-.02em;
+  margin-bottom:8px;
+}
+.view-desc{color:var(--muted);font-size:.95rem;font-weight:300;max-width:600px}
+
+/* ============ OYUN KARTLARI ============ */
+.games-row{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:22px;
+}
+.game-tile{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:18px;overflow:hidden;
+  cursor:pointer;
+  transition:transform .35s cubic-bezier(.2,.8,.2,1), border-color .35s, box-shadow .35s;
+  position:relative;
+}
+.game-tile:hover{
+  transform:translateY(-6px);
   border-color:rgba(124,92,255,.5);
-  box-shadow:0 24px 60px rgba(0,0,0,.6);
+  box-shadow:0 20px 40px rgba(0,0,0,.5), 0 0 30px rgba(124,92,255,.15);
 }
-.game-thumb{
-  height:200px;display:flex;align-items:center;justify-content:center;
-  font-size:5rem;position:relative;
+.game-cover{
+  height:150px;display:flex;align-items:center;justify-content:center;
+  font-size:4rem;position:relative;overflow:hidden;
 }
-.t-bike{background:linear-gradient(135deg,#00e5ff,#0a3d5c)}
-.t-drift{background:linear-gradient(135deg,#ff2e88,#5c0a33)}
-.game-body{padding:26px}
-.game-meta{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}
-.chip{
-  font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;
-  padding:5px 12px;border-radius:100px;
+.game-cover::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to top,var(--card) 5%,transparent 60%);
+}
+.game-of-year{
+  position:absolute;top:12px;right:12px;z-index:2;
+  background:linear-gradient(115deg,#ffb020,#ff2e88);
+  color:#07070d;font-size:.68rem;font-weight:800;
+  padding:5px 11px;border-radius:100px;
+  letter-spacing:.06em;text-transform:uppercase;
+  box-shadow:0 4px 16px rgba(255,176,32,.5);
+  display:flex;align-items:center;gap:4px;
+}
+.game-info{padding:18px 20px}
+.game-info h3{font-size:1.15rem;font-weight:800;margin-bottom:6px}
+.game-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.mini-tag{
+  font-size:.65rem;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;padding:3px 9px;border-radius:100px;
   background:rgba(124,92,255,.14);color:#b9a8ff;
   border:1px solid rgba(124,92,255,.25);
 }
-.chip.beta{background:rgba(43,255,136,.12);color:#6bffaa;border-color:rgba(43,255,136,.3)}
-.chip.dev{background:rgba(255,176,32,.12);color:#ffcb6b;border-color:rgba(255,176,32,.28)}
-.game-body h3{font-size:1.5rem;font-weight:800;margin-bottom:10px}
-.game-body p{color:#8f93b3;font-size:.95rem;font-weight:300;margin-bottom:18px}
-
-/* Beta uyari kutusu */
-.warn-box{
-  display:flex;align-items:center;gap:10px;
-  padding:11px 14px;border-radius:12px;
-  background:rgba(255,176,32,.1);
-  border:1px solid rgba(255,176,32,.3);
-  color:#ffcb6b;font-size:.85rem;font-weight:600;
-  margin-bottom:14px;
-}
-.warn-box .warn-icon{
-  width:20px;height:20px;border-radius:50%;
-  background:#ffb020;color:#07070d;
-  display:flex;align-items:center;justify-content:center;
-  font-size:.75rem;font-weight:900;flex-shrink:0;
+.mini-tag.beta{background:rgba(43,255,136,.12);color:#6bffaa;border-color:rgba(43,255,136,.3)}
+.mini-tag.dev{background:rgba(255,176,32,.12);color:#ffcb6b;border-color:rgba(255,176,32,.28)}
+.mini-tag.released{background:rgba(0,229,255,.12);color:#7ae8ff;border-color:rgba(0,229,255,.3)}
+.game-price{
+  font-family:'Space Mono',monospace;font-weight:700;
+  font-size:1.05rem;
+  background:linear-gradient(115deg,var(--neon),var(--cyan));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
 }
 
-.game-foot{display:flex;gap:10px;flex-wrap:wrap}
-.game-foot .btn{padding:10px 20px;font-size:.85rem}
+/* ============ OYUN DETAY ============ */
+.back-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:8px 16px;border-radius:100px;
+  background:rgba(255,255,255,.04);border:1px solid var(--line);
+  color:var(--muted);cursor:pointer;font-size:.85rem;
+  margin-bottom:24px;transition:all .2s;
+}
+.back-btn:hover{color:var(--text);border-color:var(--neon)}
 
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-.about-text h2{font-size:2.4rem;font-weight:800;line-height:1.15;margin-bottom:20px}
-.about-text p{color:#8f93b3;margin-bottom:16px;font-weight:300}
-.about-text p strong{color:#eef0ff;font-weight:600}
-.values{display:grid;gap:14px;margin-top:30px}
-.value{
-  display:flex;gap:14px;align-items:flex-start;
-  padding:16px 18px;border-radius:16px;
-  background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);
+.game-detail-hero{
+  border-radius:24px;overflow:hidden;
+  border:1px solid var(--line);
+  margin-bottom:28px;
+  background:var(--card);
 }
-.value-icon{
-  width:38px;height:38px;flex-shrink:0;border-radius:11px;
-  background:linear-gradient(115deg,#7c5cff,#00e5ff);
-  display:flex;align-items:center;justify-content:center;font-size:1.05rem;
+.game-detail-cover{
+  height:260px;display:flex;align-items:center;justify-content:center;
+  font-size:7rem;position:relative;
 }
-.value h4{font-size:.98rem;font-weight:700;margin-bottom:3px}
-.value p{font-size:.85rem;margin:0;color:#8f93b3}
-.about-visual{
-  aspect-ratio:1/1.05;border-radius:26px;
-  border:1px solid rgba(255,255,255,.08);
-  background:
-    radial-gradient(circle at 30% 25%, rgba(124,92,255,.35), transparent 55%),
-    radial-gradient(circle at 75% 75%, rgba(0,229,255,.28), transparent 55%),
-    #0d0d18;
-  display:flex;align-items:center;justify-content:center;
+.game-detail-cover::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to top,var(--card) 10%,transparent 80%);
+}
+.game-detail-body{
+  padding:0 32px 32px;
+  margin-top:-40px;position:relative;z-index:2;
+}
+.game-detail-body h1{
+  font-size:2.4rem;font-weight:900;letter-spacing:-.02em;
+  margin-bottom:12px;
+}
+.game-detail-meta{
+  display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;
+}
+.game-detail-actions{
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  margin-bottom:24px;
+  padding-bottom:24px;border-bottom:1px solid var(--line);
+}
+.buy-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:14px 32px;border-radius:100px;
+  background:linear-gradient(115deg,var(--neon),var(--cyan));
+  color:#07070d;font-weight:800;font-size:1rem;border:none;
+  cursor:pointer;letter-spacing:.02em;
+  box-shadow:0 10px 30px rgba(124,92,255,.4);
+  transition:transform .2s, box-shadow .2s;
+}
+.buy-btn:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(124,92,255,.55)}
+.buy-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+.game-detail-price{
+  font-family:'Space Mono',monospace;font-weight:700;
+  font-size:1.6rem;
+  background:linear-gradient(115deg,var(--neon),var(--cyan));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.game-detail-price.old{opacity:.5;text-decoration:line-through;font-size:1rem;margin-left:8px}
+
+.game-detail-grid{
+  display:grid;grid-template-columns:2fr 1fr;gap:36px;
+}
+.game-detail-desc{color:var(--muted);font-weight:300;line-height:1.75}
+.game-detail-desc p{margin-bottom:14px}
+.game-detail-side{display:flex;flex-direction:column;gap:14px}
+.info-row{
+  padding:14px 16px;border-radius:12px;
+  background:rgba(255,255,255,.02);border:1px solid var(--line);
+}
+.info-label{
+  font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);font-weight:700;margin-bottom:4px;
+}
+.info-value{font-size:.92rem;font-weight:600;color:var(--text)}
+
+/* ============ DUYURULAR ============ */
+.updates-list{display:grid;gap:14px;max-width:860px}
+.update-card{
+  background:var(--card);border:1px solid var(--line);
+  border-radius:16px;padding:20px 22px;
+  position:relative;
+  transition:transform .3s, border-color .3s;
+}
+.update-card:hover{
+  transform:translateX(5px);
+  border-color:rgba(124,92,255,.4);
+}
+.update-card::before{
+  content:'';position:absolute;left:0;top:18px;bottom:18px;width:3px;
+  background:linear-gradient(180deg,var(--neon),var(--cyan));
+  border-radius:0 3px 3px 0;
+}
+.update-head{display:flex;gap:10px;align-items:center;margin-bottom:10px;flex-wrap:wrap}
+.update-tag{
+  font-size:.68rem;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;padding:4px 11px;border-radius:100px;
+  background:rgba(124,92,255,.16);color:#b9a8ff;
+  border:1px solid rgba(124,92,255,.3);
+}
+.update-tag.karar{background:rgba(255,46,136,.12);color:#ff85b3;border-color:rgba(255,46,136,.3)}
+.update-tag.guncelleme{background:rgba(43,255,136,.12);color:#6bffaa;border-color:rgba(43,255,136,.3)}
+.update-tag.duyuru{background:rgba(0,229,255,.12);color:#7ae8ff;border-color:rgba(0,229,255,.3)}
+.update-tag.onemli{background:rgba(255,176,32,.14);color:#ffcb6b;border-color:rgba(255,176,32,.35)}
+.update-date{
+  font-family:'Space Mono',monospace;font-size:.75rem;
+  color:var(--muted);letter-spacing:.04em;
+}
+.update-card h3{font-size:1.1rem;font-weight:700;margin-bottom:6px}
+.update-card p{color:var(--muted);font-size:.9rem;font-weight:300}
+
+/* ============ ADMIN PANEL ============ */
+.admin-panel{
+  background:var(--card);border:1px solid rgba(124,92,255,.3);
+  border-radius:20px;padding:28px 30px;margin-bottom:24px;
   position:relative;overflow:hidden;
 }
-.about-visual .mark{
-  font-family:'Space Mono',monospace;font-weight:700;
-  font-size:5rem;letter-spacing:-.04em;
-  background:linear-gradient(115deg,#7c5cff,#00e5ff);
-  -webkit-background-clip:text;background-clip:text;
-  -webkit-text-fill-color:transparent;color:#7c5cff;
-  animation:float 5s ease-in-out infinite;
+.admin-panel::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--neon),var(--cyan),var(--pink));
 }
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+.admin-panel h2{font-size:1.3rem;font-weight:800;margin-bottom:6px}
+.admin-panel > p{color:var(--muted);font-size:.88rem;margin-bottom:20px}
 
-.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px}
-.member{
-  text-align:center;padding:38px 20px;border-radius:22px;
-  background:#12121f;border:1px solid rgba(255,255,255,.08);
-  transition:transform .35s, border-color .35s;
+.admin-table{width:100%;border-collapse:collapse}
+.admin-table th{
+  text-align:left;font-size:.72rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);font-weight:700;
+  padding:10px 12px;border-bottom:1px solid var(--line);
 }
-.member:hover{transform:translateY(-8px);border-color:rgba(124,92,255,.45)}
-.member.leader{
-  border-color:rgba(124,92,255,.35);
-  background:linear-gradient(180deg, rgba(124,92,255,.08), #12121f);
+.admin-table td{
+  padding:14px 12px;border-bottom:1px solid var(--line);
+  font-size:.9rem;vertical-align:middle;
 }
-.avatar{
-  width:88px;height:88px;border-radius:50%;margin:0 auto 18px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.8rem;font-weight:800;font-family:'Space Mono',monospace;
-  background:linear-gradient(115deg,#7c5cff,#00e5ff);
+.admin-table tr:last-child td{border-bottom:none}
+.admin-actions{display:flex;gap:8px}
+.mini-btn{
+  padding:7px 14px;border-radius:8px;font-size:.8rem;
+  font-weight:600;cursor:pointer;border:1px solid var(--line);
+  background:rgba(255,255,255,.03);color:var(--text);
+  transition:all .2s;
+}
+.mini-btn:hover{background:rgba(124,92,255,.15);border-color:var(--neon)}
+.mini-btn.danger{color:#ff85b3;border-color:rgba(255,46,136,.3)}
+.mini-btn.danger:hover{background:rgba(255,46,136,.15)}
+.mini-btn.gold{
+  background:rgba(255,176,32,.12);border-color:rgba(255,176,32,.35);
+  color:#ffcb6b;
+}
+.mini-btn.gold:hover{background:rgba(255,176,32,.22)}
+.mini-btn.active{
+  background:linear-gradient(115deg,#ffb020,#ff2e88);
+  color:#07070d;border-color:transparent;
+}
+
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-field{display:flex;flex-direction:column;gap:6px}
+.form-field.full{grid-column:1 / -1}
+.form-field label{
+  font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);font-weight:600;
+}
+.form-field input,.form-field textarea,.form-field select{
+  padding:11px 14px;border-radius:10px;
+  background:rgba(0,0,0,.35);border:1px solid var(--line);
+  color:var(--text);font-size:.9rem;
+  transition:border-color .2s;
+}
+.form-field input:focus,.form-field textarea:focus,.form-field select:focus{
+  outline:none;border-color:var(--neon);
+}
+.form-field textarea{resize:vertical;min-height:80px;font-family:inherit}
+
+/* ============ MODAL ============ */
+.modal-bg{
+  display:none;position:fixed;inset:0;z-index:200;
+  background:rgba(0,0,0,.75);backdrop-filter:blur(6px);
+  align-items:center;justify-content:center;padding:20px;
+}
+.modal-bg.active{display:flex}
+.modal{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:22px;
+  width:100%;max-width:600px;max-height:90vh;overflow-y:auto;
+  padding:32px;
+  box-shadow:0 40px 100px rgba(0,0,0,.7);
+  animation:modalIn .3s ease;
+}
+@keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:none}}
+.modal h3{font-size:1.3rem;font-weight:800;margin-bottom:22px}
+.modal-actions{
+  display:flex;gap:12px;justify-content:flex-end;
+  margin-top:24px;padding-top:20px;border-top:1px solid var(--line);
+}
+.modal-actions .btn{
+  padding:11px 22px;border-radius:10px;font-weight:700;
+  cursor:pointer;font-size:.9rem;border:none;
+}
+.btn-save{
+  background:linear-gradient(115deg,var(--neon),var(--cyan));
   color:#07070d;
-  box-shadow:0 0 0 5px rgba(124,92,255,.12), 0 0 30px rgba(124,92,255,.3);
 }
-.member h4{font-size:1.1rem;font-weight:700;margin-bottom:6px}
-.member .role{
-  font-size:.85rem;color:#00e5ff;letter-spacing:.06em;font-weight:600;
-  text-transform:uppercase;display:block;
-}
-.role-tag{
-  display:inline-block;margin-top:14px;
-  font-size:.72rem;color:#8f93b3;letter-spacing:.06em;
-  padding:4px 12px;border-radius:100px;
-  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);
-}
-.member.leader .role-tag{
-  background:rgba(124,92,255,.15);border-color:rgba(124,92,255,.35);color:#b9a8ff;
+.btn-cancel{
+  background:rgba(255,255,255,.04);color:var(--muted);
+  border:1px solid var(--line)!important;
 }
 
-.cta{
-  border-radius:30px;padding:70px 40px;text-align:center;
-  background:
-    radial-gradient(circle at 20% 0%, rgba(124,92,255,.35), transparent 55%),
-    radial-gradient(circle at 85% 100%, rgba(0,229,255,.28), transparent 55%),
-    #0d0d18;
-  border:1px solid rgba(255,255,255,.08);
+/* ============ BOŞ DURUM ============ */
+.empty{
+  padding:60px 30px;text-align:center;
+  background:var(--card);border:1px dashed var(--line);
+  border-radius:18px;color:var(--muted);
 }
-.cta h2{font-size:2.4rem;font-weight:800;letter-spacing:-.02em;margin-bottom:16px;line-height:1.15}
-.cta p{color:#8f93b3;max-width:520px;margin:0 auto 32px;font-weight:300}
-.cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-.socials{display:flex;gap:12px;justify-content:center;margin-top:38px;flex-wrap:wrap}
-.social{
-  width:46px;height:46px;border-radius:14px;
-  display:flex;align-items:center;justify-content:center;
-  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
-  color:#8f93b3;text-decoration:none;font-size:1.05rem;
-  transition:all .3s;
-}
-.social:hover{color:#eef0ff;border-color:#7c5cff;background:rgba(124,92,255,.14);transform:translateY(-4px)}
+.empty-icon{font-size:3rem;margin-bottom:14px;opacity:.5}
+.empty h3{font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:6px}
+.empty p{font-size:.88rem}
 
-footer{border-top:1px solid rgba(255,255,255,.08);padding:40px 0;margin-top:40px}
-.foot{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
-.foot p{color:#8f93b3;font-size:.85rem}
-.foot-links{display:flex;gap:22px;flex-wrap:wrap}
-.foot-links a{color:#8f93b3;text-decoration:none;font-size:.85rem;transition:color .25s}
-.foot-links a:hover{color:#eef0ff}
-
-.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s, transform .8s}
-.reveal.in{opacity:1;transform:none}
-
+/* ============ RESPONSIVE ============ */
 @media(max-width:900px){
-  .about-grid{grid-template-columns:1fr;gap:40px}
-  .about-visual{order:-1;aspect-ratio:16/10}
-  .hero h1{font-size:2.4rem}
-  .sec-head h2, .about-text h2, .cta h2{font-size:1.9rem}
+  .game-detail-grid{grid-template-columns:1fr}
+  .form-grid{grid-template-columns:1fr}
 }
-@media(max-width:720px){
-  .burger{display:flex}
-  .nav-links{
-    position:fixed;top:0;right:0;bottom:0;
-    width:280px;
-    flex-direction:column;justify-content:center;gap:26px;
-    background:rgba(9,9,17,.97);
-    border-left:1px solid rgba(255,255,255,.08);
-    transform:translateX(100%);
-    transition:transform .4s;
-    padding:60px 30px;
+@media(max-width:760px){
+  #app-screen.active{flex-direction:column}
+  .sidebar{
+    width:100%;height:auto;position:static;
+    flex-direction:row;align-items:center;
+    padding:12px 16px;
+    border-right:none;border-bottom:1px solid var(--line);
   }
-  .nav-links.open{transform:translateX(0)}
-  .nav-links a{font-size:1.1rem}
-  .nav-links .btn{width:100%;justify-content:center}
-  .stats{gap:28px}
-  section{padding:70px 0}
-  .hero{padding:110px 0 60px}
-  .hero h1{font-size:2rem}
-  .sec-head h2, .about-text h2, .cta h2{font-size:1.6rem}
-  .about-visual .mark{font-size:3.5rem}
-  .team-grid{grid-template-columns:repeat(2,1fr);gap:14px}
-  .member{padding:26px 14px}
-  .avatar{width:70px;height:70px;font-size:1.5rem;margin-bottom:14px}
-  .member h4{font-size:.95rem}
-  .member .role{font-size:.75rem}
-  .role-tag{font-size:.65rem;padding:3px 10px;margin-top:10px}
+  .sidebar-head{padding:0;border:none;flex:1}
+  .sidebar-nav{display:none}
+  .sidebar-nav.mobile-open{
+    display:flex;flex-direction:column;
+    position:fixed;top:64px;left:0;right:0;
+    background:var(--bg2);z-index:99;
+    padding:20px;max-height:calc(100vh - 64px);
+    border-bottom:1px solid var(--line);
+  }
+  .sidebar-user{padding:0;border:none}
+  .user-info{display:none}
+  .main{padding:26px 20px;max-height:none}
+  .mobile-menu-btn{display:flex!important}
+  .view-title{font-size:1.5rem}
+  .game-detail-body h1{font-size:1.7rem}
+  .admin-table{font-size:.82rem}
+  .admin-table th,.admin-table td{padding:8px 6px}
+}
+.mobile-menu-btn{
+  display:none;width:40px;height:40px;border-radius:10px;
+  background:rgba(255,255,255,.04);border:1px solid var(--line);
+  color:var(--text);cursor:pointer;align-items:center;justify-content:center;
+  font-size:1.2rem;margin-right:10px;
 }
 </style>
 </head>
 <body>
 
-<canvas id="bg-canvas"></canvas>
-<div class="glow glow-a"></div>
-<div class="glow glow-b"></div>
-
-<header id="header">
-  <nav>
-    <a href="#top" class="logo">
-      <div class="logo-mark">N</div>
-      <span class="logo-text">NOAMA GAMES</span>
-    </a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#oyunlar">Oyunlar</a></li>
-      <li><a href="#hakkimizda">Hakkimizda</a></li>
-      <li><a href="#ekip">Ekip</a></li>
-      <li><a href="#iletisim">Iletisim</a></li>
-      <li><a href="#iletisim" class="btn btn-primary">Bize Katil</a></li>
-    </ul>
-    <button class="burger" id="burger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
-</header>
-
-<main id="top">
-<section class="hero">
-  <div class="wrap">
-    <div class="badge"><span class="dot"></span> Bagimsiz Oyun Studyosu · 2025</div>
-    <h1>Oyunlar yapiyoruz,<br><em>dunyalar kuruyoruz.</em></h1>
-    <p>Noama Games, tutkuyla bir araya gelmis kucuk ama hirsli bir oyun gelistirici grubudur. Bikerman ve Driftel ile yola ciktik.</p>
-    <div class="hero-actions">
-      <a href="#oyunlar" class="btn btn-primary">Oyunlarimizi Kesfet</a>
-      <a href="#hakkimizda" class="btn btn-ghost">Hakkimizda</a>
+<!-- ============================================
+     AUTH EKRANI
+     ============================================ -->
+<div id="auth-screen">
+  <div class="auth-box">
+    <div class="auth-logo">
+      <div class="auth-logo-mark">N</div>
+      <div class="auth-logo-text">NOAMA GAMES</div>
     </div>
-    <div class="stats">
-      <div><span class="stat-num" data-count="2">0</span><span class="stat-label">Aktif Proje</span></div>
-      <div><span class="stat-num" data-count="4">0</span><span class="stat-label">Ekip Uyesi</span></div>
-      <div><span class="stat-num" data-count="1">0</span><span class="stat-label">Acik Beta</span></div>
-      <div><span class="stat-num" data-count="2025">0</span><span class="stat-label">Kurulus</span></div>
+    <div class="auth-sub">Oyun platformuna giris yap</div>
+
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">Giris Yap</button>
+      <button class="auth-tab" data-tab="register">Kayit Ol</button>
+    </div>
+
+    <div class="auth-msg" id="authMsg"></div>
+
+    <!-- Login formu -->
+    <form id="loginForm">
+      <div class="auth-field">
+        <label>Kullanici Adi</label>
+        <input type="text" id="loginUser" autocomplete="username" required>
+      </div>
+      <div class="auth-field">
+        <label>Sifre</label>
+        <input type="password" id="loginPass" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="auth-btn">Giris Yap</button>
+    </form>
+
+    <!-- Register formu -->
+    <form id="registerForm" style="display:none">
+      <div class="auth-field">
+        <label>Kullanici Adi</label>
+        <input type="text" id="regUser" autocomplete="username" required>
+      </div>
+      <div class="auth-field">
+        <label>E-posta</label>
+        <input type="email" id="regEmail" autocomplete="email" required>
+      </div>
+      <div class="auth-field">
+        <label>Sifre</label>
+        <input type="password" id="regPass" autocomplete="new-password" required minlength="4">
+      </div>
+      <button type="submit" class="auth-btn">Kayit Ol</button>
+    </form>
+
+    <div class="auth-hint">
+      Admin: <code>cmll</code> / <code>2013</code>
     </div>
   </div>
-</section>
+</div>
 
-<section id="oyunlar">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="sec-tag">// Projelerimiz</span>
-      <h2>Uzerinde calistigimiz oyunlar</h2>
-      <p>Iki buyuk proje uzerinde yogunlasiyoruz. Biri acik betada, digeri gelistirme asamasinda.</p>
+<!-- ============================================
+     APP EKRANI
+     ============================================ -->
+<div id="app-screen">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-head">
+      <a class="sidebar-logo">
+        <div class="sidebar-logo-mark">N</div>
+        <div class="sidebar-logo-text">NOAMA</div>
+      </a>
     </div>
-    <div class="games-grid">
-      <article class="game-card reveal">
-        <div class="game-thumb t-bike">&#128690;</div>
-        <div class="game-body">
-          <div class="game-meta">
-            <span class="chip beta">Acik Beta</span>
-            <span class="chip">Bisiklet</span>
-            <span class="chip">Macera</span>
+
+    <nav class="sidebar-nav" id="sidebarNav">
+      <div class="nav-label">Magaza</div>
+      <button class="nav-item active" data-view="games">
+        <span class="icon">🎮</span><span>Oyunlar</span>
+      </button>
+      <button class="nav-item" data-view="announcements">
+        <span class="icon">📢</span><span>Duyurular</span>
+      </button>
+      <button class="nav-item coming" data-coming="1">
+        <span class="icon">➕</span><span>Oyun Ekle</span>
+        <span class="badge">Yakinda</span>
+      </button>
+
+      <div class="nav-label" id="adminLabel" style="display:none">Yonetim</div>
+      <button class="nav-item" data-view="admin" id="adminNav" style="display:none">
+        <span class="icon">⚙️</span><span>Admin Panel</span>
+        <span class="badge admin">ADMIN</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-user">
+      <div class="user-card">
+        <div class="user-avatar" id="userAvatar">?</div>
+        <div class="user-info">
+          <div class="user-name" id="userName">-</div>
+          <div class="user-role" id="userRole">-</div>
+        </div>
+        <button class="logout-btn" id="logoutBtn" title="Cikis Yap">⏻</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+
+    <!-- VIEW: OYUNLAR -->
+    <section class="view active" id="view-games">
+      <div class="view-head">
+        <span class="view-tag">// Magaza</span>
+        <h1 class="view-title">Oyunlar</h1>
+        <p class="view-desc">Noama Games'in gelistirdigi tum oyunlar. Detaylar icin tikla.</p>
+      </div>
+      <div class="games-row" id="gamesRow"></div>
+    </section>
+
+    <!-- VIEW: OYUN DETAY -->
+    <section class="view" id="view-game-detail">
+      <button class="back-btn" id="backToGames">← Oyunlara Don</button>
+      <div id="gameDetailContent"></div>
+    </section>
+
+    <!-- VIEW: DUYURULAR -->
+    <section class="view" id="view-announcements">
+      <div class="view-head">
+        <span class="view-tag">// Duyurular</span>
+        <h1 class="view-title">Gelismeler ve Duyurular</h1>
+        <p class="view-desc">Noama Games'ten son haberler, kararlar ve guncellemeler.</p>
+      </div>
+      <div class="updates-list" id="updatesList"></div>
+    </section>
+
+    <!-- VIEW: ADMIN -->
+    <section class="view" id="view-admin">
+      <div class="view-head">
+        <span class="view-tag">// Yonetim</span>
+        <h1 class="view-title">Admin Panel</h1>
+        <p class="view-desc">Oyunlari duzenle, yilin oyununu sec, duyuru ekle.</p>
+      </div>
+
+      <!-- Oyun Yonetimi -->
+      <div class="admin-panel">
+        <h2>🎮 Oyun Yonetimi</h2>
+        <p>Oyun bilgilerini duzenle veya yilin oyunu olarak isaretle.</p>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Oyun</th>
+              <th>Durum</th>
+              <th>Fiyat</th>
+              <th>Yilin Oyunu</th>
+              <th style="text-align:right">Islem</th>
+            </tr>
+          </thead>
+          <tbody id="adminGamesBody"></tbody>
+        </table>
+      </div>
+
+      <!-- Duyuru Yonetimi -->
+      <div class="admin-panel">
+        <h2>📢 Duyuru Yonetimi</h2>
+        <p>Yeni duyuru ekle veya mevcut duyurulari sil.</p>
+        <div class="form-grid" style="margin-bottom:18px">
+          <div class="form-field">
+            <label>Etiket</label>
+            <select id="annTag">
+              <option value="Duyuru">Duyuru</option>
+              <option value="Karar">Karar</option>
+              <option value="Guncelleme">Guncelleme</option>
+              <option value="Onemli">Onemli</option>
+            </select>
           </div>
-          <h3>Bikerman</h3>
-          <p>Bisikletinle zorlu parkurlarda dengeni koru, engelleri as ve hizini test et. Su anda acik beta asamasinda - sen de oyna ve geri bildirim ver!</p>
-          <div class="warn-box">
-            <span class="warn-icon">!</span>
-            <span>Beta suan gecersizdir</span>
+          <div class="form-field">
+            <label>Tarih</label>
+            <input type="date" id="annDate">
           </div>
-          <div class="game-foot">
-            <a href="https://bikerman.noamagames.com/beta" class="btn btn-primary">Beta'ya Katil</a>
-            <a href="#" class="btn btn-ghost">Detaylar</a>
+          <div class="form-field full">
+            <label>Baslik</label>
+            <input type="text" id="annTitle" placeholder="Duyuru basligi">
+          </div>
+          <div class="form-field full">
+            <label>Mesaj</label>
+            <textarea id="annMessage" placeholder="Duyuru mesaji..."></textarea>
           </div>
         </div>
-      </article>
-      <article class="game-card reveal">
-        <div class="game-thumb t-drift">&#127950;</div>
-        <div class="game-body">
-          <div class="game-meta">
-            <span class="chip dev">Gelistiriliyor</span>
-            <span class="chip">Acik Dunya</span>
-            <span class="chip">Yaris</span>
-          </div>
-          <h3>Driftel</h3>
-          <p>Genis bir acik dunyada ozgurce drift at, arabalari modifiye et ve sokaklarin krali ol. Gelistirme asamasinda - yakinda yollarda!</p>
-          <div class="game-foot">
-            <span class="btn btn-ghost">Yakinda</span>
-            <a href="#" class="btn btn-ghost">Onizleme</a>
-          </div>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
+        <button class="mini-btn gold" id="addAnnBtn">+ Duyuru Ekle</button>
+        <div id="adminAnnList" style="margin-top:20px"></div>
+      </div>
+    </section>
 
-<section id="hakkimizda">
-  <div class="wrap">
-    <div class="about-grid">
-      <div class="about-text reveal">
-        <span class="sec-tag">// Biz Kimiz</span>
-        <h2>Kucuk bir ekip, sonsuz bir tutku.</h2>
-        <p>Noama Games, 2025'te oyun oynamayi ve yapmayi seven <strong>dort kisilik bir grup</strong> olarak dogdu. 3D modellemeden kodlamaya, sosyal medyadan test sureclerine kadar her isi kendimiz yapiyoruz.</p>
-        <p>Amacimiz sadece oyun cikarmak degil; oyuncularin yillar sonra bile hatirlayacagi, kendi hissini tasiyan deneyimler yaratmak.</p>
-        <div class="values">
-          <div class="value">
-            <div class="value-icon">&#127919;</div>
-            <div><h4>Oyuncu Odakli</h4><p>Her karari oyuncu deneyimini onceleyerek aliyoruz.</p></div>
-          </div>
-          <div class="value">
-            <div class="value-icon">&#9889;</div>
-            <div><h4>Hizli ve Cevik</h4><p>Kucuk ekibin avantajiyla hizli prototip, hizli karar.</p></div>
-          </div>
-          <div class="value">
-            <div class="value-icon">&#128142;</div>
-            <div><h4>Kalite Takintisi</h4><p>Iyi hissettirmeyen hicbir mekanigi oyuna koymuyoruz.</p></div>
-          </div>
-        </div>
-      </div>
-      <div class="about-visual reveal">
-        <div class="mark">N.</div>
-      </div>
-    </div>
-  </div>
-</section>
+  </main>
+</div>
 
-<section id="ekip">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="sec-tag">// Kadro</span>
-      <h2>Noama'yi ayakta tutanlar</h2>
-      <p>Kucuk bir ekibiz ama her biri kendi alaninda uzman. Iste Noama'nin arkasindaki isimler.</p>
+<!-- MODAL: Oyun Duzenle -->
+<div class="modal-bg" id="editGameModal">
+  <div class="modal">
+    <h3>Oyunu Duzenle</h3>
+    <div class="form-grid">
+      <div class="form-field full">
+        <label>Oyun Adi</label>
+        <input type="text" id="editTitle">
+      </div>
+      <div class="form-field full">
+        <label>Emoji (Kapak)</label>
+        <input type="text" id="editEmoji" maxlength="4">
+      </div>
+      <div class="form-field">
+        <label>Durum</label>
+        <select id="editStatus">
+          <option value="released">Yayinda</option>
+          <option value="beta">Acik Beta</option>
+          <option value="dev">Gelistiriliyor</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>Fiyat (TL, 0 = ucretsiz)</label>
+        <input type="number" id="editPrice" min="0" step="1">
+      </div>
+      <div class="form-field full">
+        <label>Etiketler (virgulle ayir)</label>
+        <input type="text" id="editTags" placeholder="Bisiklet, Macera, Platform">
+      </div>
+      <div class="form-field">
+        <label>Cikis Yili</label>
+        <input type="text" id="editYear">
+      </div>
+      <div class="form-field">
+        <label>Gelistirici</label>
+        <input type="text" id="editDev">
+      </div>
+      <div class="form-field full">
+        <label>Kisa Aciklama</label>
+        <textarea id="editDesc"></textarea>
+      </div>
     </div>
-    <div class="team-grid">
-      <div class="member leader reveal">
-        <div class="avatar">C</div>
-        <h4>Cemil Cam</h4>
-        <span class="role">Ekip Lideri</span>
-        <div><span class="role-tag">&#128187; Unity Gelistirici</span></div>
-      </div>
-      <div class="member reveal">
-        <div class="avatar">M</div>
-        <h4>Muharrem</h4>
-        <span class="role">3D Sanatci</span>
-        <div><span class="role-tag">&#127912; 3D Modelleme</span></div>
-      </div>
-      <div class="member reveal">
-        <div class="avatar">C</div>
-        <h4>Cinar Gulen</h4>
-        <span class="role">Unity Gelistirici</span>
-        <div><span class="role-tag">&#128187; Unity</span></div>
-      </div>
-      <div class="member reveal">
-        <div class="avatar">A</div>
-        <h4>Ahmet Batuhan</h4>
-        <span class="role">Sosyal Medya</span>
-        <div><span class="role-tag">&#128227; Sosyal Medya Yoneticisi</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="iletisim">
-  <div class="wrap">
-    <div class="cta reveal">
-      <h2>Bize ulas, birlikte yapalim.</h2>
-      <p>Oyunlarimiz hakkinda geri bildirim mi vereceksin, yoksa ekibe mi katilmak istiyorsun? Her turlu mesaja acigiz.</p>
-      <div class="cta-actions">
-        <span class="btn btn-primary" style="opacity:.6;cursor:not-allowed">E-posta · Yakinda</span>
-        <a href="#" class="btn btn-ghost">Discord'a Katil</a>
-      </div>
-      <div class="socials">
-        <a href="#" class="social" aria-label="Discord">&#128172;</a>
-        <a href="#" class="social" aria-label="X">&#120143;</a>
-        <a href="#" class="social" aria-label="YouTube">&#9658;</a>
-        <a href="#" class="social" aria-label="Instagram">&#9673;</a>
-      </div>
+    <div class="modal-actions">
+      <button class="btn btn-cancel" id="editCancel">Iptal</button>
+      <button class="btn btn-save" id="editSave">Kaydet</button>
     </div>
   </div>
-</section>
-</main>
-
-<footer>
-  <div class="wrap foot">
-    <p>&copy; <span id="year"></span> Noama Games. Tum haklari saklidir.</p>
-    <div class="foot-links">
-      <a href="#oyunlar">Oyunlar</a>
-      <a href="#hakkimizda">Hakkimizda</a>
-      <a href="#ekip">Ekip</a>
-      <a href="#iletisim">Iletisim</a>
-    </div>
-  </div>
-</footer>
+</div>
 
 <script>
-document.getElementById('year').textContent = new Date().getFullYear();
+/* ============================================
+   VERI KATMANI (localStorage)
+   ============================================ */
+const STORAGE = {
+  users: 'noama_users',
+  session: 'noama_session',
+  games: 'noama_games_v3',
+  announcements: 'noama_announcements_v2'
+};
 
-var header = document.getElementById('header');
-window.addEventListener('scroll', function(){
-  if (window.scrollY > 30) header.classList.add('scrolled');
-  else header.classList.remove('scrolled');
+const ADMIN_USER = 'cmll';
+const ADMIN_PASS = '2013';
+
+const DEFAULT_GAMES = [
+  {
+    id: 'bikerman',
+    title: 'Bikerman',
+    emoji: '🚴',
+    coverFrom: '#00e5ff',
+    coverTo: '#0a3d5c',
+    tags: ['Bisiklet', 'Macera', 'Platform'],
+    status: 'beta',
+    description: 'Bisikletinle zorlu parkurlarda dengeni koru, engelleri as ve hizini test et. Su anda acik beta asamasinda.',
+    longDesc: 'Bikerman, reflekslerine guvenen oyuncular icin tasarlanmis bir platform oyunudur. El yapimi seviyelerde ilerlerken dengeni koru, engelleri as ve zamana karsi yaris. Her bolum yeni bir mekanik ogretiyor.',
+    price: 0,
+    releaseYear: '2026',
+    developer: 'Noama Games',
+    gameOfYear: false
+  },
+  {
+    id: 'driftel',
+    title: 'Driftel',
+    emoji: '🏎️',
+    coverFrom: '#ff2e88',
+    coverTo: '#5c0a33',
+    tags: ['Acik Dunya', 'Yaris', 'Drift'],
+    status: 'dev',
+    description: 'Genis bir acik dunyada ozgurce drift at, arabalari modifiye et ve sokaklarin krali ol.',
+    longDesc: 'Driftel, sokak yarislari ve drift kulturune adanmis bir acik dunya oyunudur. 3 farkli bolge, onlarca arac ve derin modifiye sistemi ile kendi efsaneni yarat. Gece gunduz dongusu ve dinamik hava sistemi ile her yaris farkli.',
+    price: 0,
+    releaseYear: '2026',
+    developer: 'Noama Games',
+    gameOfYear: false
+  }
+];
+
+const DEFAULT_ANNOUNCEMENTS = [
+  {
+    id: 'a1',
+    date: '2026-09-10',
+    tag: 'Duyuru',
+    title: 'Noama Games platformu yayinda!',
+    message: 'Artik tum oyunlarimiza tek yerden ulasabilir, gelismeleri takip edebilirsiniz.'
+  },
+  {
+    id: 'a2',
+    date: '2026-09-05',
+    tag: 'Karar',
+    title: 'Bikerman beta ertelendi',
+    message: 'Beta testlerinde kritik bir hata tespit ettik. Yeni surum icin calismalar devam ediyor.'
+  }
+];
+
+function load(key, fallback){
+  try{
+    const raw = localStorage.getItem(key);
+    if (!raw) return fallback;
+    return JSON.parse(raw);
+  } catch(e){
+    return fallback;
+  }
+}
+function save(key, val){
+  localStorage.setItem(key, JSON.stringify(val));
+}
+
+/* Baslangicta varsayilan verileri yukle */
+if (!localStorage.getItem(STORAGE.games)) {
+  save(STORAGE.games, DEFAULT_GAMES);
+}
+if (!localStorage.getItem(STORAGE.announcements)) {
+  save(STORAGE.announcements, DEFAULT_ANNOUNCEMENTS);
+}
+if (!localStorage.getItem(STORAGE.users)) {
+  save(STORAGE.users, []);
+}
+
+let games = load(STORAGE.games, DEFAULT_GAMES);
+let announcements = load(STORAGE.announcements, DEFAULT_ANNOUNCEMENTS);
+
+/* ============================================
+   AUTH ISLEMLERI
+   ============================================ */
+const authScreen = document.getElementById('auth-screen');
+const appScreen = document.getElementById('app-screen');
+const authMsg = document.getElementById('authMsg');
+
+function showAuthMsg(text, type){
+  authMsg.textContent = text;
+  authMsg.className = 'auth-msg ' + type;
+  setTimeout(() => { authMsg.className = 'auth-msg'; }, 4000);
+}
+
+// Tab degistirme
+document.querySelectorAll('.auth-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    const isLogin = tab.dataset.tab === 'login';
+    document.getElementById('loginForm').style.display = isLogin ? 'block' : 'none';
+    document.getElementById('registerForm').style.display = isLogin ? 'none' : 'block';
+  });
 });
 
-var burger = document.getElementById('burger');
-var navLinks = document.getElementById('navLinks');
-burger.addEventListener('click', function(){
-  burger.classList.toggle('open');
-  navLinks.classList.toggle('open');
+// Kayit olma
+document.getElementById('registerForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const username = document.getElementById('regUser').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const password = document.getElementById('regPass').value;
+
+  if (!username || !email || !password) {
+    showAuthMsg('Tum alanlari doldur.', 'error');
+    return;
+  }
+  if (username === ADMIN_USER) {
+    showAuthMsg('Bu kullanici adi kullanilamaz.', 'error');
+    return;
+  }
+  const users = load(STORAGE.users, []);
+  if (users.find(u => u.username === username)) {
+    showAuthMsg('Bu kullanici adi zaten alinmis.', 'error');
+    return;
+  }
+  users.push({ username, email, password, role: 'user' });
+  save(STORAGE.users, users);
+
+  showAuthMsg('Kayit basarili! Simdi giris yap.', 'success');
+  document.getElementById('registerForm').reset();
+  setTimeout(() => {
+    document.querySelector('.auth-tab[data-tab="login"]').click();
+  }, 1200);
 });
-var links = navLinks.querySelectorAll('a');
-for (var i = 0; i < links.length; i++) {
-  links[i].addEventListener('click', function(){
-    burger.classList.remove('open');
-    navLinks.classList.remove('open');
+
+// Giris yapma
+document.getElementById('loginForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const username = document.getElementById('loginUser').value.trim();
+  const password = document.getElementById('loginPass').value;
+
+  // Admin kontrolu
+  if (username === ADMIN_USER && password === ADMIN_PASS) {
+    session = { username: ADMIN_USER, role: 'admin' };
+    save(STORAGE.session, session);
+    enterApp();
+    return;
+  }
+
+  // Normal kullanici
+  const users = load(STORAGE.users, []);
+  const user = users.find(u => u.username === username && u.password === password);
+  if (!user) {
+    showAuthMsg('Kullanici adi veya sifre yanlis.', 'error');
+    return;
+  }
+  session = { username: user.username, role: user.role };
+  save(STORAGE.session, session);
+  enterApp();
+});
+
+let session = load(STORAGE.session, null);
+
+function enterApp(){
+  authScreen.style.display = 'none';
+  appScreen.classList.add('active');
+  updateUserUI();
+  renderGames();
+  renderAnnouncements();
+  if (session.role === 'admin') {
+    renderAdmin();
+  }
+}
+
+function updateUserUI(){
+  document.getElementById('userAvatar').textContent = session.username[0].toUpperCase();
+  document.getElementById('userName').textContent = session.username;
+  document.getElementById('userRole').textContent = session.role === 'admin' ? 'Yonetici' : 'Oyuncu';
+
+  const adminNav = document.getElementById('adminNav');
+  const adminLabel = document.getElementById('adminLabel');
+  if (session.role === 'admin') {
+    adminNav.style.display = 'flex';
+    adminLabel.style.display = 'block';
+  } else {
+    adminNav.style.display = 'none';
+    adminLabel.style.display = 'none';
+  }
+}
+
+// Cikis
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  localStorage.removeItem(STORAGE.session);
+  session = null;
+  appScreen.classList.remove('active');
+  authScreen.style.display = 'flex';
+  document.getElementById('loginForm').reset();
+});
+
+/* ============================================
+   NAVIGASYON
+   ============================================ */
+document.querySelectorAll('.nav-item[data-view]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    showView(btn.dataset.view);
+    document.getElementById('sidebarNav').classList.remove('mobile-open');
+  });
+});
+document.querySelectorAll('.nav-item.coming').forEach(btn => {
+  btn.addEventListener('click', () => {
+    alert('Oyun ekleme ozelligi yakinda gelecek! 🎮');
+  });
+});
+
+function showView(name){
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + name).classList.add('active');
+}
+
+document.getElementById('backToGames').addEventListener('click', () => {
+  showView('games');
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+  document.querySelector('.nav-item[data-view="games"]').classList.add('active');
+});
+
+/* Mobil menu */
+document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+  document.getElementById('sidebarNav').classList.toggle('mobile-open');
+});
+
+/* ============================================
+   OYUNLAR RENDER
+   ============================================ */
+function statusText(status){
+  return status === 'beta' ? 'Acik Beta'
+    : status === 'dev' ? 'Gelistiriliyor'
+    : 'Yayinda';
+}
+function priceText(game){
+  if (game.price > 0) return game.price + ' TL';
+  if (game.status === 'dev') return 'Yakinda';
+  return 'Ucretsiz';
+}
+
+function renderGames(){
+  const row = document.getElementById('gamesRow');
+  if (!games.length) {
+    row.innerHTML = '<div class="empty"><div class="empty-icon">🎮</div><h3>Henuz oyun yok</h3><p>Admin panelinden oyun ekleyebilirsin.</p></div>';
+    return;
+  }
+  let html = '';
+  games.forEach(g => {
+    html += `
+      <article class="game-tile" data-game-id="${g.id}">
+        <div class="game-cover" style="background:linear-gradient(135deg,${g.coverFrom},${g.coverTo})">
+          ${g.gameOfYear ? '<div class="game-of-year">🏆 Yilin Oyunu</div>' : ''}
+          ${g.emoji}
+        </div>
+        <div class="game-info">
+          <h3>${g.title}</h3>
+          <div class="game-tags">
+            <span class="mini-tag ${g.status}">${statusText(g.status)}</span>
+            ${g.tags.slice(0,2).map(t => `<span class="mini-tag">${t}</span>`).join('')}
+          </div>
+          <div class="game-price">${priceText(g)}</div>
+        </div>
+      </article>
+    `;
+  });
+  row.innerHTML = html;
+
+  // Tiklama olaylari
+  row.querySelectorAll('.game-tile').forEach(tile => {
+    tile.addEventListener('click', () => {
+      openGameDetail(tile.dataset.gameId);
+    });
   });
 }
 
-var io = new IntersectionObserver(function(entries){
-  entries.forEach(function(e, i){
-    if (e.isIntersecting) {
-      setTimeout(function(){ e.target.classList.add('in'); }, i * 70);
-      io.unobserve(e.target);
-    }
+/* ============================================
+   OYUN DETAY
+   ============================================ */
+function openGameDetail(id){
+  const g = games.find(x => x.id === id);
+  if (!g) return;
+
+  const html = `
+    <div class="game-detail-hero">
+      <div class="game-detail-cover" style="background:linear-gradient(135deg,${g.coverFrom},${g.coverTo})">
+        ${g.gameOfYear ? '<div class="game-of-year" style="top:20px;right:20px;font-size:.8rem;padding:7px 14px;">🏆 Yilin Oyunu</div>' : ''}
+        ${g.emoji}
+      </div>
+      <div class="game-detail-body">
+        <h1>${g.title}</h1>
+        <div class="game-detail-meta">
+          <span class="mini-tag ${g.status}">${statusText(g.status)}</span>
+          ${g.tags.map(t => `<span class="mini-tag">${t}</span>`).join('')}
+        </div>
+        <div class="game-detail-actions">
+          <button class="buy-btn" ${g.status === 'dev' ? 'disabled' : ''}>
+            ${g.status === 'dev' ? 'Yakinda Geliyor' : 'Satin Al'}
+          </button>
+          <div>
+            <span class="game-detail-price">${priceText(g)}</span>
+            ${g.price > 0 ? '<span class="game-detail-price old">' + Math.round(g.price * 1.4) + ' TL</span>' : ''}
+          </div>
+        </div>
+        <div class="game-detail-grid">
+          <div class="game-detail-desc">
+            <h3 style="font-size:1.1rem;font-weight:800;color:var(--text);margin-bottom:12px;">Oyun Hakkinda</h3>
+            <p>${g.longDesc || g.description}</p>
+          </div>
+          <div class="game-detail-side">
+            <div class="info-row">
+              <div class="info-label">Gelistirici</div>
+              <div class="info-value">${g.developer || 'Noama Games'}</div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">Yayinci</div>
+              <div class="info-value">Noama Games</div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">Cikis Yili</div>
+              <div class="info-value">${g.releaseYear || '-'}</div>
+            </div>
+            <div class="info-row">
+              <div class="info-label">Platform</div>
+              <div class="info-value">PC (Windows)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  document.getElementById('gameDetailContent').innerHTML = html;
+  showView('game-detail');
+  document.querySelector('.main').scrollTop = 0;
+}
+
+/* ============================================
+   DUYURULAR RENDER
+   ============================================ */
+function renderAnnouncements(){
+  const list = document.getElementById('updatesList');
+  if (!announcements.length) {
+    list.innerHTML = '<div class="empty"><div class="empty-icon">📢</div><h3>Henuz duyuru yok</h3><p>Admin panelinden duyuru ekleyebilirsin.</p></div>';
+    return;
+  }
+  const sorted = [...announcements].sort((a,b) => (b.date||'').localeCompare(a.date||''));
+  list.innerHTML = sorted.map(a => `
+    <article class="update-card">
+      <div class="update-head">
+        <span class="update-tag ${(a.tag||'').toLowerCase().replace(/ı/g,'i').replace(/ş/g,'s').replace(/ğ/g,'g').replace(/ü/g,'u').replace(/ö/g,'o').replace(/ç/g,'c')}">${a.tag}</span>
+        <span class="update-date">${a.date}</span>
+      </div>
+      <h3>${a.title}</h3>
+      <p>${a.message}</p>
+    </article>
+  `).join('');
+}
+
+/* ============================================
+   ADMIN PANEL
+   ============================================ */
+function renderAdmin(){
+  // Oyun tablosu
+  const tbody = document.getElementById('adminGamesBody');
+  if (!games.length) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:30px">Oyun yok</td></tr>';
+  } else {
+    tbody.innerHTML = games.map(g => `
+      <tr>
+        <td><strong>${g.emoji} ${g.title}</strong></td>
+        <td>${statusText(g.status)}</td>
+        <td>${priceText(g)}</td>
+        <td>
+          <button class="mini-btn ${g.gameOfYear ? 'active' : 'gold'}" data-toggle-year="${g.id}">
+            ${g.gameOfYear ? '🏆 Secili' : 'Sec'}
+          </button>
+        </td>
+        <td style="text-align:right">
+          <div class="admin-actions" style="justify-content:flex-end">
+            <button class="mini-btn" data-edit="${g.id}">✏️ Duzenle</button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  // Tiklama olaylari
+  tbody.querySelectorAll('[data-edit]').forEach(btn => {
+    btn.addEventListener('click', () => openEditModal(btn.dataset.edit));
   });
-}, { threshold: 0.12 });
-document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
-
-var counters = document.querySelectorAll('[data-count]');
-var cio = new IntersectionObserver(function(entries){
-  entries.forEach(function(e){
-    if (!e.isIntersecting) return;
-    var el = e.target;
-    var target = parseInt(el.dataset.count, 10);
-    var dur = 1400;
-    var start = performance.now();
-    function step(now){
-      var p = Math.min((now - start) / dur, 1);
-      var eased = 1 - Math.pow(1 - p, 3);
-      el.textContent = Math.floor(eased * target);
-      if (p < 1) requestAnimationFrame(step);
-      else el.textContent = target;
-    }
-    requestAnimationFrame(step);
-    cio.unobserve(el);
+  tbody.querySelectorAll('[data-toggle-year]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.toggleYear;
+      games.forEach(g => { g.gameOfYear = (g.id === id) ? !g.gameOfYear : false; });
+      save(STORAGE.games, games);
+      renderGames();
+      renderAdmin();
+    });
   });
-}, { threshold: 0.5 });
-counters.forEach(function(c){ cio.observe(c); });
 
-var canvas = document.getElementById('bg-canvas');
-var ctx = canvas.getContext('2d');
-var particles = [], w, h;
-
-function resize(){
-  w = canvas.width = window.innerWidth;
-  h = canvas.height = window.innerHeight;
-  var count = Math.min(Math.floor(w / 16), 80);
-  particles = [];
-  for (var i = 0; i < count; i++) {
-    particles.push({
-      x: Math.random() * w,
-      y: Math.random() * h,
-      vx: (Math.random() - 0.5) * 0.28,
-      vy: (Math.random() - 0.5) * 0.28,
-      r: Math.random() * 1.6 + 0.6
+  // Duyuru listesi
+  const annList = document.getElementById('adminAnnList');
+  if (!announcements.length) {
+    annList.innerHTML = '<p style="color:var(--muted);font-size:.85rem">Henuz duyuru yok.</p>';
+  } else {
+    const sorted = [...announcements].sort((a,b) => (b.date||'').localeCompare(a.date||''));
+    annList.innerHTML = sorted.map(a => `
+      <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.02);border:1px solid var(--line);margin-bottom:8px">
+        <span class="update-tag" style="flex-shrink:0">${a.tag}</span>
+        <span style="flex:1;font-size:.88rem;font-weight:600">${a.title}</span>
+        <span style="font-family:'Space Mono',monospace;font-size:.72rem;color:var(--muted)">${a.date}</span>
+        <button class="mini-btn danger" data-del-ann="${a.id}">🗑️</button>
+      </div>
+    `).join('');
+    annList.querySelectorAll('[data-del-ann]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (!confirm('Bu duyuruyu silmek istediginize emin misiniz?')) return;
+        announcements = announcements.filter(x => x.id !== btn.dataset.delAnn);
+        save(STORAGE.announcements, announcements);
+        renderAnnouncements();
+        renderAdmin();
+      });
     });
   }
-}
-resize();
-window.addEventListener('resize', resize);
 
-var mouse = { x: -9999, y: -9999 };
-window.addEventListener('mousemove', function(e){ mouse.x = e.clientX; mouse.y = e.clientY; });
-window.addEventListener('mouseleave', function(){ mouse.x = -9999; mouse.y = -9999; });
-
-function draw(){
-  ctx.clearRect(0, 0, w, h);
-  for (var i = 0; i < particles.length; i++) {
-    var p = particles[i];
-    p.x += p.vx; p.y += p.vy;
-    if (p.x < 0 || p.x > w) p.vx *= -1;
-    if (p.y < 0 || p.y > h) p.vy *= -1;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(140,120,255,0.5)';
-    ctx.fill();
+  // Tarih alanini bugune ayarla
+  const dateInput = document.getElementById('annDate');
+  if (!dateInput.value) {
+    dateInput.value = new Date().toISOString().slice(0,10);
   }
-  for (var i = 0; i < particles.length; i++) {
-    for (var j = i + 1; j < particles.length; j++) {
-      var dx = particles[i].x - particles[j].x;
-      var dy = particles[i].y - particles[j].y;
-      var dist = Math.sqrt(dx*dx + dy*dy);
-      if (dist < 120) {
-        ctx.beginPath();
-        ctx.moveTo(particles[i].x, particles[i].y);
-        ctx.lineTo(particles[j].x, particles[j].y);
-        ctx.strokeStyle = 'rgba(124,92,255,' + (0.12 * (1 - dist / 120)) + ')';
-        ctx.lineWidth = 0.7;
-        ctx.stroke();
-      }
-    }
-  }
-  if (mouse.x > 0) {
-    for (var k = 0; k < particles.length; k++) {
-      var p2 = particles[k];
-      var dx2 = p2.x - mouse.x;
-      var dy2 = p2.y - mouse.y;
-      var d2 = Math.sqrt(dx2*dx2 + dy2*dy2);
-      if (d2 < 160) {
-        ctx.beginPath();
-        ctx.moveTo(p2.x, p2.y);
-        ctx.lineTo(mouse.x, mouse.y);
-        ctx.strokeStyle = 'rgba(0,229,255,' + (0.2 * (1 - d2 / 160)) + ')';
-        ctx.lineWidth = 0.8;
-        ctx.stroke();
-      }
-    }
-  }
-  requestAnimationFrame(draw);
 }
-draw();
+
+// Duyuru ekle
+document.getElementById('addAnnBtn').addEventListener('click', () => {
+  const tag = document.getElementById('annTag').value;
+  const date = document.getElementById('annDate').value;
+  const title = document.getElementById('annTitle').value.trim();
+  const message = document.getElementById('annMessage').value.trim();
+
+  if (!title || !message || !date) {
+    alert('Baslik, mesaj ve tarih alanlarini doldur.');
+    return;
+  }
+  announcements.unshift({
+    id: 'a' + Date.now(),
+    date, tag, title, message
+  });
+  save(STORAGE.announcements, announcements);
+  document.getElementById('annTitle').value = '';
+  document.getElementById('annMessage').value = '';
+  renderAnnouncements();
+  renderAdmin();
+  alert('Duyuru eklendi! ✅');
+});
+
+/* ============================================
+   OYUN DUZENLEME MODAL
+   ============================================ */
+let editingGameId = null;
+
+function openEditModal(id){
+  const g = games.find(x => x.id === id);
+  if (!g) return;
+  editingGameId = id;
+
+  document.getElementById('editTitle').value = g.title;
+  document.getElementById('editEmoji').value = g.emoji;
+  document.getElementById('editStatus').value = g.status;
+  document.getElementById('editPrice').value = g.price;
+  document.getElementById('editTags').value = g.tags.join(', ');
+  document.getElementById('editYear').value = g.releaseYear || '';
+  document.getElementById('editDev').value = g.developer || 'Noama Games';
+  document.getElementById('editDesc').value = g.longDesc || g.description || '';
+
+  document.getElementById('editGameModal').classList.add('active');
+}
+
+document.getElementById('editCancel').addEventListener('click', () => {
+  document.getElementById('editGameModal').classList.remove('active');
+  editingGameId = null;
+});
+
+document.getElementById('editSave').addEventListener('click', () => {
+  if (!editingGameId) return;
+  const g = games.find(x => x.id === editingGameId);
+  if (!g) return;
+
+  g.title = document.getElementById('editTitle').value.trim() || g.title;
+  g.emoji = document.getElementById('editEmoji').value.trim() || g.emoji;
+  g.status = document.getElementById('editStatus').value;
+  g.price = parseInt(document.getElementById('editPrice').value, 10) || 0;
+  g.tags = document.getElementById('editTags').value.split(',').map(t => t.trim()).filter(Boolean);
+  g.releaseYear = document.getElementById('editYear').value.trim();
+  g.developer = document.getElementById('editDev').value.trim() || 'Noama Games';
+  const newDesc = document.getElementById('editDesc').value.trim();
+  g.longDesc = newDesc;
+  g.description = newDesc.length > 120 ? newDesc.slice(0,117) + '...' : newDesc;
+
+  save(STORAGE.games, games);
+  renderGames();
+  renderAdmin();
+  document.getElementById('editGameModal').classList.remove('active');
+  editingGameId = null;
+  alert('Oyun guncellendi! ✅');
+});
+
+document.getElementById('editGameModal').addEventListener('click', (e) => {
+  if (e.target.id === 'editGameModal') {
+    e.target.classList.remove('active');
+    editingGameId = null;
+  }
+});
+
+/* ============================================
+   BASLANGIC
+   ============================================ */
+if (session) {
+  enterApp();
+}
 </script>
 </body>
 </html>
