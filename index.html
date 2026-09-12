@@ -57,15 +57,15 @@ input,button,textarea,select{font-family:inherit}
 .user-info{flex:1;min-width:0}
 .user-name{font-size:.88rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .user-role{font-size:.7rem;color:var(--muted);letter-spacing:.04em}
-.logout-btn{width:36px;height:36px;border-radius:10px;background:rgba(255,46,136,.1);border:1px solid rgba(255,46,136,.25);color:#ff85b3;cursor:pointer;font-size:.95rem;transition:all .2s;flex-shrink:0}
-.logout-btn:hover{background:rgba(255,46,136,.2)}
+.logout-btn{width:36px;height:36px;border-radius:10px;background:rgba(255,46,136,.1);border:1px solid rgba(255,46,136,.25);color:#ff85b3;cursor:pointer;font-size:.{95rem;transition:all .2s;flex-shrink:0}
+.logout-btn:hover{background:rgba(255,46,136,.2display)}
 
 .main{flex:1;min-width:0;padding:36px 44px;overflow-y:auto;max-height:100vh}
-.view{display:none;animation:fadeUp .4s ease}
+.view{display:n:one;animation:fadeUp .4s ease}
 .view.active{display:block}
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12pxinline)}to{opacity:1;transform:none}}
 .view-head{margin-bottom:26px}
-.view-tag{font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:8px;display:block}
+.view-tag{font-family:'Space Mono',mon-flexospace;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:8px;display:;block}
 .view-title{font-size:2rem;font-weight:900;letter-spacing:-.02em;margin-bottom:8px}
 .view-desc{color:var(--muted);font-size:.95rem;font-weight:300;max-width:600px}
 
@@ -94,7 +94,6 @@ input,button,textarea,select{font-family:inherit}
 .mini-tag.beta{background:rgba(43,255,136,.12);color:#6bffaa;border-color:rgba(43,255,136,.3)}
 .mini-tag.dev{background:rgba(255,176,32,.12);color:#ffcb6b;border-color:rgba(255,176,32,.28)}
 .mini-tag.released{background:rgba(0,229,255,.12);color:#7ae8ff;border-color:rgba(0,229,255,.3)}
-.mini-tag.gold{background:rgba(255,176,32,.15);color:#ffcb6b;border-color:rgba(255,176,32,.4)}
 .mini-tag.staff{background:linear-gradient(115deg,rgba(124,92,255,.25),rgba(0,229,255,.2));color:#fff;border-color:rgba(124,92,255,.5)}
 .game-price{font-family:'Space Mono',monospace;font-weight:700;font-size:1.05rem;background:linear-gradient(115deg,var(--neon),var(--cyan));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .game-rating{margin-top:6px;font-size:.8rem;color:var(--muted);display:flex;align-items:center;gap:6px}
@@ -109,7 +108,7 @@ input,button,textarea,select{font-family:inherit}
 .game-detail-body h1{font-size:2.4rem;font-weight:900;letter-spacing:-.02em;margin-bottom:12px}
 .game-detail-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
 .game-detail-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--line)}
-.buy-btn{display:inline-flex;align-items:center;gap:10px;padding:14px 32px;border-radius:100px;background:linear-gradient(115deg,var(--neon),var(--cyan));color:#07070d;font-weight:800;font-size:1rem;border:none;cursor:pointer;letter-spacing:.02em;box-shadow:0 10px 30px rgba(124,92,255,.4);transition:transform .2s,box-shadow .2s;text-decoration:none}
+.buy-btnalign-items:center;gap:10px;padding:14px 32px;border-radius:100px;background:linear-gradient(115deg,var(--neon),var(--cyan));color:#07070d;font-weight:800;font-size:1rem;border:none;cursor:pointer;letter-spacing:.02em;box-shadow:0 10px 30px rgba(124,92,255,.4);transition:transform .2s,box-shadow .2s;text-decoration:none}
 .buy-btn:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(124,92,255,.55)}
 .buy-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
 .buy-btn.green{background:linear-gradient(115deg,#2bff88,#00e5ff)}
@@ -117,7 +116,6 @@ input,button,textarea,select{font-family:inherit}
 .wishlist-btn:hover{border-color:#ff2e88;color:#ff85b3}
 .wishlist-btn.active{background:rgba(255,46,136,.15);border-color:#ff2e88;color:#ff85b3}
 .game-detail-price{font-family:'Space Mono',monospace;font-weight:700;font-size:1.6rem;background:linear-gradient(115deg,var(--neon),var(--cyan));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.game-detail-price.old{opacity:.5;text-decoration:line-through;font-size:1rem;margin-left:8px}
 .game-detail-grid{display:grid;grid-template-columns:2fr 1fr;gap:36px}
 .game-detail-desc{color:var(--muted);font-weight:300;line-height:1.75}
 .game-detail-desc p{margin-bottom:14px}
@@ -128,7 +126,6 @@ input,button,textarea,select{font-family:inherit}
 .progress-bar{height:8px;border-radius:100px;background:rgba(255,255,255,.06);overflow:hidden;margin-top:8px}
 .progress-fill{height:100%;background:linear-gradient(90deg,#ffb020,#ff2e88);border-radius:100px;transition:width .5s ease}
 
-/* YORUM SISTEMI */
 .review-section{margin-top:36px;padding-top:32px;border-top:1px solid var(--line)}
 .review-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px}
 .review-head h3{font-size:1.3rem;font-weight:800}
@@ -141,11 +138,9 @@ input,button,textarea,select{font-family:inherit}
 .star-picker{display:flex;gap:4px;margin-bottom:14px;font-size:1.8rem;cursor:pointer;user-select:none}
 .star-picker span{color:rgba(255,255,255,.15);transition:color .15s,transform .15s}
 .star-picker span.active{color:#ffb020}
-.star-picker span:hover{transform:scale(1.15)}
 .review-form textarea{width:100%;padding:12px 14px;border-radius:10px;background:rgba(0,0,0,.35);border:1px solid var(--line);color:var(--text);font-size:.9rem;resize:vertical;min-height:80px;font-family:inherit}
 .review-form textarea:focus{outline:none;border-color:var(--neon)}
-.review-form button{margin-top:12px;padding:11px 24px;border-radius:10px;background:linear-gradient(115deg,var(--neon),var(--cyan));color:#07070d;font-weight:700;font-size:.88rem;border:none;cursor:pointer;transition:transform .2s}
-.review-form button:hover{transform:translateY(-2px)}
+.review-form button{margin-top:12px;padding:11px 24px;border-radius:10px;background:linear-gradient(115deg,var(--neon),var(--cyan));color:#07070d;font-weight:700;font-size:.88rem;border:none;cursor:pointer}
 .review-list{display:grid;gap:12px}
 .review-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
 .review-card-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
@@ -162,45 +157,37 @@ input,button,textarea,select{font-family:inherit}
 .dev-badge{font-size:.6rem;font-weight:800;padding:2px 7px;border-radius:100px;background:linear-gradient(115deg,var(--neon),var(--cyan));color:#07070d;letter-spacing:.06em}
 .staff-badge{font-size:.6rem;font-weight:800;padding:2px 7px;border-radius:100px;background:linear-gradient(115deg,#ffb020,#ff2e88);color:#07070d;letter-spacing:.06em}
 .reply-btn{margin-top:8px;background:none;border:none;color:var(--cyan);cursor:pointer;font-size:.82rem;font-weight:600;padding:4px 0}
-.reply-btn:hover{text-decoration:underline}
 .reply-form{margin-top:10px;margin-left:32px}
 .reply-form textarea{width:100%;padding:10px 12px;border-radius:8px;background:rgba(0,0,0,.35);border:1px solid var(--line);color:var(--text);font-size:.85rem;resize:vertical;min-height:60px;font-family:inherit}
 .reply-form button{margin-top:8px;padding:8px 16px;border-radius:8px;background:var(--neon);color:#fff;border:none;cursor:pointer;font-size:.8rem;font-weight:600}
 
-/* AKIS (FEED) */
 .feed-container{max-width:640px}
 .post-form{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;margin-bottom:24px}
 .post-form textarea{width:100%;padding:12px 14px;border-radius:10px;background:rgba(0,0,0,.35);border:1px solid var(--line);color:var(--text);font-size:.95rem;resize:vertical;min-height:80px;font-family:inherit}
 .post-form textarea:focus{outline:none;border-color:var(--neon)}
 .post-form-footer{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
 .post-form-char{font-size:.78rem;color:var(--muted);font-family:'Space Mono',monospace}
-.post-btn{padding:10px 24px;border-radius:100px;background:linear-gradient(115deg,var(--neon),var(--cyan));color:#07070d;font-weight:700;font-size:.88rem;border:none;cursor:pointer;transition:transform .2s}
-.post-btn:hover{transform:translateY(-2px)}
-.post-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.post-btn{padding:10px 24px;border-radius:100px;background:linear-gradient(115deg,var(--neon),var(--cyan));color:#07070d;font-weight:700;font-size:.88rem;border:none;cursor:pointer}
+.post-btn:disabled{opacity:.4;cursor:not-allowed}
 .post-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:14px;position:relative}
-.post-card:hover{border-color:rgba(124,92,255,.3)}
-.post-head{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.post-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
 .post-avatar{width:40px;height:40px;border-radius:12px;background:linear-gradient(115deg,var(--neon),var(--cyan));display:flex;align-items:center;justify-content:center;font-weight:800;color:#07070d;font-family:'Space Mono',monospace;flex-shrink:0;overflow:hidden;font-size:.95rem}
 .post-avatar img{width:100%;height:100%;object-fit:cover}
 .post-name{font-weight:700;font-size:.95rem;display:flex;align-items:center;gap:6px}
 .post-username{color:var(--muted);font-size:.82rem}
-.post-date{font-size:.72rem;color:var(--muted);font-family:'Space Mono',monospace;margin-left:auto}
-.post-menu-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.2rem;padding:2px 8px;border-radius:6px;transition:all .2s}
-.post-menu-btn:hover{background:rgba(255,255,255,.05);color:var(--text)}
+.post-menu-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.2rem;padding:2px 8px;border-radius:6px;margin-left:auto}
 .post-menu{position:absolute;top:50px;right:20px;background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:6px;min-width:140px;box-shadow:0 10px 30px rgba(0,0,0,.5);z-index:10;display:none}
 .post-menu.open{display:block}
-.post-menu button{display:flex;align-items:center;gap:8px;width:100%;padding:8px 12px;background:none;border:none;color:var(--text);cursor:pointer;font-size:.85rem;border-radius:6px;text-align:left;transition:background .2s}
+.post-menu button{display:flex;align-items:center;gap:8px;width:100%;padding:8px 12px;background:none;border:none;color:var(--text);cursor:pointer;font-size:.85rem;border-radius:6px;text-align:left}
 .post-menu button:hover{background:rgba(255,255,255,.06)}
 .post-menu button.danger{color:#ff85b3}
 .post-text{color:var(--text);font-size:.95rem;line-height:1.6;margin-bottom:12px;word-wrap:break-word;white-space:pre-wrap}
 .post-actions{display:flex;gap:20px;padding-top:10px;border-top:1px solid var(--line)}
-.post-action{display:flex;align-items:center;gap:6px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:.85rem;font-weight:600;padding:6px 8px;border-radius:6px;transition:all .2s}
-.post-action:hover{color:var(--text);background:rgba(255,255,255,.04)}
+.post-action{display:flex;align-items:center;gap:6px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:.85rem;font-weight:600;padding:6px 8px;border-radius:6px}
 .post-action.liked{color:#ff2e88}
 .post-replies{padding-top:12px;margin-top:12px;border-top:1px solid var(--line);display:none}
 .post-replies.open{display:block}
 .reply-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.04)}
-.reply-item:last-child{border-bottom:none}
 .reply-item .reply-avatar{width:32px;height:32px;border-radius:8px;background:linear-gradient(115deg,var(--neon),var(--cyan));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem;color:#07070d;font-family:'Space Mono',monospace;flex-shrink:0;overflow:hidden}
 .reply-item .reply-avatar img{width:100%;height:100%;object-fit:cover}
 .reply-body{flex:1;min-width:0}
@@ -213,9 +200,8 @@ input,button,textarea,select{font-family:inherit}
 .reply-input-row input:focus{outline:none;border-color:var(--neon)}
 .reply-input-row button{padding:9px 16px;border-radius:8px;background:var(--neon);color:#fff;border:none;cursor:pointer;font-size:.82rem;font-weight:600}
 
-/* GELISTIRICILER */
 .dev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
-.dev-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;position:relative;transition:transform .3s,border-color .3s}
+.dev-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;transition:transform .3s,border-color .3s}
 .dev-card:hover{transform:translateY(-5px);border-color:rgba(124,92,255,.4)}
 .dev-card.staff{border-color:rgba(255,176,32,.4);background:linear-gradient(180deg,rgba(255,176,32,.06),var(--card))}
 .dev-card-head{display:flex;align-items:center;gap:14px;margin-bottom:16px}
@@ -230,7 +216,6 @@ input,button,textarea,select{font-family:inherit}
 .dev-stat-num{font-family:'Space Mono',monospace;font-weight:800;font-size:1.15rem;display:block;background:linear-gradient(115deg,var(--neon),var(--cyan));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .dev-stat-label{font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
 
-/* PROFIL */
 .profile-grid{display:grid;grid-template-columns:1fr 2fr;gap:24px}
 .profile-card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px 24px;text-align:center}
 .profile-avatar-big{width:100px;height:100px;border-radius:24px;background:linear-gradient(115deg,var(--neon),var(--cyan));display:flex;align-items:center;justify-content:center;font-size:2.5rem;font-weight:900;color:#07070d;font-family:'Space Mono',monospace;margin:0 auto 18px;box-shadow:0 10px 40px rgba(124,92,255,.4);overflow:hidden}
@@ -242,10 +227,9 @@ input,button,textarea,select{font-family:inherit}
 .profile-stat-num{font-family:'Space Mono',monospace;font-size:1.5rem;font-weight:700;background:linear-gradient(115deg,var(--neon),var(--cyan));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;display:block}
 .profile-stat-label{font-size:.72rem;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
 .profile-panel{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px 28px;margin-bottom:20px}
-.profile-panel h3{font-size:1.1rem;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.profile-panel h3{font-size:1.1rem;font-weight:800;margin-bottom:16px}
 .profile-empty{padding:30px;text-align:center;color:var(--muted);font-size:.88rem;background:rgba(255,255,255,.02);border-radius:12px;border:1px dashed var(--line)}
 
-/* ADMIN */
 .admin-panel{background:var(--card);border:1px solid rgba(124,92,255,.3);border-radius:20px;padding:28px 30px;margin-bottom:24px;position:relative;overflow:hidden}
 .admin-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--neon),var(--cyan),var(--pink))}
 .admin-panel h2{font-size:1.3rem;font-weight:800;margin-bottom:6px}
@@ -258,11 +242,8 @@ input,button,textarea,select{font-family:inherit}
 .mini-btn{padding:7px 14px;border-radius:8px;font-size:.8rem;font-weight:600;cursor:pointer;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--text);transition:all .2s}
 .mini-btn:hover{background:rgba(124,92,255,.15);border-color:var(--neon)}
 .mini-btn.danger{color:#ff85b3;border-color:rgba(255,46,136,.3)}
-.mini-btn.danger:hover{background:rgba(255,46,136,.15)}
 .mini-btn.gold{background:rgba(255,176,32,.12);border-color:rgba(255,176,32,.35);color:#ffcb6b}
-.mini-btn.gold:hover{background:rgba(255,176,32,.22)}
 .mini-btn.green{background:rgba(43,255,136,.12);border-color:rgba(43,255,136,.35);color:#6bffaa}
-.mini-btn.green:hover{background:rgba(43,255,136,.22)}
 .mini-btn.active{background:linear-gradient(115deg,#ffb020,#ff2e88);color:#07070d;border-color:transparent}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .form-field{display:flex;flex-direction:column;gap:6px}
@@ -271,12 +252,10 @@ input,button,textarea,select{font-family:inherit}
 .form-field input,.form-field textarea,.form-field select{padding:11px 14px;border-radius:10px;background:rgba(0,0,0,.35);border:1px solid var(--line);color:var(--text);font-size:.9rem;transition:border-color .2s}
 .form-field input:focus,.form-field textarea:focus,.form-field select:focus{outline:none;border-color:var(--neon)}
 .form-field textarea{resize:vertical;min-height:80px;font-family:inherit}
-.form-field small{font-size:.72rem;color:var(--muted);margin-top:4px}
 
 .modal-bg{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px}
 .modal-bg.active{display:flex}
-.modal{background:var(--card);border:1px solid var(--line);border-radius:22px;width:100%;max-width:620px;max-height:90vh;overflow-y:auto;padding:32px;box-shadow:0 40px 100px rgba(0,0,0,.7);animation:modalIn .3s ease}
-@keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:none}}
+.modal{background:var(--card);border:1px solid var(--line);border-radius:22px;width:100%;max-width:620px;max-height:90vh;overflow-y:auto;padding:32px;box-shadow:0 40px 100px rgba(0,0,0,.7)}
 .modal h3{font-size:1.3rem;font-weight:800;margin-bottom:22px}
 .modal-actions{display:flex;gap:12px;justify-content:flex-end;margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
 .modal-actions .btn{padding:11px 22px;border-radius:10px;font-weight:700;cursor:pointer;font-size:.9rem;border:none}
@@ -285,7 +264,6 @@ input,button,textarea,select{font-family:inherit}
 .empty{padding:60px 30px;text-align:center;background:var(--card);border:1px dashed var(--line);border-radius:18px;color:var(--muted)}
 .empty-icon{font-size:3rem;margin-bottom:14px;opacity:.5}
 .empty h3{font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:6px}
-.empty p{font-size:.88rem}
 .mobile-menu-btn{display:none;width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--text);cursor:pointer;align-items:center;justify-content:center;font-size:1.2rem;margin-right:10px}
 @media(max-width:900px){.game-detail-grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.profile-grid{grid-template-columns:1fr}}
 @media(max-width:760px){
@@ -368,7 +346,7 @@ input,button,textarea,select{font-family:inherit}
           <div class="user-name" id="userName">-</div>
           <div class="user-role" id="userRole">-</div>
         </div>
-        <button class="logout-btn" id="logoutBtn" title="Cikis Yap">⏻</button>
+        <button class="logout-btn" id="logoutBtn">⏻</button>
       </div>
     </div>
   </aside>
@@ -402,7 +380,7 @@ input,button,textarea,select{font-family:inherit}
       <div class="view-head">
         <span class="view-tag">// Akis</span>
         <h1 class="view-title">Noama Akis</h1>
-        <p class="view-desc">Gelistiricilerden son haberler ve paylasimlar.</p>
+        <p class="view-desc">Gelistiricilerden son haberler.</p>
       </div>
       <div class="feed-container">
         <div class="post-form" id="postForm">
@@ -429,7 +407,7 @@ input,button,textarea,select{font-family:inherit}
       <div class="view-head">
         <span class="view-tag">// Topluluk</span>
         <h1 class="view-title">Gelistiriciler</h1>
-        <p class="view-desc">Platformda oyun yayinlayan gelistiriciler ve istatistikleri.</p>
+        <p class="view-desc">Platformda oyun yayinlayan gelistiriciler.</p>
       </div>
       <div class="filter-row">
         <button class="filter-btn active" data-devfilter="all">Tumu</button>
@@ -486,7 +464,6 @@ input,button,textarea,select{font-family:inherit}
 
       <div class="admin-panel">
         <h2>🎮 Oyun Yonetimi</h2>
-        <p>Tum oyunlari duzenle veya sil.</p>
         <table class="admin-table">
           <thead><tr><th>Oyun</th><th>Durum</th><th>Fiyat</th><th>Yilin</th><th style="text-align:right">Islem</th></tr></thead>
           <tbody id="adminGamesBody"></tbody>
@@ -518,7 +495,6 @@ input,button,textarea,select{font-family:inherit}
       <div class="view-head">
         <span class="view-tag">// Yonetim</span>
         <h1 class="view-title">Gelistirici Yonetimi</h1>
-        <p class="view-desc">E-posta ile gelistirici yetkisi ver, etiket ekle, onayla.</p>
       </div>
 
       <div class="admin-panel">
@@ -531,13 +507,13 @@ input,button,textarea,select{font-family:inherit}
           </div>
           <div class="form-field">
             <label>Etiketler (virgulle)</label>
-            <input type="text" id="devTagsInput" placeholder="Unity, 3D Sanatci, Bagimsiz">
+            <input type="text" id="devTagsInput" placeholder="Unity, 3D Sanatci">
           </div>
           <div class="form-field">
             <label>Noama Calisani mi?</label>
             <select id="devStaffSelect">
               <option value="no">Hayir</option>
-              <option value="yes">Evet (Noama Calisani)</option>
+              <option value="yes">Evet</option>
             </select>
           </div>
         </div>
@@ -546,7 +522,6 @@ input,button,textarea,select{font-family:inherit}
 
       <div class="admin-panel">
         <h2>👥 Tum Gelistiriciler</h2>
-        <p>Skorlar: oyun sayisi + ortalama puan.</p>
         <table class="admin-table">
           <thead><tr><th>Kullanici</th><th>E-posta</th><th>Etiketler</th><th>Skor</th><th>Durum</th><th style="text-align:right">Islem</th></tr></thead>
           <tbody id="devListBody"></tbody>
@@ -558,7 +533,6 @@ input,button,textarea,select{font-family:inherit}
       <div class="view-head">
         <span class="view-tag">// Yonetim</span>
         <h1 class="view-title">Oyun Yukle</h1>
-        <p class="view-desc">Yeni bir oyun yayinla.</p>
       </div>
       <div class="admin-panel">
         <div class="form-grid">
@@ -622,10 +596,14 @@ input,button,textarea,select{font-family:inherit}
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import {
+  getAuth, onAuthStateChanged, signInWithPopup, signInWithRedirect,
+  getRedirectResult, GoogleAuthProvider, signOut, setPersistence,
+  browserLocalPersistence
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import {
   getFirestore, collection, doc, getDocs, getDoc, setDoc, addDoc, updateDoc, deleteDoc,
-  onSnapshot, query, where
+  onSnapshot
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -643,7 +621,9 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const ADMIN_EMAIL = 'cemilprooyuncu@gmail.com';
 
-// STATE
+// Oturum kaliciligi - iOS'ta redirect sonrasi oturumun korunmasi icin SART
+setPersistence(auth, browserLocalPersistence).catch(err => console.warn('Persistence:', err));
+
 let currentUser = null;
 let currentUserDoc = null;
 let games = [];
@@ -653,6 +633,7 @@ let posts = [];
 let users = [];
 let wishlistIds = [];
 let currentDevFilter = 'all';
+let authResolved = false;
 
 const $ = id => document.getElementById(id);
 const unsubs = {};
@@ -663,54 +644,85 @@ function isStaff(){ return isAdmin() || (currentUserDoc && currentUserDoc.isStaf
 function myUsername(){ return currentUserDoc?.username || currentUser?.displayName || currentUser?.email?.split('@')[0] || 'Anonim'; }
 function myPhoto(){ return currentUser?.photoURL || ''; }
 
+// MOBIL TESPIT
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
 // GOOGLE GIRIS
 $('googleSignInBtn').addEventListener('click', async () => {
   const btn = $('googleSignInBtn');
   btn.disabled = true;
   btn.textContent = 'Giris yapiliyor...';
+  const provider = new GoogleAuthProvider();
+  provider.setCustomParameters({ prompt: 'select_account' });
   try {
-    await signInWithPopup(auth, new GoogleAuthProvider());
+    if (isMobile){
+      // iOS Safari popup'i engelledigi icin redirect kullaniyoruz
+      await signInWithRedirect(auth, provider);
+    } else {
+      await signInWithPopup(auth, provider);
+    }
   } catch (error){
-    console.error(error);
-    const msg = $('authMsg');
-    msg.textContent = 'Giris yapilamadi: ' + error.message;
-    msg.classList.add('show');
-    btn.disabled = false;
-    btn.innerHTML = 'Google ile Giris Yap';
+    console.error('Giris hatasi:', error);
+    // Popup basarisiz olursa redirect'e gec
+    try {
+      await signInWithRedirect(auth, provider);
+    } catch (e2){
+      const msg = $('authMsg');
+      msg.textContent = 'Giris yapilamadi: ' + e2.message;
+      msg.classList.add('show');
+      btn.disabled = false;
+      btn.innerHTML = 'Google ile Giris Yap';
+    }
   }
 });
 
-// OTURUM
+// REDIRECT SONRASI SONUC
+getRedirectResult(auth).then((result) => {
+  if (result && result.user){
+    console.log('Redirect ile giris basarili:', result.user.email);
+  }
+}).catch((error) => {
+  console.error('Redirect hatasi:', error);
+  const msg = $('authMsg');
+  if (msg){
+    msg.textContent = 'Giris hatasi: ' + error.message;
+    msg.classList.add('show');
+  }
+});
+
+// OTURUM DINLE
 onAuthStateChanged(auth, async (user) => {
+  authResolved = true;
   $('loading').classList.add('hide');
   if (user){
     currentUser = user;
-    // users koleksiyonunda kayit var mi?
     const userRef = doc(db, 'users', user.uid);
-    const userSnap = await getDoc(userRef);
-    if (!userSnap.exists()){
-      await setDoc(userRef, {
-        email: user.email,
-        username: user.displayName || user.email.split('@')[0],
-        photoURL: user.photoURL || '',
-        role: user.email === ADMIN_EMAIL ? 'admin' : 'user',
-        isStaff: user.email === ADMIN_EMAIL,
-        isVerified: user.email === ADMIN_EMAIL,
-        tags: [],
-        createdAt: new Date().toISOString()
-      });
-    } else {
-      // Eger admin e-postasi ise rolu guncelle
-      if (user.email === ADMIN_EMAIL && userSnap.data().role !== 'admin'){
-        await updateDoc(userRef, { role: 'admin', isStaff: true, isVerified: true });
+    try {
+      const userSnap = await getDoc(userRef);
+      if (!userSnap.exists()){
+        await setDoc(userRef, {
+          email: user.email,
+          username: user.displayName || user.email.split('@')[0],
+          photoURL: user.photoURL || '',
+          role: user.email === ADMIN_EMAIL ? 'admin' : 'user',
+          isStaff: user.email === ADMIN_EMAIL,
+          isVerified: user.email === ADMIN_EMAIL,
+          tags: [],
+          createdAt: new Date().toISOString()
+        });
+      } else {
+        if (user.email === ADMIN_EMAIL && userSnap.data().role !== 'admin'){
+          await updateDoc(userRef, { role: 'admin', isStaff: true, isVerified: true });
+        }
       }
+      if (unsubs.user) unsubs.user();
+      unsubs.user = onSnapshot(userRef, (snap) => {
+        currentUserDoc = snap.exists() ? { uid: snap.id, ...snap.data() } : null;
+        updateUserUI();
+      });
+    } catch(e){
+      console.error('User doc hatasi:', e);
     }
-    // Kullaniciyi dinle
-    if (unsubs.user) unsubs.user();
-    unsubs.user = onSnapshot(userRef, (snap) => {
-      currentUserDoc = snap.exists() ? { uid: snap.id, ...snap.data() } : null;
-      updateUserUI();
-    });
 
     $('auth-screen').classList.remove('active');
     $('app-screen').classList.add('active');
@@ -749,7 +761,7 @@ function updateUserUI(){
   $('devManagerNav').style.display = isAdmin() ? 'flex' : 'none';
 }
 
-// FIRESTORE SUBSCRIBERS
+// FIRESTORE
 function subscribeGames(){
   if (unsubs.games) unsubs.games();
   unsubs.games = onSnapshot(collection(db, 'games'), async (snap) => {
@@ -766,7 +778,7 @@ function subscribeGames(){
       if (id) openGameDetail(id);
     }
     if ($('view-profile').classList.contains('active')) renderProfile();
-  });
+  }, (err) => console.error('Games snapshot:', err));
 }
 
 async function seedDefaults(){
@@ -789,7 +801,7 @@ function subscribeAnnouncements(){
     snap.forEach(d => announcements.push({ id: d.id, ...d.data() }));
     renderAnnouncements();
     if ($('view-admin').classList.contains('active')) renderAdmin();
-  });
+  }, (err) => console.error('Ann snapshot:', err));
 }
 
 function subscribeReviews(){
@@ -803,7 +815,7 @@ function subscribeReviews(){
       if (id) openGameDetail(id);
     }
     if ($('view-profile').classList.contains('active')) renderProfile();
-  });
+  }, (err) => console.error('Reviews snapshot:', err));
 }
 
 function subscribePosts(){
@@ -813,7 +825,7 @@ function subscribePosts(){
     snap.forEach(d => posts.push({ id: d.id, ...d.data() }));
     posts.sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
     renderPosts();
-  });
+  }, (err) => console.error('Posts snapshot:', err));
 }
 
 function subscribeUsers(){
@@ -824,7 +836,7 @@ function subscribeUsers(){
     if ($('view-developers').classList.contains('active')) renderDevelopers();
     if ($('view-dev-manager').classList.contains('active')) renderDevManager();
     if ($('view-profile').classList.contains('active')) renderProfile();
-  });
+  }, (err) => console.error('Users snapshot:', err));
 }
 
 function subscribeWishlist(){
@@ -840,7 +852,7 @@ function subscribeWishlist(){
     if (wishlistIds.length > 0){ badge.style.display = 'inline-block'; badge.textContent = wishlistIds.length; }
     else badge.style.display = 'none';
     if ($('view-wishlist').classList.contains('active')) renderWishlist();
-  });
+  }, (err) => console.error('Wishlist snapshot:', err));
 }
 
 // NAVIGASYON
@@ -898,6 +910,9 @@ function timeAgo(iso){
   return new Date(iso).toLocaleDateString('tr-TR');
 }
 function userByUid(uid){ return users.find(u => u.uid === uid); }
+function escapeHtml(t){
+  return (t || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
 
 // OYUNLAR
 let currentFilter = 'all';
@@ -929,7 +944,7 @@ function renderGames(){
   const row = $('gamesRow');
   if (!row) return;
   const list = getFilteredGames();
-oc  if (!list.length){
+  if (!list.length){
     row.innerHTML = '<div class="empty" style="grid-column:1/-1"><div class="empty-icon">🎮</div><h3>Oyun bulunamadi</h3></div>';
     return;
   }
@@ -978,7 +993,7 @@ async function toggleWishlist(gameId){
     const data = d.data();
     if (data.userId === currentUser.uid && data.gameId === gameId) ex = d.id;
   });
-  if (ex) await deleteDoc(d(db, 'wishlists', ex));
+  if (ex) await deleteDoc(doc(db, 'wishlists', ex));
   else await addDoc(collection(db, 'wishlists'), { userId: currentUser.uid, gameId, addedAt: new Date().toISOString() });
 }
 
@@ -1020,9 +1035,7 @@ function openGameDetail(id){
         <div class="game-detail-actions">
           ${actionBtn}
           <button class="wishlist-btn ${inWish ? 'active' : ''}" id="detailWishBtn">${inWish ? '❤️ Istek Listemde' : '🤍 Istek Listesine Ekle'}</button>
-          <div>
-            <span class="game-detail-price">${priceText(g)}</span>
-          </div>
+          <div><span class="game-detail-price">${priceText(g)}</span></div>
         </div>
         <div class="game-detail-grid">
           <div class="game-detail-desc">
@@ -1068,7 +1081,7 @@ function openGameDetail(id){
                     <span class="review-date">${r.date}</span>
                     ${(currentUser && (currentUser.uid === r.userId || isAdmin())) ? `<button class="review-delete" data-del-review="${r.id}">🗑️</button>` : ''}
                   </div>
-                  <p class="review-text">${r.text}</p>
+                  <p class="review-text">${escapeHtml(r.text)}</p>
                   ${r.reply ? `
                     <div class="review-reply">
                       <div class="review-reply-head">
@@ -1076,7 +1089,7 @@ function openGameDetail(id){
                         ${r.reply.isStaff ? '<span class="staff-badge">NOAMA</span>' : '<span class="dev-badge">GELISTIRICI</span>'}
                         <span style="margin-left:auto">${r.reply.date}</span>
                       </div>
-                      <div class="review-reply-text">${r.reply.text}</div>
+                      <div class="review-reply-text">${escapeHtml(r.reply.text)}</div>
                     </div>
                   ` : ''}
                   ${canEdit && !r.reply ? `<button class="reply-btn" data-reply-to="${r.id}">↩ Yanitla</button>` : ''}
@@ -1128,7 +1141,6 @@ function openGameDetail(id){
     });
   });
 
-  // Yanitlama
   document.querySelectorAll('[data-reply-to]').forEach(btn => {
     btn.addEventListener('click', () => {
       const rid = btn.dataset.replyTo;
@@ -1240,7 +1252,6 @@ function renderPosts(){
     `;
   }).join('');
 
-  // Menu toggle
   list.querySelectorAll('[data-menu-toggle]').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -1253,7 +1264,6 @@ function renderPosts(){
     document.querySelectorAll('.post-menu.open').forEach(m => m.classList.remove('open'));
   });
 
-  // Like
   list.querySelectorAll('[data-like-post]').forEach(btn => {
     btn.addEventListener('click', async () => {
       const pid = btn.dataset.likePost;
@@ -1265,14 +1275,12 @@ function renderPosts(){
     });
   });
 
-  // Replies toggle
   list.querySelectorAll('[data-replies-toggle]').forEach(btn => {
     btn.addEventListener('click', () => {
       $('replies-' + btn.dataset.repliesToggle).classList.toggle('open');
     });
   });
 
-  // Submit reply
   list.querySelectorAll('[data-submit-post-reply]').forEach(btn => {
     btn.addEventListener('click', async () => {
       const pid = btn.dataset.submitPostReply;
@@ -1292,7 +1300,6 @@ function renderPosts(){
     });
   });
 
-  // Delete post
   list.querySelectorAll('[data-del-post]').forEach(btn => {
     btn.addEventListener('click', async () => {
       if (!confirm('Bu paylasimi silmek istediginize emin misiniz?')) return;
@@ -1300,7 +1307,6 @@ function renderPosts(){
     });
   });
 
-  // Copy
   list.querySelectorAll('[data-copy-post]').forEach(btn => {
     btn.addEventListener('click', () => {
       const p = posts.find(x => x.id === btn.dataset.copyPost);
@@ -1308,10 +1314,6 @@ function renderPosts(){
       alert('Metin kopyalandi!');
     });
   });
-}
-
-function escapeHtml(t){
-  return (t || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
 // DUYURULAR
@@ -1324,13 +1326,13 @@ function renderAnnouncements(){
   }
   const sorted = [...announcements].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
   list.innerHTML = sorted.map(a => `
-    <article class="update-card">
-      <div class="update-head">
-        <span class="update-tag ${(a.tag || '').toLowerCase()}">${a.tag}</span>
-        <span class="update-date">${a.date}</span>
+    <article class="update-card" style="background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;position:relative">
+      <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px;flex-wrap:wrap">
+        <span class="mini-tag">${a.tag}</span>
+        <span style="font-family:'Space Mono',monospace;font-size:.75rem;color:var(--muted)">${a.date}</span>
       </div>
-      <h3>${a.title}</h3>
-      <p>${a.message}</p>
+      <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:6px">${a.title}</h3>
+      <p style="color:var(--muted);font-size:.9rem">${escapeHtml(a.message)}</p>
     </article>
   `).join('');
 }
@@ -1358,7 +1360,6 @@ function renderDevelopers(){
   let devs = users.filter(u => u.role === 'developer' || u.role === 'admin');
   if (currentDevFilter === 'staff') devs = devs.filter(u => u.isStaff);
   else if (currentDevFilter === 'verified') devs = devs.filter(u => u.isVerified);
-  // Staff en uste
   devs.sort((a, b) => {
     if (a.isStaff && !b.isStaff) return -1;
     if (!a.isStaff && b.isStaff) return 1;
@@ -1411,7 +1412,6 @@ function renderProfile(){
   $('profileReviewCount').textContent = myReviews.length;
   $('profileWishlistCount').textContent = wishlistIds.length;
 
-  // Kendi oyunlari
   const myGamesPanel = $('myGamesPanel');
   const myGamesList = $('myGamesList');
   if (isDeveloper()){
@@ -1437,7 +1437,7 @@ function renderProfile(){
             <span class="review-stars-sm">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</span>
             <span class="review-date">${r.date}</span>
           </div>
-          <p class="review-text">${r.text}</p>
+          <p class="review-text">${escapeHtml(r.text)}</p>
         </div>
       `;
     }).join('');
@@ -1518,7 +1518,7 @@ function renderAdmin(){
   const sorted = [...announcements].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
   annList.innerHTML = sorted.map(a => `
     <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.02);border:1px solid var(--line);margin-bottom:8px">
-      <span class="update-tag">${a.tag}</span>
+      <span class="mini-tag">${a.tag}</span>
       <span style="flex:1;font-size:.88rem;font-weight:600">${a.title}</span>
       <span style="font-family:'Space Mono',monospace;font-size:.72rem;color:var(--muted)">${a.date}</span>
       <button class="mini-btn danger" data-del-ann="${a.id}">🗑️</button>
@@ -1709,11 +1709,16 @@ $('editGameModal').addEventListener('click', e => {
   }
 });
 
+// GUVENLIK AGI - 6 saniye icinde auth cozulmezse loading'i kaldir
 setTimeout(() => {
-  if (!$('loading').classList.contains('hide')){
-    $('loading').innerHTML = '<p style="color:#ff85b3;text-align:center;padding:20px">Baglanti kurulamadi.<br>Internet ve Firebase ayarlarini kontrol et.</p>';
+  if (!authResolved){
+    console.warn('Auth timeout - zorla gosterim');
+    $('loading').classList.add('hide');
+    if (!$('auth-screen').classList.contains('active') && !$('app-screen').classList.contains('active')){
+      $('auth-screen').classList.add('active');
+    }
   }
-}, 8000);
+}, 6000);
 </script>
 </body>
 </html>
