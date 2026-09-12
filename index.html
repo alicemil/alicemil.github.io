@@ -597,9 +597,8 @@ input,button,textarea,select{font-family:inherit}
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import {
-  getAuth, onAuthStateChanged, signInWithPopup, signInWithRedirect,
-  getRedirectResult, GoogleAuthProvider, signOut, setPersistence,
-  browserLocalPersistence
+  getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut,
+  setPersistence, browserLocalPersistence
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import {
   getFirestore, collection, doc, getDocs, getDoc, setDoc, addDoc, updateDoc, deleteDoc,
@@ -641,26 +640,19 @@ function isStaff(){ return isAdmin() || (currentUserDoc && currentUserDoc.isStaf
 function myUsername(){ return currentUserDoc?.username || currentUser?.displayName || currentUser?.email?.split('@')[0] || 'Anonim'; }
 function myPhoto(){ return currentUser?.photoURL || ''; }
 
-const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-// BUTONA BASINCA
+// ============================================
+// GOOGLE GIRIS - POPUP (iOS uyumlu)
+// ============================================
 $('googleSignInBtn').addEventListener('click', async () => {
   const btn = $('googleSignInBtn');
   btn.disabled = true;
   btn.textContent = 'Giris yapiliyor...';
   const provider = new GoogleAuthProvider();
   provider.setCustomParameters({ prompt: 'select_account' });
+
   try {
-    if (isMobile){
-      await signInWithRedirect(auth, provider);
-    } else {
-      try {
-        await signInWithPopup(auth, provider);
-      } catch (popupErr){
-        console.warn('Popup basarisiz, redirect deneniyor:', popupErr);
-        await signInWithRedirect(auth, provider);
-      }
-    }
+    // iOS dahil tum tarayicilarda calisan popup yontemi
+    await signInWithPopup(auth, provider);
   } catch (error){
     console.error('Giris hatasi:', error);
     const msg = $('authMsg');
@@ -672,90 +664,64 @@ $('googleSignInBtn').addEventListener('click', async () => {
 });
 
 // ============================================
-// ANA BASLATMA: redirect sonucu -> sonra state dinle
+// OTURUM DINLE
 // ============================================
-async function startAuth(){
-  // 1. Persistence ayarla (iOS'ta oturumun korunmasi icin SART)
-  try {
-    await setPersistence(auth, browserLocalPersistence);
-  } catch (e){
-    console.warn('Persistence ayarlanamadi:', e);
-  }
-
-  // 2. Redirect sonucu varsa bekle ve isle
-  try {
-    const result = await getRedirectResult(auth);
-    if (result && result.user){
-      console.log('Redirect sonucu basarili:', result.user.email);
-    } else {
-      console.log('Bekleyen redirect sonucu yok.');
-    }
-  } catch (error){
-    console.error('Redirect sonuc hatasi:', error);
-    const msg = $('authMsg');
-    if (msg){
-      msg.textContent = 'Giris hatasi: ' + error.message;
-      msg.classList.add('show');
-    }
-  }
-
-  // 3. SIMDI state listener'i kur
-  onAuthStateChanged(auth, async (user) => {
-    $('loading').classList.add('hide');
-    if (user){
-      currentUser = user;
-      const userRef = doc(db, 'users', user.uid);
-      try {
-        const userSnap = await getDoc(userRef);
-        if (!userSnap.exists()){
-          await setDoc(userRef, {
-            email: user.email,
-            username: user.displayName || user.email.split('@')[0],
-            photoURL: user.photoURL || '',
-            role: user.email === ADMIN_EMAIL ? 'admin' : 'user',
-            isStaff: user.email === ADMIN_EMAIL,
-            isVerified: user.email === ADMIN_EMAIL,
-            tags: [],
-            createdAt: new Date().toISOString()
-          });
-        } else {
-          if (user.email === ADMIN_EMAIL && userSnap.data().role !== 'admin'){
-            await updateDoc(userRef, { role: 'admin', isStaff: true, isVerified: true });
-          }
-        }
-        if (unsubs.user) unsubs.user();
-        unsubs.user = onSnapshot(userRef, (snap) => {
-          currentUserDoc = snap.exists() ? { uid: snap.id, ...snap.data() } : null;
-          updateUserUI();
+onAuthStateChanged(auth, async (user) => {
+  $('loading').classList.add('hide');
+  if (user){
+    currentUser = user;
+    const userRef = doc(db, 'users', user.uid);
+    try {
+      const userSnap = await getDoc(userRef);
+      if (!userSnap.exists()){
+        await setDoc(userRef, {
+          email: user.email,
+          username: user.displayName || user.email.split('@')[0],
+          photoURL: user.photoURL || '',
+          role: user.email === ADMIN_EMAIL ? 'admin' : 'user',
+          isStaff: user.email === ADMIN_EMAIL,
+          isVerified: user.email === ADMIN_EMAIL,
+          tags: [],
+          createdAt: new Date().toISOString()
         });
-      } catch(e){
-        console.error('User doc hatasi:', e);
+      } else {
+        if (user.email === ADMIN_EMAIL && userSnap.data().role !== 'admin'){
+          await updateDoc(userRef, { role: 'admin', isStaff: true, isVerified: true });
+        }
       }
-
-      $('auth-screen').classList.remove('active');
-      $('app-screen').classList.add('active');
-
-      if (!subsStarted){
-        subsStarted = true;
-        subscribeGames();
-        subscribeAnnouncements();
-        subscribeReviews();
-        subscribePosts();
-        subscribeUsers();
-        subscribeWishlist();
-      }
-    } else {
-      currentUser = null;
-      currentUserDoc = null;
-      Object.values(unsubs).forEach(fn => { if (fn) fn(); });
-      subsStarted = false;
-      $('auth-screen').classList.add('active');
-      $('app-screen').classList.remove('active');
+      if (unsubs.user) unsubs.user();
+      unsubs.user = onSnapshot(userRef, (snap) => {
+        currentUserDoc = snap.exists() ? { uid: snap.id, ...snap.data() } : null;
+        updateUserUI();
+      });
+    } catch(e){
+      console.error('User doc hatasi:', e);
     }
-  });
-}
 
-startAuth();
+    $('auth-screen').classList.remove('active');
+    $('app-screen').classList.add('active');
+
+    if (!subsStarted){
+      subsStarted = true;
+      subscribeGames();
+      subscribeAnnouncements();
+      subscribeReviews();
+      subscribePosts();
+      subscribeUsers();
+      subscribeWishlist();
+    }
+  } else {
+    currentUser = null;
+    currentUserDoc = null;
+    Object.values(unsubs).forEach(fn => { if (fn) fn(); });
+    subsStarted = false;
+    $('auth-screen').classList.add('active');
+    $('app-screen').classList.remove('active');
+  }
+});
+
+// Persistence
+setPersistence(auth, browserLocalPersistence).catch(err => console.warn('Persistence:', err));
 
 $('logoutBtn').addEventListener('click', async () => {
   if (confirm('Cikis yapmak istediginize emin misiniz?')) await signOut(auth);
