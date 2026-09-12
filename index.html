@@ -57,15 +57,15 @@ input,button,textarea,select{font-family:inherit}
 .user-info{flex:1;min-width:0}
 .user-name{font-size:.88rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .user-role{font-size:.7rem;color:var(--muted);letter-spacing:.04em}
-.logout-btn{width:36px;height:36px;border-radius:10px;background:rgba(255,46,136,.1);border:1px solid rgba(255,46,136,.25);color:#ff85b3;cursor:pointer;font-size:.{95rem;transition:all .2s;flex-shrink:0}
-.logout-btn:hover{background:rgba(255,46,136,.2display)}
+.logout-btn{width:36px;height:36px;border-radius:10px;background:rgba(255,46,136,.1);border:1px solid rgba(255,46,136,.25);color:#ff85b3;cursor:pointer;font-size:.95rem;transition:all .2s;flex-shrink:0}
+.logout-btn:hover{background:rgba(255,46,136,.2)}
 
 .main{flex:1;min-width:0;padding:36px 44px;overflow-y:auto;max-height:100vh}
-.view{display:n:one;animation:fadeUp .4s ease}
+.view{display:none;animation:fadeUp .4s ease}
 .view.active{display:block}
-@keyframes fadeUp{from{opacity:0;transform:translateY(12pxinline)}to{opacity:1;transform:none}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 .view-head{margin-bottom:26px}
-.view-tag{font-family:'Space Mono',mon-flexospace;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:8px;display:;block}
+.view-tag{font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:8px;display:block}
 .view-title{font-size:2rem;font-weight:900;letter-spacing:-.02em;margin-bottom:8px}
 .view-desc{color:var(--muted);font-size:.95rem;font-weight:300;max-width:600px}
 
@@ -108,7 +108,7 @@ input,button,textarea,select{font-family:inherit}
 .game-detail-body h1{font-size:2.4rem;font-weight:900;letter-spacing:-.02em;margin-bottom:12px}
 .game-detail-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
 .game-detail-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--line)}
-.buy-btnalign-items:center;gap:10px;padding:14px 32px;border-radius:100px;background:linear-gradient(115deg,var(--neon),var(--cyan));color:#07070d;font-weight:800;font-size:1rem;border:none;cursor:pointer;letter-spacing:.02em;box-shadow:0 10px 30px rgba(124,92,255,.4);transition:transform .2s,box-shadow .2s;text-decoration:none}
+.buy-btn{display:inline-flex;align-items:center;gap:10px;padding:14px 32px;border-radius:100px;background:linear-gradient(115deg,var(--neon),var(--cyan));color:#07070d;font-weight:800;font-size:1rem;border:none;cursor:pointer;letter-spacing:.02em;box-shadow:0 10px 30px rgba(124,92,255,.4);transition:transform .2s,box-shadow .2s;text-decoration:none}
 .buy-btn:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(124,92,255,.55)}
 .buy-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
 .buy-btn.green{background:linear-gradient(115deg,#2bff88,#00e5ff)}
@@ -621,9 +621,6 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const ADMIN_EMAIL = 'cemilprooyuncu@gmail.com';
 
-// Oturum kaliciligi - iOS'ta redirect sonrasi oturumun korunmasi icin SART
-setPersistence(auth, browserLocalPersistence).catch(err => console.warn('Persistence:', err));
-
 let currentUser = null;
 let currentUserDoc = null;
 let games = [];
@@ -633,7 +630,7 @@ let posts = [];
 let users = [];
 let wishlistIds = [];
 let currentDevFilter = 'all';
-let authResolved = false;
+let subsStarted = false;
 
 const $ = id => document.getElementById(id);
 const unsubs = {};
@@ -644,10 +641,9 @@ function isStaff(){ return isAdmin() || (currentUserDoc && currentUserDoc.isStaf
 function myUsername(){ return currentUserDoc?.username || currentUser?.displayName || currentUser?.email?.split('@')[0] || 'Anonim'; }
 function myPhoto(){ return currentUser?.photoURL || ''; }
 
-// MOBIL TESPIT
 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-// GOOGLE GIRIS
+// BUTONA BASINCA
 $('googleSignInBtn').addEventListener('click', async () => {
   const btn = $('googleSignInBtn');
   btn.disabled = true;
@@ -656,91 +652,110 @@ $('googleSignInBtn').addEventListener('click', async () => {
   provider.setCustomParameters({ prompt: 'select_account' });
   try {
     if (isMobile){
-      // iOS Safari popup'i engelledigi icin redirect kullaniyoruz
       await signInWithRedirect(auth, provider);
     } else {
-      await signInWithPopup(auth, provider);
+      try {
+        await signInWithPopup(auth, provider);
+      } catch (popupErr){
+        console.warn('Popup basarisiz, redirect deneniyor:', popupErr);
+        await signInWithRedirect(auth, provider);
+      }
     }
   } catch (error){
     console.error('Giris hatasi:', error);
-    // Popup basarisiz olursa redirect'e gec
-    try {
-      await signInWithRedirect(auth, provider);
-    } catch (e2){
-      const msg = $('authMsg');
-      msg.textContent = 'Giris yapilamadi: ' + e2.message;
-      msg.classList.add('show');
-      btn.disabled = false;
-      btn.innerHTML = 'Google ile Giris Yap';
-    }
-  }
-});
-
-// REDIRECT SONRASI SONUC
-getRedirectResult(auth).then((result) => {
-  if (result && result.user){
-    console.log('Redirect ile giris basarili:', result.user.email);
-  }
-}).catch((error) => {
-  console.error('Redirect hatasi:', error);
-  const msg = $('authMsg');
-  if (msg){
-    msg.textContent = 'Giris hatasi: ' + error.message;
+    const msg = $('authMsg');
+    msg.textContent = 'Giris yapilamadi: ' + error.message;
     msg.classList.add('show');
+    btn.disabled = false;
+    btn.innerHTML = 'Google ile Giris Yap';
   }
 });
 
-// OTURUM DINLE
-onAuthStateChanged(auth, async (user) => {
-  authResolved = true;
-  $('loading').classList.add('hide');
-  if (user){
-    currentUser = user;
-    const userRef = doc(db, 'users', user.uid);
-    try {
-      const userSnap = await getDoc(userRef);
-      if (!userSnap.exists()){
-        await setDoc(userRef, {
-          email: user.email,
-          username: user.displayName || user.email.split('@')[0],
-          photoURL: user.photoURL || '',
-          role: user.email === ADMIN_EMAIL ? 'admin' : 'user',
-          isStaff: user.email === ADMIN_EMAIL,
-          isVerified: user.email === ADMIN_EMAIL,
-          tags: [],
-          createdAt: new Date().toISOString()
-        });
-      } else {
-        if (user.email === ADMIN_EMAIL && userSnap.data().role !== 'admin'){
-          await updateDoc(userRef, { role: 'admin', isStaff: true, isVerified: true });
-        }
-      }
-      if (unsubs.user) unsubs.user();
-      unsubs.user = onSnapshot(userRef, (snap) => {
-        currentUserDoc = snap.exists() ? { uid: snap.id, ...snap.data() } : null;
-        updateUserUI();
-      });
-    } catch(e){
-      console.error('User doc hatasi:', e);
+// ============================================
+// ANA BASLATMA: redirect sonucu -> sonra state dinle
+// ============================================
+async function startAuth(){
+  // 1. Persistence ayarla (iOS'ta oturumun korunmasi icin SART)
+  try {
+    await setPersistence(auth, browserLocalPersistence);
+  } catch (e){
+    console.warn('Persistence ayarlanamadi:', e);
+  }
+
+  // 2. Redirect sonucu varsa bekle ve isle
+  try {
+    const result = await getRedirectResult(auth);
+    if (result && result.user){
+      console.log('Redirect sonucu basarili:', result.user.email);
+    } else {
+      console.log('Bekleyen redirect sonucu yok.');
     }
-
-    $('auth-screen').classList.remove('active');
-    $('app-screen').classList.add('active');
-
-    subscribeGames();
-    subscribeAnnouncements();
-    subscribeReviews();
-    subscribePosts();
-    subscribeUsers();
-    subscribeWishlist();
-  } else {
-    currentUser = null;
-    currentUserDoc = null;
-    Object.values(unsubs).forEach(fn => { if (fn) fn(); });
-    $('auth-screen').classList.add('active');
-    $('app-screen').classList.remove('active');
+  } catch (error){
+    console.error('Redirect sonuc hatasi:', error);
+    const msg = $('authMsg');
+    if (msg){
+      msg.textContent = 'Giris hatasi: ' + error.message;
+      msg.classList.add('show');
+    }
   }
-});
+
+  // 3. SIMDI state listener'i kur
+  onAuthStateChanged(auth, async (user) => {
+    $('loading').classList.add('hide');
+    if (user){
+      currentUser = user;
+      const userRef = doc(db, 'users', user.uid);
+      try {
+        const userSnap = await getDoc(userRef);
+        if (!userSnap.exists()){
+          await setDoc(userRef, {
+            email: user.email,
+            username: user.displayName || user.email.split('@')[0],
+            photoURL: user.photoURL || '',
+            role: user.email === ADMIN_EMAIL ? 'admin' : 'user',
+            isStaff: user.email === ADMIN_EMAIL,
+            isVerified: user.email === ADMIN_EMAIL,
+            tags: [],
+            createdAt: new Date().toISOString()
+          });
+        } else {
+          if (user.email === ADMIN_EMAIL && userSnap.data().role !== 'admin'){
+            await updateDoc(userRef, { role: 'admin', isStaff: true, isVerified: true });
+          }
+        }
+        if (unsubs.user) unsubs.user();
+        unsubs.user = onSnapshot(userRef, (snap) => {
+          currentUserDoc = snap.exists() ? { uid: snap.id, ...snap.data() } : null;
+          updateUserUI();
+        });
+      } catch(e){
+        console.error('User doc hatasi:', e);
+      }
+
+      $('auth-screen').classList.remove('active');
+      $('app-screen').classList.add('active');
+
+      if (!subsStarted){
+        subsStarted = true;
+        subscribeGames();
+        subscribeAnnouncements();
+        subscribeReviews();
+        subscribePosts();
+        subscribeUsers();
+        subscribeWishlist();
+      }
+    } else {
+      currentUser = null;
+      currentUserDoc = null;
+      Object.values(unsubs).forEach(fn => { if (fn) fn(); });
+      subsStarted = false;
+      $('auth-screen').classList.add('active');
+      $('app-screen').classList.remove('active');
+    }
+  });
+}
+
+startAuth();
 
 $('logoutBtn').addEventListener('click', async () => {
   if (confirm('Cikis yapmak istediginize emin misiniz?')) await signOut(auth);
@@ -761,7 +776,6 @@ function updateUserUI(){
   $('devManagerNav').style.display = isAdmin() ? 'flex' : 'none';
 }
 
-// FIRESTORE
 function subscribeGames(){
   if (unsubs.games) unsubs.games();
   unsubs.games = onSnapshot(collection(db, 'games'), async (snap) => {
@@ -855,7 +869,6 @@ function subscribeWishlist(){
   }, (err) => console.error('Wishlist snapshot:', err));
 }
 
-// NAVIGASYON
 document.querySelectorAll('.nav-item[data-view]').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
@@ -886,7 +899,6 @@ $('mobileMenuBtn').addEventListener('click', () => {
   $('sidebarNav').classList.toggle('mobile-open');
 });
 
-// YARDIMCILAR
 function statusText(s){ return s === 'beta' ? 'Acik Beta' : s === 'dev' ? 'Gelistiriliyor' : 'Yayinda'; }
 function priceText(g){
   if (g.price > 0) return g.price + ' TL';
@@ -914,7 +926,6 @@ function escapeHtml(t){
   return (t || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-// OYUNLAR
 let currentFilter = 'all';
 let currentSearch = '';
 $('searchInput').addEventListener('input', e => { currentSearch = e.target.value; renderGames(); });
@@ -997,7 +1008,6 @@ async function toggleWishlist(gameId){
   else await addDoc(collection(db, 'wishlists'), { userId: currentUser.uid, gameId, addedAt: new Date().toISOString() });
 }
 
-// OYUN DETAY
 function openGameDetail(id){
   const g = games.find(x => x.id === id);
   if (!g) return;
@@ -1167,7 +1177,6 @@ function openGameDetail(id){
   });
 }
 
-// AKIS
 $('postText').addEventListener('input', e => {
   const len = e.target.value.length;
   $('postCharCount').textContent = len;
@@ -1316,7 +1325,6 @@ function renderPosts(){
   });
 }
 
-// DUYURULAR
 function renderAnnouncements(){
   const list = $('updatesList');
   if (!list) return;
@@ -1337,7 +1345,6 @@ function renderAnnouncements(){
   `).join('');
 }
 
-// GELISTIRICILER
 document.querySelectorAll('.filter-btn[data-devfilter]').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.filter-btn[data-devfilter]').forEach(b => b.classList.remove('active'));
@@ -1395,7 +1402,6 @@ function renderDevelopers(){
   }).join('');
 }
 
-// PROFIL
 function renderProfile(){
   if (!currentUser || !currentUserDoc) return;
   const a = $('profileBigAvatar');
@@ -1444,7 +1450,6 @@ function renderProfile(){
   }
 }
 
-// ISTEK LISTEM
 function renderWishlist(){
   const row = $('wishlistRow');
   const list = games.filter(g => wishlistIds.includes(g.id));
@@ -1480,7 +1485,6 @@ function renderWishlist(){
   });
 }
 
-// ADMIN
 function renderAdmin(){
   if (!isAdmin()) return;
   const tbody = $('adminGamesBody');
@@ -1547,7 +1551,6 @@ $('addAnnBtn').addEventListener('click', async () => {
   $('annMessage').value = '';
 });
 
-// GELISTIRICI YONETIMI
 $('addDevBtn').addEventListener('click', async () => {
   if (!isAdmin()) return;
   const email = $('devEmailInput').value.trim().toLowerCase();
@@ -1619,7 +1622,6 @@ function renderDevManager(){
   });
 }
 
-// OYUN EKLE
 $('createGameBtn').addEventListener('click', async () => {
   if (!isDeveloper()) return alert('Yetkin yok.');
   const title = $('newTitle').value.trim();
@@ -1656,7 +1658,6 @@ $('createGameBtn').addEventListener('click', async () => {
   document.querySelector('[data-view="games"]').click();
 });
 
-// MODAL
 let editingGameId = null;
 function openEditModal(id){
   const g = games.find(x => x.id === id);
@@ -1709,16 +1710,13 @@ $('editGameModal').addEventListener('click', e => {
   }
 });
 
-// GUVENLIK AGI - 6 saniye icinde auth cozulmezse loading'i kaldir
+// GUVENLIK AGI
 setTimeout(() => {
-  if (!authResolved){
-    console.warn('Auth timeout - zorla gosterim');
+  if (!$('loading').classList.contains('hide') && !$('app-screen').classList.contains('active')){
     $('loading').classList.add('hide');
-    if (!$('auth-screen').classList.contains('active') && !$('app-screen').classList.contains('active')){
-      $('auth-screen').classList.add('active');
-    }
+    $('auth-screen').classList.add('active');
   }
-}, 6000);
+}, 8000);
 </script>
 </body>
 </html>
