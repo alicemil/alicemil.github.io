@@ -61,9 +61,8 @@ input,button,textarea,select{font-family:inherit}
 .logout-btn:hover{background:rgba(255,46,136,.2)}
 
 .main{flex:1;min-width:0;padding:36px 44px;overflow-y:auto;max-height:100vh}
-.view{display:none;animation:fadeUp .4s ease}
+.view{display:none}
 .view.active{display:block}
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 .view-head{margin-bottom:26px}
 .view-tag{font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:8px;display:block}
 .view-title{font-size:2rem;font-weight:900;letter-spacing:-.02em;margin-bottom:8px}
@@ -80,7 +79,7 @@ input,button,textarea,select{font-family:inherit}
 
 .games-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px}
 .game-tile{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;cursor:pointer;transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .35s,box-shadow .35s;position:relative}
-.game-tile:hover{transform:translateY(-6px);border-color:rgba(124,92,255,.5);box-shadow:0 20px 40px rgba(0,0,0,.5),0 0 30px rgba(124,92,255,.15)}
+.game-tile:hover{border-color:rgba(124,92,255,.5);box-shadow:0 20px 40px rgba(0,0,0,.5),0 0 30px rgba(124,92,255,.15)}
 .game-cover{height:150px;display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative;overflow:hidden}
 .game-cover::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,var(--card) 5%,transparent 60%)}
 .game-of-year{position:absolute;top:12px;right:12px;z-index:2;background:linear-gradient(115deg,#ffb020,#ff2e88);color:#07070d;font-size:.68rem;font-weight:800;padding:5px 11px;border-radius:100px;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 4px 16px rgba(255,176,32,.5);display:flex;align-items:center;gap:4px}
@@ -265,19 +264,99 @@ input,button,textarea,select{font-family:inherit}
 .empty-icon{font-size:3rem;margin-bottom:14px;opacity:.5}
 .empty h3{font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:6px}
 .mobile-menu-btn{display:none;width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--text);cursor:pointer;align-items:center;justify-content:center;font-size:1.2rem;margin-right:10px}
+
+/* ============================================
+   ANIMASYONLAR
+   ============================================ */
+#auth-screen{transition:opacity .5s cubic-bezier(.4,0,.2,1), transform .5s cubic-bezier(.4,0,.2,1)}
+#auth-screen.fade-out{opacity:0;transform:scale(1.05);pointer-events:none}
+#app-screen{opacity:0}
+#app-screen.active{display:flex;animation:appFadeIn .6s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes appFadeIn{0%{opacity:0;transform:scale(.98)}100%{opacity:1;transform:scale(1)}}
+
+.auth-box{animation:authBoxIn .7s cubic-bezier(.2,.8,.2,1)}
+@keyframes authBoxIn{0%{opacity:0;transform:translateY(30px) scale(.95)}100%{opacity:1;transform:translateY(0) scale(1)}}
+
+.google-btn{position:relative;overflow:hidden}
+.google-btn::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at center,rgba(124,92,255,.35) 0%,transparent 70%);opacity:0;transition:opacity .4s}
+.google-btn:hover::before{opacity:1}
+.google-btn.loading{animation:btnPulse 1.5s ease-in-out infinite;pointer-events:none}
+@keyframes btnPulse{0%,100%{transform:scale(1);box-shadow:0 8px 24px rgba(255,255,255,.15)}50%{transform:scale(1.02);box-shadow:0 12px 40px rgba(124,92,255,.4)}}
+
+.view.active{animation:viewSlideIn .45s cubic-bezier(.2,.8,.2,1)}
+@keyframes viewSlideIn{0%{opacity:0;transform:translateY(18px) scale(.99)}100%{opacity:1;transform:translateY(0) scale(1)}}
+
+@keyframes cardStagger{0%{opacity:0;transform:translateY(24px) scale(.96)}100%{opacity:1;transform:translateY(0) scale(1)}}
+.game-tile,.dev-card,.post-card,.review-card,.update-card{animation:cardStagger .5s cubic-bezier(.2,.8,.2,1) backwards}
+.game-tile:nth-child(1),.dev-card:nth-child(1),.post-card:nth-child(1){animation-delay:.05s}
+.game-tile:nth-child(2),.dev-card:nth-child(2),.post-card:nth-child(2){animation-delay:.1s}
+.game-tile:nth-child(3),.dev-card:nth-child(3),.post-card:nth-child(3){animation-delay:.15s}
+.game-tile:nth-child(4),.dev-card:nth-child(4),.post-card:nth-child(4){animation-delay:.2s}
+.game-tile:nth-child(5),.dev-card:nth-child(5){animation-delay:.25s}
+.game-tile:nth-child(6),.dev-card:nth-child(6){animation-delay:.3s}
+.game-tile:nth-child(n+7),.dev-card:nth-child(n+7){animation-delay:.35s}
+
+.game-tile:hover{transform:translateY(-8px) scale(1.02)}
+.game-tile:active{transform:translateY(-4px) scale(.99);transition:transform .1s}
+
+.nav-item{position:relative;transition:all .3s cubic-bezier(.2,.8,.2,1)}
+.nav-item::before{content:'';position:absolute;left:0;top:50%;width:3px;height:0;background:linear-gradient(180deg,var(--neon),var(--cyan));border-radius:0 3px 3px 0;transform:translateY(-50%);transition:height .3s cubic-bezier(.2,.8,.2,1)}
+.nav-item.active::before{height:60%}
+.nav-item:hover{transform:translateX(3px)}
+
+.btn,.mini-btn,.buy-btn,.post-btn{position:relative;overflow:hidden}
+.ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.5);transform:scale(0);animation:rippleAnim .6s linear;pointer-events:none}
+@keyframes rippleAnim{to{transform:scale(4);opacity:0}}
+
+.login-success{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);width:120px;height:120px;border-radius:50%;background:linear-gradient(115deg,#2bff88,#00e5ff);z-index:9999;display:flex;align-items:center;justify-content:center;box-shadow:0 0 80px rgba(43,255,136,.6);animation:successPop .8s cubic-bezier(.2,.8,.2,1) forwards}
+.login-success svg{width:60px;height:60px;stroke:#07070d;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:100;stroke-dashoffset:100;animation:drawCheck .5s .3s ease forwards}
+@keyframes successPop{0%{transform:translate(-50%,-50%) scale(0);opacity:0}50%{transform:translate(-50%,-50%) scale(1.15);opacity:1}70%{transform:translate(-50%,-50%) scale(1)}100%{transform:translate(-50%,-50%) scale(1);opacity:0}}
+@keyframes drawCheck{to{stroke-dashoffset:0}}
+
+.spinner{box-shadow:0 0 30px rgba(124,92,255,.4)}
+#loading p{animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
+
+.modal-bg.active .modal{animation:modalIn .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes modalIn{0%{opacity:0;transform:scale(.9) translateY(20px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+
+.update-card{transition:transform .3s,border-color .3s,box-shadow .3s}
+.update-card:hover{transform:translateX(6px) scale(1.01);box-shadow:0 10px 30px rgba(124,92,255,.15)}
+
+.user-avatar,.post-avatar,.dev-card-avatar,.profile-avatar-big{transition:box-shadow .3s}
+.user-avatar:hover{box-shadow:0 0 20px rgba(124,92,255,.6)}
+
+.filter-btn{transition:all .25s cubic-bezier(.2,.8,.2,1)}
+.filter-btn:hover{transform:translateY(-2px)}
+.filter-btn.active{box-shadow:0 6px 20px rgba(124,92,255,.35)}
+
+@keyframes heartBeat{0%{transform:scale(1)}25%{transform:scale(1.3)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
+.post-action.liked{animation:heartBeat .4s}
+.wishlist-mini.active{animation:heartBeat .4s}
+
+.review-form{animation:cardStagger .5s cubic-bezier(.2,.8,.2,1) backwards;animation-delay:.1s}
+
+.progress-fill{position:relative;overflow:hidden}
+.progress-fill::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);animation:progressShine 2s infinite}
+@keyframes progressShine{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+
 @media(max-width:900px){.game-detail-grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.profile-grid{grid-template-columns:1fr}}
 @media(max-width:760px){
   #app-screen.active{flex-direction:column}
   .sidebar{width:100%;height:auto;position:static;flex-direction:row;align-items:center;padding:12px 16px;border-right:none;border-bottom:1px solid var(--line)}
   .sidebar-head{padding:0;border:none;flex:1}
   .sidebar-nav{display:none}
-  .sidebar-nav.mobile-open{display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:var(--bg2);z-index:99;padding:20px;max-height:calc(100vh - 64px);border-bottom:1px solid var(--line)}
+  .sidebar-nav.mobile-open{display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:var(--bg2);z-index:99;padding:20px;max-height:calc(100vh - 64px);border-bottom:1px solid var(--line);animation:slideInRight .35s cubic-bezier(.2,.8,.2,1)}
+  @keyframes slideInRight{0%{opacity:0;transform:translateX(30px)}100%{opacity:1;transform:translateX(0)}}
   .sidebar-user{padding:0;border:none}
   .user-info{display:none}
   .main{padding:26px 20px;max-height:none}
   .mobile-menu-btn{display:flex}
   .view-title{font-size:1.5rem}
   .game-detail-body h1{font-size:1.7rem}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important;}
 }
 </style>
 </head>
@@ -640,18 +719,15 @@ function isStaff(){ return isAdmin() || (currentUserDoc && currentUserDoc.isStaf
 function myUsername(){ return currentUserDoc?.username || currentUser?.displayName || currentUser?.email?.split('@')[0] || 'Anonim'; }
 function myPhoto(){ return currentUser?.photoURL || ''; }
 
-// ============================================
-// GOOGLE GIRIS - POPUP (iOS uyumlu)
-// ============================================
+// GOOGLE GIRIS
 $('googleSignInBtn').addEventListener('click', async () => {
   const btn = $('googleSignInBtn');
   btn.disabled = true;
   btn.textContent = 'Giris yapiliyor...';
+  btn.classList.add('loading');
   const provider = new GoogleAuthProvider();
   provider.setCustomParameters({ prompt: 'select_account' });
-
   try {
-    // iOS dahil tum tarayicilarda calisan popup yontemi
     await signInWithPopup(auth, provider);
   } catch (error){
     console.error('Giris hatasi:', error);
@@ -659,17 +735,35 @@ $('googleSignInBtn').addEventListener('click', async () => {
     msg.textContent = 'Giris yapilamadi: ' + error.message;
     msg.classList.add('show');
     btn.disabled = false;
+    btn.classList.remove('loading');
     btn.innerHTML = 'Google ile Giris Yap';
   }
 });
 
-// ============================================
-// OTURUM DINLE
-// ============================================
+// BAŞARI ANİMASYONU
+function showLoginSuccess(){
+  const overlay = document.createElement('div');
+  overlay.className = 'login-success';
+  overlay.innerHTML = '<svg viewBox="0 0 52 52"><path d="M14 27 L22 35 L38 19"/></svg>';
+  document.body.appendChild(overlay);
+  setTimeout(() => overlay.remove(), 1500);
+}
+
+// OTURUM
 onAuthStateChanged(auth, async (user) => {
   $('loading').classList.add('hide');
   if (user){
     currentUser = user;
+
+    // Başarı animasyonu
+    showLoginSuccess();
+    const authScr = $('auth-screen');
+    authScr.classList.add('fade-out');
+    setTimeout(() => {
+      authScr.classList.remove('active');
+      authScr.classList.remove('fade-out');
+    }, 500);
+
     const userRef = doc(db, 'users', user.uid);
     try {
       const userSnap = await getDoc(userRef);
@@ -698,7 +792,6 @@ onAuthStateChanged(auth, async (user) => {
       console.error('User doc hatasi:', e);
     }
 
-    $('auth-screen').classList.remove('active');
     $('app-screen').classList.add('active');
 
     if (!subsStarted){
@@ -715,12 +808,12 @@ onAuthStateChanged(auth, async (user) => {
     currentUserDoc = null;
     Object.values(unsubs).forEach(fn => { if (fn) fn(); });
     subsStarted = false;
+    $('auth-screen').classList.remove('fade-out');
     $('auth-screen').classList.add('active');
     $('app-screen').classList.remove('active');
   }
 });
 
-// Persistence
 setPersistence(auth, browserLocalPersistence).catch(err => console.warn('Persistence:', err));
 
 $('logoutBtn').addEventListener('click', async () => {
@@ -835,6 +928,7 @@ function subscribeWishlist(){
   }, (err) => console.error('Wishlist snapshot:', err));
 }
 
+// NAVIGASYON
 document.querySelectorAll('.nav-item[data-view]').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
@@ -1674,6 +1768,21 @@ $('editGameModal').addEventListener('click', e => {
     e.target.classList.remove('active');
     editingGameId = null;
   }
+});
+
+// RIPPLE efekti
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.btn, .mini-btn, .buy-btn, .post-btn, .filter-btn');
+  if (!btn) return;
+  const rect = btn.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height);
+  const ripple = document.createElement('span');
+  ripple.className = 'ripple';
+  ripple.style.width = ripple.style.height = size + 'px';
+  ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
+  ripple.style.top = (e.clientY - rect.top - size/2) + 'px';
+  btn.appendChild(ripple);
+  setTimeout(() => ripple.remove(), 600);
 });
 
 // GUVENLIK AGI
